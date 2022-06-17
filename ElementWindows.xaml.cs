@@ -63,28 +63,25 @@ namespace TerminalMaster
                 else if (header[i].Equals("Статус"))
                 {
                     ComboBox combo = new ComboBox() {Header = header[i] };
-                    ComboBoxItem boxItem = new ComboBoxItem();
-                    if(i == 4)
+                    if(i == 3)
                     {
 
                         string[] text = { "Запас", "Работает", "Пустой" };
                         for(int z = 0; z < text.Length; z++)
                         {
-                            boxItem.Content = text[z];
+                            combo.Items.Add(text[z]);
                         }
                         
                     }  
 
-                    if(i == 7)
+                    if(i == 6)
                     {
                         string[] text = { "Нет сим-карты", "Работает", "Закончился ФН" };
                         for (int z = 0; z < text.Length; z++)
                         {
-                            boxItem.Content = text[z];
+                            combo.Items.Add(text[z]);
                         }
                     }
-
-                    combo.SelectedItem = boxItem;
                     WriteTextBoxStackPanel.Children.Add(combo);
                 }
                 else
