@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TerminalMaster.Model;
-using Toner.ConfigElement;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -26,7 +25,9 @@ namespace TerminalMaster
         private string title;
         private List<string> header;
 
-        private PropertyElement pe = new PropertyElement(); 
+        private ComboBox combo;
+        private TextBox textBox;
+
         public ElementWindows()
         {
             InitializeComponent();
@@ -36,6 +37,43 @@ namespace TerminalMaster
             count = list.Count;
             this.title = title;
             header = new List<string>(list);
+        }
+
+        public void AddComboxItem(string[] text, ComboBox combo)
+        {
+            for (int i = 0; i < text.Length; i++)
+            {
+                combo.Items.Add(text[i]);
+            }
+        }
+
+        public void AddTextBoxMaxLength(string header)
+        {
+            switch (header)
+            {
+                case "Заводской номер":
+                    textBox.MaxLength = 12;
+                    break;
+                case "Серийный номер":
+                    textBox.MaxLength = 13;
+                    break;
+                case "Номер счета":
+                    textBox.MaxLength = 8;
+                    break;
+                case "Внутренний номер":
+                    textBox.MaxLength = 3;
+                    break;
+                case "Мобильный номер":
+                    textBox.MaxLength = 11;
+                    break;
+                case "ККМ":
+                    textBox.MaxLength = 9;
+                    break;
+                default:
+                    textBox.MaxLength = 20;
+                    break;
+            }
+
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -62,36 +100,28 @@ namespace TerminalMaster
                 }
                 else if (header[i].Equals("Статус"))
                 {
-                    ComboBox combo = new ComboBox() {Header = header[i] };
+                    combo = new ComboBox() {Header = header[i] };
                     if(i == 3)
                     {
-
                         string[] text = { "Запас", "Работает", "Пустой" };
-                        for(int z = 0; z < text.Length; z++)
-                        {
-                            combo.Items.Add(text[z]);
-                        }
-
+                        AddComboxItem(text, combo);
                     }
 
                     if(i == 6)
                     {
                         string[] text = { "Нет сим-карты", "Работает", "Закончился ФН" };
-                        for (int z = 0; z < text.Length; z++)
-                        {
-                            combo.Items.Add(text[z]);
-                        }
+                        AddComboxItem(text, combo);
                     }
                     WriteTextBoxStackPanel.Children.Add(combo);
                 }
                 else
                 {
-                    TextBox textBox = new TextBox { Header = header[i] };
-                    pe.SetTextBoxMaxLength(10);
-                    textBox.MaxLength = pe.GetTextBoxMaxLength();
+                    textBox = new TextBox { Header = header[i] };
+                    AddTextBoxMaxLength(header[i]);
                     WriteTextBoxStackPanel.Children.Add(textBox);
                 }
             }
         }
+
     }
 }

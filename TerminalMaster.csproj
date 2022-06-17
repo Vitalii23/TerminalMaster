@@ -124,7 +124,6 @@
     <Compile Include="ConfigElement\Element\GetElement.cs" />
     <Compile Include="ConfigElement\Element\SaveElement.cs" />
     <Compile Include="ConfigElement\Element\UpdateElement.cs" />
-    <Compile Include="ConfigElement\PropertyElement.cs" />
     <Compile Include="ElementWindows.xaml.cs">
       <DependentUpon>ElementWindows.xaml</DependentUpon>
     </Compile>

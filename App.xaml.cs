@@ -22,6 +22,8 @@ namespace TerminalMaster
     /// </summary>
     sealed partial class App : Application
     {
+        private string connectionString =
+        @"Data Source=YourServerName\SQLEXPRESS;Initial Catalog=NORTHWIND;Integrated Security=SSPI";
         /// <summary>
         /// Инициализирует одноэлементный объект приложения. Это первая выполняемая строка разрабатываемого
         /// кода, поэтому она является логическим эквивалентом main() или WinMain().
@@ -96,5 +98,7 @@ namespace TerminalMaster
             //TODO: Сохранить состояние приложения и остановить все фоновые операции
             deferral.Complete();
         }
+
+        public string ConnectionString { get => connectionString; set => connectionString = value; }
     }
 }

@@ -19,7 +19,7 @@
             <RowDefinition Height="55*"></RowDefinition>
             <RowDefinition Height="1035*"></RowDefinition>
         </Grid.RowDefinitions>
-        <CommandBar Height="51" VerticalAlignment="Center">
+        <CommandBar x:Name="MainCommandBar" Height="51" VerticalAlignment="Center" IsEnabled="False">
             <AppBarButton x:Name="AppBarButtonAdd" Icon="Add" Label="Добавить" Tapped="AppBarButtonAdd_Tapped"></AppBarButton>
             <AppBarButton x:Name="AppBarButtonEdit" Icon="Edit" Label="Изменить" Tapped="AppBarButtonEdit_Tapped"></AppBarButton>
             <AppBarButton x:Name="AppBarButtonDelete" Icon="Delete" Label="Удалить" Tapped="AppBarButtonDelete_Tapped"></AppBarButton>
@@ -45,11 +45,11 @@
                 <NavigationViewItem Icon="Phone" Tapped="SimCardRegystriNavigationItem_Tapped">Sim-карты</NavigationViewItem>
                 <NavigationViewItem Icon="PhoneBook" Tapped="DirectoryNavigationItem_Tapped">Телефоны сотрудников</NavigationViewItem>
                 <NavigationViewItemSeparator/>
-                <NavigationViewItemHeader>Настройка</NavigationViewItemHeader>
-                <NavigationViewItem Icon="DisconnectDrive" >Подключение</NavigationViewItem>
-                <NavigationViewItem Icon="Setting">Настройка</NavigationViewItem>
-                <NavigationViewItem Icon="Library">Инструкция</NavigationViewItem>
-                <NavigationViewItem Icon="ContactInfo">О программе</NavigationViewItem>
+                <NavigationViewItemHeader>Конфигурации</NavigationViewItemHeader>
+                <NavigationViewItem Icon="DisconnectDrive" Tapped="ConnectNavigationItem_Tapped">Подключение</NavigationViewItem>
+                <NavigationViewItem Icon="Setting" Tapped="SettingNavigationItem_Tapped">Настройка</NavigationViewItem>
+                <NavigationViewItem Icon="Library" Tapped="InstructionNavigationItem_Tapped">Инструкция</NavigationViewItem>
+                <NavigationViewItem Icon="ContactInfo" Tapped="AboutNavigationItem_Tapped">О программе</NavigationViewItem>
             </NavigationView.MenuItems>
             <!--<NavigationView.PaneFooter>
                 <NavigationViewItem Icon="MapDrive">Подключение</NavigationViewItem>
@@ -58,8 +58,12 @@
                 <control:DataGrid x:Name="MainDataGrid" 
                                   AutoGenerateColumns="True" 
                                   ScrollViewer.CanContentRenderOutsideBounds="True"
+                                  ColumnWidth="Auto"
                                   ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                  ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="0,42,0,0"/>
+                                  ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                                  Margin="0,42,0,0"
+                                  IsReadOnly="True">
+                </control:DataGrid>
             </NavigationView.Content>
         </NavigationView>
     </Grid>
