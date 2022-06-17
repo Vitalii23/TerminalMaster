@@ -71,8 +71,8 @@ namespace TerminalMaster
                         {
                             combo.Items.Add(text[z]);
                         }
-                        
-                    }  
+
+                    }
 
                     if(i == 6)
                     {

@@ -138,6 +138,8 @@
     <Compile Include="Model\PhoneBook.cs" />
     <Compile Include="Model\Printer.cs" />
     <Compile Include="Model\SimCard.cs" />
+    <Compile Include="SaveFile\JsonFile.cs" />
+    <Compile Include="SaveFile\XmlFile.cs" />
     <Compile Include="ViewModel\DataGets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -147,6 +149,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\icons8-water-drop-64.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
