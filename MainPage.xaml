@@ -4,11 +4,63 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:TerminalMaster"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:control="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:vm="using:TerminalMaster.ViewModel"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="1080" Width="1920">
 
-    <Grid>
+    <Page.DataContext>
+        <vm:DataGets/>
+    </Page.DataContext>
 
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="55*"></RowDefinition>
+            <RowDefinition Height="1035*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <CommandBar Height="51" VerticalAlignment="Center">
+            <AppBarButton x:Name="AppBarButtonAdd" Icon="Add" Label="Добавить" Tapped="AppBarButtonAdd_Tapped"></AppBarButton>
+            <AppBarButton x:Name="AppBarButtonEdit" Icon="Edit" Label="Изменить" Tapped="AppBarButtonEdit_Tapped"></AppBarButton>
+            <AppBarButton x:Name="AppBarButtonDelete" Icon="Delete" Label="Удалить" Tapped="AppBarButtonDelete_Tapped"></AppBarButton>
+            <AppBarButton x:Name="AppBarButtonSave" Icon="Save" Label="Сохранить" Tapped="AppBarButtonSave_Tapped"></AppBarButton>
+        </CommandBar>
+
+        <NavigationView x:Name="MainNavigationView"
+                        PaneTitle="   ООО Ключевая вода" 
+                        PaneDisplayMode="Auto" 
+                        IsSettingsVisible="False" 
+                        CompactModeThresholdWidth="0"  
+                        ExpandedModeThresholdWidth ="1070"
+                        Grid.Column="0"
+                        Margin="0,0,0,0" Grid.RowSpan="2">
+            <NavigationView.PaneHeader>
+                <Image Source="/Assets/icons8-water-drop-64.png" HorizontalAlignment="Left"></Image>
+            </NavigationView.PaneHeader>
+            <NavigationView.MenuItems>
+                <NavigationViewItemHeader>Главная</NavigationViewItemHeader>
+                <NavigationViewItem Icon="Print" Tapped="PrintNavigationItem_Tapped">Принтеры</NavigationViewItem>
+                <NavigationViewItem Icon="StopSlideShow" Tapped="CartridesNavigationItem_Tapped">Картриджи</NavigationViewItem>
+                <NavigationViewItem Icon="Caption" Tapped="CashRegystriNavigationViewItem_Tapped">Контрольная-кассовая машина (ККМ)</NavigationViewItem>
+                <NavigationViewItem Icon="Phone" Tapped="SimCardRegystriNavigationItem_Tapped">Sim-карты</NavigationViewItem>
+                <NavigationViewItem Icon="PhoneBook" Tapped="DirectoryNavigationItem_Tapped">Телефоны сотрудников</NavigationViewItem>
+                <NavigationViewItemSeparator/>
+                <NavigationViewItemHeader>Настройка</NavigationViewItemHeader>
+                <NavigationViewItem Icon="DisconnectDrive" >Подключение</NavigationViewItem>
+                <NavigationViewItem Icon="Setting">Настройка</NavigationViewItem>
+                <NavigationViewItem Icon="Library">Инструкция</NavigationViewItem>
+                <NavigationViewItem Icon="ContactInfo">О программе</NavigationViewItem>
+            </NavigationView.MenuItems>
+            <!--<NavigationView.PaneFooter>
+                <NavigationViewItem Icon="MapDrive">Подключение</NavigationViewItem>
+            </NavigationView.PaneFooter>-->
+            <NavigationView.Content>
+                <control:DataGrid x:Name="MainDataGrid" 
+                                  AutoGenerateColumns="True" 
+                                  ScrollViewer.CanContentRenderOutsideBounds="True"
+                                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="0,42,0,0"/>
+            </NavigationView.Content>
+        </NavigationView>
     </Grid>
 </Page>
