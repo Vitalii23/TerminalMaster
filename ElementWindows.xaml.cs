@@ -28,6 +28,8 @@ namespace TerminalMaster
         private ComboBox combo;
         private TextBox textBox;
 
+        private List<object> objectList = new List<object>();
+
         public ElementWindows()
         {
             InitializeComponent();
@@ -78,12 +80,12 @@ namespace TerminalMaster
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-
+           
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-
+          
         }
 
         private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)

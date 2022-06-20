@@ -19,9 +19,6 @@ using Windows.UI.ViewManagement;
 
 namespace TerminalMaster
 {
-    /// <summary>
-    /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
         private string NameNavigationItem;
@@ -132,22 +129,18 @@ namespace TerminalMaster
         {
 
         }
-
         private void ConnectNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
 
         }
-
         private void SettingNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
 
         }
-
         private void InstructionNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
 
         }
-
         private void AboutNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
 

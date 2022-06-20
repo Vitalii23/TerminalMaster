@@ -41,13 +41,13 @@ namespace TerminalMaster.ViewModel
         {
             get
             {
-                if(_cartridges != null)
-                {
-                    for(int i = 0; i <= 50; i++)
-                    {
-                        _cartridges.Add(new Cartridge(i, "Kyocera" + i, "TK-3190" + i, "КВ-00004" + i, "в работе"));
-                    }
-                }
+                //if(_cartridges != null)
+                //{
+                //    for(int i = 0; i <= 50; i++)
+                //    {
+                //        _cartridges.Add(new Cartridge(i, "Kyocera" + i, "TK-3190" + i, "КВ-00004" + i, "в работе"));
+                //    }
+                //}
                 return _cartridges;
             }
             set
