@@ -10,6 +10,7 @@ namespace TerminalMaster.Model
     class Cartridge
     {
         public List<string> NameDisplayList = new List<string>() { "Бренд", "Модель", "Артикуль", "Статус" };
+        public List<string> ElementContent = new List<string>() { "ComboBox", "ComboBox", "TextBox", "ComboBox" };
         [Display(Name = "ID")]
         public int Id { get; set; }
         [Display(Name ="Бренд")]
@@ -28,6 +29,8 @@ namespace TerminalMaster.Model
             VendorCode = vendorCode;
             Status = status;
         }
+
+
         public Cartridge()
         {
         }

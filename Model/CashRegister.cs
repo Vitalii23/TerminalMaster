@@ -11,6 +11,7 @@ namespace TerminalMaster.Model
     {
         public List<string> NameDisplayList = new List<string>() { "ККМ", "Бренд", "Заводской номер", "Серийный номер", "Номер счета", 
             "Владелец", "Пользователь", "Дата получения", "Место нахождения" };
+        public List<string> ElementContent = new List<string>() { "TextBox", "TextBox", "TextBox", "TextBox", "TextBox", "TextBox", "TextBox", "CalendarDatePicker", "TextBox" };
         [Display(Name = "ID")]
         public int Id { get; set; }
         [Display(Name = "ККМ")]

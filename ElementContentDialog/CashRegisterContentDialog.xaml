@@ -1,0 +1,61 @@
+﻿<ContentDialog
+    x:Class="TerminalMaster.ElementContentDialog.CashRegisterContentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TerminalMaster.ElementContentDialog"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="ККМ"
+    PrimaryButtonText="ОК"
+    SecondaryButtonText="Отмена"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <Grid x:Name="PrinterContentDialogGrid" Height="Auto">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel x:Name="WriteTextBoxStackPanel" Grid.Row="0" Grid.Column="0">
+            <StackPanel.Resources>
+                <Style TargetType="TextBox">
+                    <Setter Property="Margin" Value="0,0,0,5"></Setter>
+                    <Setter Property="Padding" Value="5,5,0,0"></Setter>
+                    <Setter Property="FontSize" Value="14"></Setter>
+                    <Setter Property="Height" Value="55"></Setter>
+                    <Setter Property="Width" Value="300"></Setter>
+                    <Setter Property="BorderThickness" Value="2,2,2,2"></Setter>
+                </Style>
+                <Style TargetType="CalendarDatePicker">
+                    <Setter Property="Margin" Value="0,0,0,5"></Setter>
+                    <Setter Property="Padding" Value="5,0,0,0"></Setter>
+                    <Setter Property="FontSize" Value="14"></Setter>
+                    <Setter Property="Height" Value="55"></Setter>
+                    <Setter Property="Width" Value="300"></Setter>
+                    <Setter Property="BorderThickness" Value="2,2,2,2"></Setter>
+                </Style>
+                <Style TargetType="ComboBox">
+                    <Setter Property="Margin" Value="0,0,0,5"></Setter>
+                    <Setter Property="Padding" Value="5,0,0,0"></Setter>
+                    <Setter Property="FontSize" Value="14"></Setter>
+                    <Setter Property="Height" Value="55"></Setter>
+                    <Setter Property="Width" Value="300"></Setter>
+                    <Setter Property="MaxDropDownHeight" Value="200"></Setter>
+                    <Setter Property="BorderThickness" Value="2,2,2,2"></Setter>
+                </Style>
+            </StackPanel.Resources>
+            <TextBox x:Name="NameTextBox" Header="ККМ"></TextBox>
+            <TextBox x:Name="BrendTextBox" Header="Бренд устройства"></TextBox>
+            <TextBox x:Name="FactoryNumberTextBox" Header="Заводской номер"></TextBox>
+            <TextBox x:Name="SerialNumberTextBox" Header="Серийный номер"></TextBox>
+            <TextBox x:Name="PaymentNumberTextBox" Header="Номер счета"></TextBox>
+            <TextBox x:Name="HolderTextBox" Header="Владелец"></TextBox>
+            <TextBox x:Name="UserTextBox" Header="Пользователь"></TextBox>
+            <CalendarDatePicker x:Name="DateReceptionCalendarDatePicker" Header="Дата получения"></CalendarDatePicker>
+            <TextBox x:Name="Location" Header="Место нахождения"></TextBox>
+        </StackPanel>
+    </Grid>
+</ContentDialog>

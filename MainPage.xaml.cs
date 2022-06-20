@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Diagnostics;
 using Windows.UI.ViewManagement;
+using TerminalMaster.ElementContentDialog;
 
 namespace TerminalMaster
 {
@@ -27,8 +28,8 @@ namespace TerminalMaster
         {
             InitializeComponent();
             Loaded += MainPage_Loaded;
+            dataGets.WriteElementList();
         }
-
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
@@ -68,62 +69,49 @@ namespace TerminalMaster
             MainDataGrid.ItemsSource = dataGets.SimCardList;
             NameNavigationItem = "simCard";
         }
-        private void DirectoryNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
+        private void PhoneBookNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             MainCommandBar.IsEnabled = true;
-            MainDataGrid.Columns.Clear(); 
+            MainDataGrid.Columns.Clear();
             MainDataGrid.ItemsSource = dataGets.PhoneBookList;
-            NameNavigationItem = "directory";
+            NameNavigationItem = "phoneBook";
         }
         private async void AppBarButtonAdd_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            ElementWindows windows = new ElementWindows();
-            switch (NameNavigationItem) {
-                case "printer":
-                    windows.SetDataElement("Принтеры", dataGets.GetNameDisplayPrinterList());
-                    break;
-                case "cartrides":
-                    windows.SetDataElement("Картриджи", dataGets.GetNameDisplayCartridesList());
-                    break;
-                case "cashRegystry":
-                    windows.SetDataElement("Контрольная-кассовая машина (ККМ)", dataGets.GetNameDisplayCashRegisterList());
-                    break;
-                case "simCard":
-                    windows.SetDataElement("Сим-карты", dataGets.GetNameDisplaySimCardList());
-                    break;
-                case "directory":
-                    windows.SetDataElement("Телефоны сотрудники", dataGets.GetNameDisplayPhoneBookList());
-                    break;
-            }
-            await windows.ShowAsync();
-        }
-        private async void AppBarButtonEdit_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            ElementWindows windows = new ElementWindows();
             switch (NameNavigationItem)
             {
                 case "printer":
-                    windows.SetDataElement("Принтеры", dataGets.GetNameDisplayPrinterList());
+                    PrinterContentDialog printer = new PrinterContentDialog();
+                    await printer.ShowAsync();
                     break;
                 case "cartrides":
-                    windows.SetDataElement("Картриджи", dataGets.GetNameDisplayCartridesList());
+                    CartridgeContentDialog cartridge = new CartridgeContentDialog();
+                    await cartridge.ShowAsync();
                     break;
                 case "cashRegystry":
-                    windows.SetDataElement("Контрольная-кассовая машина (ККМ)", dataGets.GetNameDisplayCashRegisterList());
+                    CashRegisterContentDialog cashRegister = new CashRegisterContentDialog();
+                    await cashRegister.ShowAsync();
                     break;
                 case "simCard":
-                    windows.SetDataElement("Сим-карты", dataGets.GetNameDisplaySimCardList());
+                    SimCardContentDialog simCard = new SimCardContentDialog();
+                    await simCard.ShowAsync();
                     break;
-                case "directory":
-                    windows.SetDataElement("Телефоны сотрудники", dataGets.GetNameDisplayPhoneBookList());
+                case "phoneBook":
+                    PhoneBookContentDialog phoneBook = new PhoneBookContentDialog();
+                    await phoneBook.ShowAsync();
                     break;
+                default:
+                    break;
+                   
             }
-            await windows.ShowAsync();
+        }
+        private async void AppBarButtonEdit_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
         }
         private async void AppBarButtonDelete_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            ElementWindows windows = new ElementWindows();
-            await windows.ShowAsync();
+
         }
         private void AppBarButtonSave_Tapped(object sender, TappedRoutedEventArgs e)
         {

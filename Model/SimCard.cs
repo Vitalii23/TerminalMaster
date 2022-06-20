@@ -11,6 +11,7 @@ namespace TerminalMaster.Model
     {
         public List<string> NameDisplayList = new List<string>() { "Оператор связи", "Идентификационный номер", "Тип устройства", 
                                                                     "Номер телефона (TMS)", "Уникальный серийный номер (ICC)", "Пользователь", "Статус" };
+        public List<string> ElementContent = new List<string>() { "TextBox", "TextBox", "TextBox", "TextBox", "TextBox", "TextBox", "ComboBox"};
         [Display(Name = "ID")]
         public int ID { get; set; }
         [Display(Name = "Оператор связи")]

@@ -19,7 +19,7 @@
             <RowDefinition Height="55*"></RowDefinition>
             <RowDefinition Height="1035*"></RowDefinition>
         </Grid.RowDefinitions>
-        <CommandBar x:Name="MainCommandBar" Height="51" VerticalAlignment="Center" IsEnabled="False">
+        <CommandBar x:Name="MainCommandBar" Height="51" VerticalAlignment="Center" HorizontalAlignment="Stretch" IsEnabled="False">
             <AppBarButton x:Name="AppBarButtonAdd" Icon="Add" Label="Добавить" Tapped="AppBarButtonAdd_Tapped"></AppBarButton>
             <AppBarButton x:Name="AppBarButtonEdit" Icon="Edit" Label="Изменить" Tapped="AppBarButtonEdit_Tapped"></AppBarButton>
             <AppBarButton x:Name="AppBarButtonDelete" Icon="Delete" Label="Удалить" Tapped="AppBarButtonDelete_Tapped"></AppBarButton>
@@ -43,7 +43,7 @@
                 <NavigationViewItem Icon="StopSlideShow" Tapped="CartridesNavigationItem_Tapped">Картриджи</NavigationViewItem>
                 <NavigationViewItem Icon="Caption" Tapped="CashRegystriNavigationViewItem_Tapped">Контрольная-кассовая машина (ККМ)</NavigationViewItem>
                 <NavigationViewItem Icon="Phone" Tapped="SimCardRegystriNavigationItem_Tapped">Sim-карты</NavigationViewItem>
-                <NavigationViewItem Icon="PhoneBook" Tapped="DirectoryNavigationItem_Tapped">Телефоны сотрудников</NavigationViewItem>
+                <NavigationViewItem Icon="PhoneBook" Tapped="PhoneBookNavigationItem_Tapped">Телефоны сотрудников</NavigationViewItem>
                 <NavigationViewItemSeparator/>
                 <NavigationViewItemHeader>Конфигурации</NavigationViewItemHeader>
                 <NavigationViewItem Icon="DisconnectDrive" Tapped="ConnectNavigationItem_Tapped">Подключение</NavigationViewItem>
@@ -61,6 +61,8 @@
                                   ColumnWidth="Auto"
                                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                                   ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                                  CanUserReorderColumns="True" 
+                                  CanUserResizeColumns="True"
                                   Margin="0,42,0,0"
                                   IsReadOnly="True">
                 </control:DataGrid>

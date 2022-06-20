@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TerminalMaster.Model;
+using TerminalMaster.ViewModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -21,24 +24,26 @@ namespace TerminalMaster
 {
     public sealed partial class ElementWindows : ContentDialog
     {
-        private int count;
         private string title;
-        private List<string> header;
+        private int count;
+
+        private DataGets dataGets = new DataGets();
 
         private ComboBox combo;
         private TextBox textBox;
+        private CalendarDatePicker calendar;
 
-        private List<object> objectList = new List<object>();
+        private Dictionary<string, string> ObjectDictionary;
 
         public ElementWindows()
         {
             InitializeComponent();
         }
 
-        public void SetDataElement(string title, List<string> list) {
-            count = list.Count;
+        public void SetDataElement(string title, Dictionary<string, string> objectDictionary)
+        {
             this.title = title;
-            header = new List<string>(list);
+            ObjectDictionary = new Dictionary<string, string>(objectDictionary);
         }
 
         public void AddComboxItem(string[] text, ComboBox combo)
@@ -78,9 +83,18 @@ namespace TerminalMaster
 
         }
 
+        private void handler(IUICommand command)
+        {
+            System.Diagnostics.Debug.WriteLine($"The user clicked {command.Label}");
+        }
+
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-           
+            if (!string.IsNullOrEmpty(textBox.Text))
+            {
+                dataGets.CashRegisterList.Add(new CashRegister());
+                textBox.Text = string.Empty;
+            }
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -91,36 +105,29 @@ namespace TerminalMaster
         private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
             ElementContentDialog.Title = title;
-            for (int i = 0; i < count; i++)
-            {
-                if (header[i].Equals("Дата получения"))
-                {
-                    CalendarDatePicker calendar = new CalendarDatePicker();
-                    calendar.Header = header[i];
-                    WriteTextBoxStackPanel.Children.Add(calendar);
 
-                }
-                else if (header[i].Equals("Статус"))
+            foreach (KeyValuePair<string, string> kvp in ObjectDictionary)
+            {
+                switch (kvp.Value)
                 {
-                    combo = new ComboBox() {Header = header[i] };
-                    if(i == 3)
-                    {
+                    case "ComboBox":
+                        combo = new ComboBox() { Header = kvp.Key};
                         string[] text = { "Запас", "Работает", "Пустой" };
                         AddComboxItem(text, combo);
-                    }
-
-                    if(i == 6)
-                    {
-                        string[] text = { "Нет сим-карты", "Работает", "Закончился ФН" };
-                        AddComboxItem(text, combo);
-                    }
-                    WriteTextBoxStackPanel.Children.Add(combo);
-                }
-                else
-                {
-                    textBox = new TextBox { Header = header[i] };
-                    AddTextBoxMaxLength(header[i]);
-                    WriteTextBoxStackPanel.Children.Add(textBox);
+                        WriteTextBoxStackPanel.Children.Add(combo);
+                        break;
+                    case "TextBox":
+                        textBox = new TextBox { Header = kvp.Key, Name = "Name" + count++ };
+                        AddTextBoxMaxLength(kvp.Key);
+                        Debug.WriteLine(textBox.Name);
+                        WriteTextBoxStackPanel.Children.Add(textBox);
+                        break;
+                    case "CalendarDatePicker":
+                        calendar = new CalendarDatePicker { Header = kvp.Key };
+                        WriteTextBoxStackPanel.Children.Add(calendar);
+                        break;
+                    default:
+                        break;
                 }
             }
         }

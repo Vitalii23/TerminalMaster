@@ -124,6 +124,21 @@
     <Compile Include="ConfigElement\Element\GetElement.cs" />
     <Compile Include="ConfigElement\Element\SaveElement.cs" />
     <Compile Include="ConfigElement\Element\UpdateElement.cs" />
+    <Compile Include="ElementContentDialog\CartridgeContentDialog.xaml.cs">
+      <DependentUpon>CartridgeContentDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ElementContentDialog\CashRegisterContentDialog.xaml.cs">
+      <DependentUpon>CashRegisterContentDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ElementContentDialog\PhoneBookContentDialog.xaml.cs">
+      <DependentUpon>PhoneBookContentDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ElementContentDialog\PrinterContentDialog.xaml.cs">
+      <DependentUpon>PrinterContentDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ElementContentDialog\SimCardContentDialog.xaml.cs">
+      <DependentUpon>SimCardContentDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ElementWindows.xaml.cs">
       <DependentUpon>ElementWindows.xaml</DependentUpon>
     </Compile>
@@ -163,6 +178,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="ElementContentDialog\CartridgeContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ElementContentDialog\CashRegisterContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ElementContentDialog\PhoneBookContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ElementContentDialog\PrinterContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ElementContentDialog\SimCardContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ElementWindows.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
