@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Navigation;
 using System.Diagnostics;
 using Windows.UI.ViewManagement;
 using TerminalMaster.ElementContentDialog;
+using TerminalMaster.Model;
 
 namespace TerminalMaster
 {
@@ -24,11 +25,11 @@ namespace TerminalMaster
     {
         private string NameNavigationItem;
         private readonly DataGets dataGets = new DataGets();
+        private GetElement Get = new GetElement();
         public MainPage()
         {
             InitializeComponent();
             Loaded += MainPage_Loaded;
-            dataGets.WriteElementList();
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
@@ -105,17 +106,43 @@ namespace TerminalMaster
                    
             }
         }
-        private async void AppBarButtonEdit_Tapped(object sender, TappedRoutedEventArgs e)
+        private void AppBarButtonEdit_Tapped(object sender, TappedRoutedEventArgs e)
         {
 
         }
-        private async void AppBarButtonDelete_Tapped(object sender, TappedRoutedEventArgs e)
+        private void AppBarButtonDelete_Tapped(object sender, TappedRoutedEventArgs e)
         {
 
         }
         private void AppBarButtonSave_Tapped(object sender, TappedRoutedEventArgs e)
         {
 
+        }
+        private void AppBarButtonUpdate_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+            switch (NameNavigationItem)
+            {
+                case "printer":
+                    MainDataGrid.ItemsSource = Get.GetPrinter((App.Current as App).ConnectionString);
+                    break;
+                case "cartrides":
+                    MainDataGrid.ItemsSource = Get.GetCartridges((App.Current as App).ConnectionString);
+                    break;
+                case "cashRegystry":
+                    MainDataGrid.ItemsSource = Get.GetCashRegister((App.Current as App).ConnectionString);
+                    break;
+                case "simCard":
+                    MainDataGrid.ItemsSource = Get.GetSimCard((App.Current as App).ConnectionString);
+                    break;
+                case "phoneBook":
+                    MainDataGrid.ItemsSource = Get.GetPhoneBook((App.Current as App).ConnectionString);
+                    break;
+                default:
+                    break;
+
+            }
+            
         }
         private void ConnectNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         {

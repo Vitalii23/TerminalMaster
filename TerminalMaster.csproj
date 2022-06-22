@@ -148,6 +148,7 @@
     <Compile Include="Model\Cartridge.cs" />
     <Compile Include="Model\CashRegister.cs" />
     <Compile Include="Model\People\Holders.cs" />
+    <Compile Include="Model\People\IndividualEntrepreneur.cs" />
     <Compile Include="Model\People\User.cs" />
     <Compile Include="Model\PhoneBook.cs" />
     <Compile Include="Model\Printer.cs" />
@@ -214,6 +215,12 @@
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
       <Version>7.1.2</Version>
     </PackageReference>
+    <PackageReference Include="System.Data.SqlClient">
+      <Version>4.8.3</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="LocalDataBase\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

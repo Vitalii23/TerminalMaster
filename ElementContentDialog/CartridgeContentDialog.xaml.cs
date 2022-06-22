@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TerminalMaster.Model;
+using TerminalMaster.ViewModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -19,13 +22,42 @@ namespace TerminalMaster.ElementContentDialog
 {
     public sealed partial class CartridgeContentDialog : ContentDialog
     {
+        ObservableCollection<string> Items = new ObservableCollection<string>();
+        DataGets dataGets = new DataGets();
         public CartridgeContentDialog()
         {
             this.InitializeComponent();
+
+            string[] brand = { "Kyocera", "Sakura", "HP LaserJat", "NetProduct" };
+            AddComboxItem(brand, BrandComboBox);
+
+            string[] model = { "ТК3190", "ТК160", "ТК170/172", "ТК1140" };
+            AddComboxItem(model, ModelComboBox);
+
+            string[] status = { "Заправлен", "Не заправлен", "Сервисе", "Не исправно" };
+            AddComboxItem(status, StatusComboBox);
+        }
+
+        public void AddComboxItem(string[] text, ComboBox combo)
+        {
+            for (int i = 0; i < text.Length; i++)
+            {
+                combo.Items.Add(text[i]);
+            }
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+
+            string brandValue = (string)BrandComboBox.SelectedValue;
+            string modelValue = (string)ModelComboBox.SelectedValue;
+            string statusValue = (string)StatusComboBox.SelectedValue;
+
+            var cartridges = new ObservableCollection<Cartridge> { new Cartridge(1, brandValue, modelValue, VendorCodeTextBox.Text, statusValue) };
+
+            dataGets.CartridgesList = cartridges;
+
+            VendorCodeTextBox.Text = string.Empty;
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

@@ -24,6 +24,7 @@
             <AppBarButton x:Name="AppBarButtonEdit" Icon="Edit" Label="Изменить" Tapped="AppBarButtonEdit_Tapped"></AppBarButton>
             <AppBarButton x:Name="AppBarButtonDelete" Icon="Delete" Label="Удалить" Tapped="AppBarButtonDelete_Tapped"></AppBarButton>
             <AppBarButton x:Name="AppBarButtonSave" Icon="Save" Label="Сохранить" Tapped="AppBarButtonSave_Tapped"></AppBarButton>
+            <AppBarButton x:Name="AppBarButtonUpdate" Icon="RepeatAll" Label="Обновление" Tapped="AppBarButtonUpdate_Tapped"></AppBarButton>
         </CommandBar>
 
         <NavigationView x:Name="MainNavigationView"
