@@ -26,6 +26,7 @@ namespace TerminalMaster
         private string NameNavigationItem;
         private readonly DataGets dataGets = new DataGets();
         private GetElement Get = new GetElement();
+        private DeleteElement Delete = new DeleteElement();
         public MainPage()
         {
             InitializeComponent();
@@ -47,6 +48,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
             MainDataGrid.ItemsSource = dataGets.PrinterList;
+            MainDataGrid.ItemsSource = Get.GetPrinter((App.Current as App).ConnectionString);
             NameNavigationItem = "printer";
         }
         private void CartridesNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
@@ -54,6 +56,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
             MainDataGrid.ItemsSource = dataGets.CartridgesList;
+            MainDataGrid.ItemsSource = Get.GetCartridges((App.Current as App).ConnectionString);
             NameNavigationItem = "cartrides";
         }
         private void CashRegystriNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
@@ -61,6 +64,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
             MainDataGrid.ItemsSource = dataGets.CashRegisterList;
+            MainDataGrid.ItemsSource = Get.GetCashRegister((App.Current as App).ConnectionString);
             NameNavigationItem = "cashRegystry";
         }
         private void SimCardRegystriNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
@@ -68,6 +72,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
             MainDataGrid.ItemsSource = dataGets.SimCardList;
+            MainDataGrid.ItemsSource = Get.GetSimCard((App.Current as App).ConnectionString);
             NameNavigationItem = "simCard";
         }
         private void PhoneBookNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
@@ -75,6 +80,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
             MainDataGrid.ItemsSource = dataGets.PhoneBookList;
+            MainDataGrid.ItemsSource = Get.GetPhoneBook((App.Current as App).ConnectionString);
             NameNavigationItem = "phoneBook";
         }
         private async void AppBarButtonAdd_Tapped(object sender, TappedRoutedEventArgs e)
@@ -112,7 +118,27 @@ namespace TerminalMaster
         }
         private void AppBarButtonDelete_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            switch (NameNavigationItem)
+            {
+                case "printer":
+                    MainDataGrid.ItemsSource = Delete.DeleteDataElement((App.Current as App).ConnectionString, ,NameNavigationItem);
+                    break;
+                case "cartrides":
+                    MainDataGrid.ItemsSource = Delete.DeleteDataElement((App.Current as App).ConnectionString, ,NameNavigationItem);
+                    break;
+                case "cashRegystry":
+                    MainDataGrid.ItemsSource = Delete.DeleteDataElement((App.Current as App).ConnectionString, ,NameNavigationItem);
+                    break;
+                case "simCard":
+                    MainDataGrid.ItemsSource = Delete.DeleteDataElement((App.Current as App).ConnectionString, ,NameNavigationItem);
+                    break;
+                case "phoneBook":
+                    MainDataGrid.ItemsSource = Delete.DeleteDataElement((App.Current as App).ConnectionString, ,NameNavigationItem);
+                    break;
+                default:
+                    break;
 
+            }
         }
         private void AppBarButtonSave_Tapped(object sender, TappedRoutedEventArgs e)
         {

@@ -22,8 +22,8 @@ namespace TerminalMaster.ElementContentDialog
 {
     public sealed partial class CartridgeContentDialog : ContentDialog
     {
-        ObservableCollection<string> Items = new ObservableCollection<string>();
-        DataGets dataGets = new DataGets();
+        AddElement add = new AddElement();
+        DeleteElement delete = new DeleteElement();
         public CartridgeContentDialog()
         {
             this.InitializeComponent();
@@ -48,14 +48,12 @@ namespace TerminalMaster.ElementContentDialog
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-
             string brandValue = (string)BrandComboBox.SelectedValue;
             string modelValue = (string)ModelComboBox.SelectedValue;
             string statusValue = (string)StatusComboBox.SelectedValue;
 
-            var cartridges = new ObservableCollection<Cartridge> { new Cartridge(1, brandValue, modelValue, VendorCodeTextBox.Text, statusValue) };
-
-            dataGets.CartridgesList = cartridges;
+            string[] cartridges = { brandValue, modelValue, VendorCodeTextBox.Text, statusValue };
+            add.addDataElement((App.Current as App).ConnectionString, cartridges, "cartrides");
 
             VendorCodeTextBox.Text = string.Empty;
         }

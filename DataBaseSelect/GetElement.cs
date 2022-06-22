@@ -16,10 +16,10 @@ namespace TerminalMaster.ViewModel
         {
             const string GetCartridgeQuery = "SELECT * FROM Cartrides;";
 
-            var cartridges = new ObservableCollection<Cartridge>();
+            ObservableCollection<Cartridge> cartridges = new ObservableCollection<Cartridge>();
             try
             {
-                using (var connect = new SqlConnection(connection))
+                using (SqlConnection connect = new SqlConnection(connection))
                 {
                     connect.Open();
                     if(connect.State == System.Data.ConnectionState.Open)
