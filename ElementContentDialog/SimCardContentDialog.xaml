@@ -53,7 +53,7 @@
             <TextBox x:Name="IdentNumberTextBox" Header="Индентификационный номер (ИН)"/>
             <TextBox x:Name="TypeDeviceTextBox" Header="Тип устройства"/>
             <TextBox x:Name="TmsTextBox" Header="Номер телефона (TMS)" extensions:TextBoxExtensions.Mask="+7-999-999-9999"/>
-            <TextBox x:Name="IccTextBox" Header="Униркальный серийный номер (ICC)" />
+            <TextBox x:Name="IccTextBox" Header="Униркальный серийный номер (ICC)" MaxLength="18"/>
             <TextBox x:Name="IndividualEntrepreneurTextBox" Header="Индивидульный предприниматель (ИП)"/>
             <ComboBox x:Name="StatusComboBox" Header="Статус"></ComboBox>
         </StackPanel>

@@ -1,6 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using TerminalMaster.Model;
 using TerminalMaster.ViewModel;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 // Документацию по шаблону элемента "Диалоговое окно содержимого" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
@@ -46,6 +49,11 @@ namespace TerminalMaster.ElementContentDialog
             MobileNumberTextBox.Text = string.Empty;
         }
 
+        /// <summary>
+        /// Remove number a textbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
             if (SelectData.Equals("GET"))
@@ -60,6 +68,31 @@ namespace TerminalMaster.ElementContentDialog
                 SelectData = "UPDATE";
             }
 
+        }
+
+        private void FirstNameTextBox_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        {
+            args.Cancel = args.NewText.Any(c => char.IsDigit(c));  // Не забыть убрать пробел
+        }
+
+        private void LastNameTextBox_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        {
+            args.Cancel = args.NewText.Any(c => char.IsDigit(c));
+        }
+
+        private void MiddleNameTextBox_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        {
+           args.Cancel = args.NewText.Any(c => char.IsDigit(c));
+        }
+
+        private void PostTextBox_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        {
+           args.Cancel = args.NewText.Any(c => char.IsDigit(c));
+        }
+
+        private void FirstNameTextBox_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
+        {
+            FirstNameTextBox.Text = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(this.FirstNameTextBox.Text);
         }
     }
 }
