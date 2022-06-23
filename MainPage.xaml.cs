@@ -92,6 +92,7 @@ namespace TerminalMaster
             {
                 case "printer":
                     PrinterContentDialog printer = new PrinterContentDialog();
+                    printer.SelectData = "ADD";
                     await printer.ShowAsync();
                     break;
                 case "cartrides":
@@ -101,14 +102,17 @@ namespace TerminalMaster
                     break;
                 case "cashRegystry":
                     CashRegisterContentDialog cashRegister = new CashRegisterContentDialog();
+                    cashRegister.SelectData = "ADD";
                     await cashRegister.ShowAsync();
                     break;
                 case "simCard":
                     SimCardContentDialog simCard = new SimCardContentDialog();
+                    simCard.SelectData = "ADD";
                     await simCard.ShowAsync();
                     break;
                 case "phoneBook":
                     PhoneBookContentDialog phoneBook = new PhoneBookContentDialog();
+                    phoneBook.SelectData = "ADD";
                     await phoneBook.ShowAsync();
                     break;
                 default:

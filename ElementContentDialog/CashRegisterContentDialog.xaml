@@ -9,6 +9,7 @@
     Title="ККМ"
     PrimaryButtonText="ОК"
     SecondaryButtonText="Отмена"
+    Opened="ContentDialog_Opened"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
@@ -55,7 +56,7 @@
             <TextBox x:Name="HolderTextBox" Header="Владелец"></TextBox>
             <TextBox x:Name="UserTextBox" Header="Пользователь"></TextBox>
             <CalendarDatePicker x:Name="DateReceptionCalendarDatePicker" Header="Дата получения"></CalendarDatePicker>
-            <TextBox x:Name="Location" Header="Место нахождения"></TextBox>
+            <TextBox x:Name="LocationTextBox" Header="Место нахождения"></TextBox>
         </StackPanel>
     </Grid>
 </ContentDialog>

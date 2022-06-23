@@ -12,7 +12,7 @@ namespace TerminalMaster.ViewModel
 {
     class AddElement
     {
-        public void addDataElement(string connection, string[] element, string items)
+        public void AddDataElement(string connection, string[] element, string items)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace TerminalMaster.ViewModel
                         AddQuery = "INSERT INTO dbo.PhoneBook (first_name, last_name, middle_name, post, internal_number, mobile_number) VALUES " + values;
                         break;
                     case "printer":
-                        AddQuery = "INSERT INTO dbo.Printer (name_user, name_printer, model, name_port, location, operation_sustem) VALUES " + values;
+                        AddQuery = "INSERT INTO dbo.Printer (name_user, name_printer, model, name_port, location, operation_system) VALUES " + values;
                         break;
                     case "simCard":
                         AddQuery = "INSERT INTO dbo.SimCard (operator, identifaction_number, type_device, tms, icc, status) VALUES " + values;

@@ -23,7 +23,6 @@ namespace TerminalMaster.ElementContentDialog
     public sealed partial class CartridgeContentDialog : ContentDialog
     {
         AddElement add = new AddElement();
-        DeleteElement delete = new DeleteElement();
         UpdateElement update = new UpdateElement();
         GetElement get = new GetElement();
         public CartridgeContentDialog()
@@ -57,7 +56,7 @@ namespace TerminalMaster.ElementContentDialog
 
             string[] cartridges = { brandValue, modelValue, VendorCodeTextBox.Text, statusValue };
 
-            if (SelectData.Equals("ADD")) { add.addDataElement((App.Current as App).ConnectionString, cartridges, "cartrides"); }
+            if (SelectData.Equals("ADD")) { add.AddDataElement((App.Current as App).ConnectionString, cartridges, "cartrides"); }
 
             if (SelectData.Equals("UPDATE")) { update.UpdateDataElement((App.Current as App).ConnectionString, cartridges, SelectIndex, "cartrides"); }
 
@@ -65,6 +64,7 @@ namespace TerminalMaster.ElementContentDialog
         }
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            VendorCodeTextBox.Text = string.Empty;
         }
         private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
