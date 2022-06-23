@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TerminalMaster.ViewModel
+namespace TerminalMaster.DML
 {
-    class UpdateElement
+    class EnumDML
     {
+        enum DML { ADD, GET, DELETE, UPDATE, SAVE  }
     }
 }

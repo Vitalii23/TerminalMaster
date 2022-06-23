@@ -9,6 +9,7 @@
     Title="Картриджи"
     PrimaryButtonText="ОК"
     SecondaryButtonText="Отмена"
+    Opened="ContentDialog_Opened"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 

@@ -24,6 +24,8 @@ namespace TerminalMaster.ElementContentDialog
     {
         AddElement add = new AddElement();
         DeleteElement delete = new DeleteElement();
+        UpdateElement update = new UpdateElement();
+        GetElement get = new GetElement();
         public CartridgeContentDialog()
         {
             this.InitializeComponent();
@@ -31,13 +33,15 @@ namespace TerminalMaster.ElementContentDialog
             string[] brand = { "Kyocera", "Sakura", "HP LaserJat", "NetProduct" };
             AddComboxItem(brand, BrandComboBox);
 
-            string[] model = { "ТК3190", "ТК160", "ТК170/172", "ТК1140" };
+            string[] model = {  "TK-160", "TK-170/172", "TK-475", "TK-1140", "TK-1150", "TK-1200", "TK-3190",
+                "P3055dn", "CE505X/CRG719H", "7553X", "N-CE505A", "(05X)CE505X", "(53X) Q7553X", "(85A)CE285", "DV-1140E", "DK-150", "DK-170" };
             AddComboxItem(model, ModelComboBox);
 
             string[] status = { "Заправлен", "Не заправлен", "Сервисе", "Не исправно" };
             AddComboxItem(status, StatusComboBox);
         }
-
+        public string SelectData { get; set; }
+        public int SelectIndex { get; set; }
         public void AddComboxItem(string[] text, ComboBox combo)
         {
             for (int i = 0; i < text.Length; i++)
@@ -45,7 +49,6 @@ namespace TerminalMaster.ElementContentDialog
                 combo.Items.Add(text[i]);
             }
         }
-
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             string brandValue = (string)BrandComboBox.SelectedValue;
@@ -53,13 +56,27 @@ namespace TerminalMaster.ElementContentDialog
             string statusValue = (string)StatusComboBox.SelectedValue;
 
             string[] cartridges = { brandValue, modelValue, VendorCodeTextBox.Text, statusValue };
-            add.addDataElement((App.Current as App).ConnectionString, cartridges, "cartrides");
+
+            if (SelectData.Equals("ADD")) { add.addDataElement((App.Current as App).ConnectionString, cartridges, "cartrides"); }
+
+            if (SelectData.Equals("UPDATE")) { update.UpdateDataElement((App.Current as App).ConnectionString, cartridges, SelectIndex, "cartrides"); }
 
             VendorCodeTextBox.Text = string.Empty;
         }
-
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+        }
+        private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
+        {
+            if (SelectData.Equals("GET"))
+            {
+                ObservableCollection<Cartridge> cartridges = get.GetCartridges((App.Current as App).ConnectionString, "ONE", SelectIndex);
+                BrandComboBox.SelectedValue = cartridges[0].Brand;
+                ModelComboBox.SelectedValue = cartridges[0].Model;
+                VendorCodeTextBox.Text = cartridges[0].VendorCode;
+                StatusComboBox.SelectedValue = cartridges[0].Status;
+                SelectData = "UPDATE";
+            }
         }
     }
 }

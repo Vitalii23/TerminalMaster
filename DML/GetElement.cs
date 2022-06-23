@@ -7,14 +7,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TerminalMaster.Model;
+using Windows.UI.Popups;
 
 namespace TerminalMaster.ViewModel
 {
     class GetElement
     {
-        public ObservableCollection<Cartridge> GetCartridges(string connection)
+        public ObservableCollection<Cartridge> GetCartridges(string connection, string selection, int id)
         {
-            const string GetCartridgeQuery = "SELECT * FROM Cartrides;";
+            string GetCartridgeQuery = null;
+            if (selection.Equals("ALL"))
+            {
+                GetCartridgeQuery = "SELECT * FROM Cartrides;";
+            }
+
+            if (selection.Equals("ONE"))
+            {
+                GetCartridgeQuery = "SELECT * FROM Cartrides WHERE id = " + id;
+            }
+
 
             ObservableCollection<Cartridge> cartridges = new ObservableCollection<Cartridge>();
             try
@@ -53,10 +64,19 @@ namespace TerminalMaster.ViewModel
             }
             return null;
         }
-
-        public ObservableCollection<CashRegister> GetCashRegister(string connection)
+        public ObservableCollection<CashRegister> GetCashRegister(string connection, string selection, int id)
         {
-            const string GetCashRegister = "SELECT * FROM CashRegister;";
+
+            string GetCashRegister = null;
+            if (selection.Equals("ALL"))
+            {
+                GetCashRegister = "SELECT * FROM CashRegister;";
+            }
+
+            if (selection.Equals("ONE"))
+            {
+                GetCashRegister = "SELECT * FROM CashRegister WHERE id = " + id;
+            }
 
             var cashRegisters = new ObservableCollection<CashRegister>();
             try
@@ -100,10 +120,18 @@ namespace TerminalMaster.ViewModel
             }
             return null;
         }
-
-        public ObservableCollection<PhoneBook> GetPhoneBook(string connection)
+        public ObservableCollection<PhoneBook> GetPhoneBook(string connection, string selection, int id)
         {
-            const string GetCashRegister = "SELECT * FROM PhoneBook;";
+            string GetPhoneBook = null;
+            if (selection.Equals("ALL"))
+            {
+                GetPhoneBook = "SELECT * FROM PhoneBook;";
+            }
+
+            if (selection.Equals("ONE"))
+            {
+                GetPhoneBook = "SELECT * FROM PhoneBook WHERE id = " + id;
+            }
 
             var phoneBooks = new ObservableCollection<PhoneBook>();
             try
@@ -115,7 +143,7 @@ namespace TerminalMaster.ViewModel
                     {
                         using (SqlCommand cmd = connect.CreateCommand())
                         {
-                            cmd.CommandText = GetCashRegister;
+                            cmd.CommandText = GetPhoneBook;
                             using (SqlDataReader reader = cmd.ExecuteReader())
                             {
                                 while (reader.Read())
@@ -144,10 +172,18 @@ namespace TerminalMaster.ViewModel
             }
             return null;
         }
-
-        public ObservableCollection<Printer> GetPrinter(string connection)
+        public ObservableCollection<Printer> GetPrinter(string connection, string selection, int id)
         {
-            const string GetPrinter = "SELECT * FROM Printer;";
+            string GetPrinter = null;
+            if (selection.Equals("ALL"))
+            {
+                GetPrinter = "SELECT * FROM Printer;";
+            }
+
+            if (selection.Equals("ONE"))
+            {
+                GetPrinter = "SELECT * FROM Printer WHERE id = " + id;
+            }
 
             var printers = new ObservableCollection<Printer>();
             try
@@ -188,10 +224,18 @@ namespace TerminalMaster.ViewModel
             }
             return null;
         }
-
-        public ObservableCollection<SimCard> GetSimCard(string connection)
+        public ObservableCollection<SimCard> GetSimCard(string connection, string selection, int id)
         {
-            const string GetSimCard = "SELECT * FROM SimCard;";
+            string GetSimCard = null;
+            if (selection.Equals("ALL"))
+            {
+                GetSimCard = "SELECT * FROM SimCard;";
+            }
+
+            if (selection.Equals("ONE"))
+            {
+                GetSimCard = "SELECT * FROM SimCard WHERE id = " + id;
+            }
 
             var simCards = new ObservableCollection<SimCard>();
             try

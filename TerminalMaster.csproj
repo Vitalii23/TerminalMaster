@@ -119,11 +119,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataBaseSelect\AddElement.cs" />
-    <Compile Include="DataBaseSelect\DeleteElement.cs" />
-    <Compile Include="DataBaseSelect\GetElement.cs" />
-    <Compile Include="DataBaseSelect\SaveElement.cs" />
-    <Compile Include="DataBaseSelect\UpdateElement.cs" />
+    <Compile Include="DML\AddElement.cs" />
+    <Compile Include="DML\DeleteElement.cs" />
+    <Compile Include="DML\EnumDML.cs" />
+    <Compile Include="DML\GetElement.cs" />
+    <Compile Include="DML\SaveElement.cs" />
+    <Compile Include="DML\UpdateElement.cs" />
     <Compile Include="ElementContentDialog\CartridgeContentDialog.xaml.cs">
       <DependentUpon>CartridgeContentDialog.xaml</DependentUpon>
     </Compile>

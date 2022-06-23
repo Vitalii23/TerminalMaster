@@ -11,7 +11,7 @@ namespace TerminalMaster.ViewModel
     class DeleteElement
     {
 
-        public void DeleteDataElement(string connection, string id, string items)
+        public void DeleteDataElement(string connection, int id, string items)
         {
             try
             {
@@ -20,19 +20,19 @@ namespace TerminalMaster.ViewModel
                 switch (items)
                 {
                     case "cartrides":
-                        AddQuery = "DELETE FROM dbo.Cartides WHERE id = ";
+                        AddQuery = "DELETE FROM dbo.Cartrides WHERE id = " + id;
                         break;
                     case "cashRegister":
-                        AddQuery = "DELETE FROM dbo.CashRegister WHERE id = ";
+                        AddQuery = "DELETE FROM dbo.CashRegister WHERE id = " + id;
                         break;
                     case "phoneBook":
-                        AddQuery = "DELETE FROM dbo.PhoneBook WHERE id = ";
+                        AddQuery = "DELETE FROM dbo.PhoneBook WHERE id = " + id;
                         break;
                     case "printer":
-                        AddQuery = "DELETE FROM dbo.Printer WHERE id = ";
+                        AddQuery = "DELETE FROM dbo.Printer WHERE id = " + id;
                         break;
                     case "simCard":
-                        AddQuery = "DELETE FROM dbo.SimCard WHERE id = ";
+                        AddQuery = "DELETE FROM dbo.SimCard WHERE id = " + id;
                         break;
                     default:
                         break;
