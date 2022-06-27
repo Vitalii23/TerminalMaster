@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TerminalMaster.Model
 {
-    class User
+    class Holder
     {
         [Display(Name = "ID")]
         public int Id { get; set; }
@@ -17,5 +17,6 @@ namespace TerminalMaster.Model
         public string LastName { get; set; } // Фамилия 
         [Display(Name = "Отчество")]
         public string MiddleName { get; set; } // Отчество
+
     }
 }

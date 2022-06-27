@@ -9,8 +9,8 @@ namespace TerminalMaster.Model
 {
     class Printer
     {
-        public List<string> NameDisplayList = new List<string>() { "Имя пользователя", "Имя принтера", "Модель принтера", "Имена портов", "Расположение", "Среда ОС" };
-        public List<string> ElementContent = new List<string>() { "TextBox", "TextBox", "TextBox", "TextBox", "TextBox", "TextBox"};
+        public List<string> NameDisplayList = new List<string>() { "Имя пользователя", "Имя принтера", "Модель принтера", "Имена портов", "Расположение", "Среда ОС", "Статус" };
+        public List<string> ElementContent = new List<string>() { "TextBox", "TextBox", "TextBox", "TextBox", "TextBox", "TextBox", "ComboBox"};
         [Display(Name = "ID")]
         public int Id { get; set; }
         [Display(Name = "Имя пользователя")]
@@ -25,16 +25,8 @@ namespace TerminalMaster.Model
         public string Location { get; set; } // Расположение принтера
         [Display(Name = "Среда ОС")]
         public string OC { get; set; } // Среда ОС
-        public Printer(int id, string nameUser, string namePrinter, string model, string namePort, string location, string oс)
-        {
-            Id = id;
-            NameUser = nameUser;
-            NamePrinter = namePrinter;
-            Model = model;
-            NamePort = namePort;
-            Location = location;
-            OC = oс;
-        }
+        [Display(Name = "Статус")]
+        public string Status { get; set; } // Статус
 
         public Printer()
         {

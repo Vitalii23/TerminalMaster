@@ -52,6 +52,15 @@ namespace TerminalMaster.ViewModel
                     case "simCard":
                         AddQuery = "INSERT INTO dbo.SimCard (operator, identifaction_number, type_device, tms, icc, status) VALUES " + values;
                         break;
+                    case "holder":
+                        AddQuery = "INSERT INTO dbo.Holder (first_name, last_name, middle_name) VALUES " + values;
+                        break;
+                    case "user":
+                        AddQuery = "INSERT INTO dbo.UserDevice (first_name, last_name, middle_name) VALUES " + values;
+                        break;
+                    case "ie":
+                        AddQuery = "INSERT INTO dbo.IndividualEntrepreneur (first_name, last_name, middle_name) VALUES " + values;
+                        break;
                     default:
                         break;
                 }

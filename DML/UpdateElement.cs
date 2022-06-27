@@ -26,16 +26,25 @@ namespace TerminalMaster.ViewModel
                             + element[3] + "', serial_number = '" + element[4] + "', date_reception = '" + element[5] + "', location = '" + element[6] + "' WHERE id = " + id;
                         break;
                     case "phoneBook":
-                        AddQuery = "UPDATE dbo.PhoneBook SET first_name = '" + element[1] + "', last_name = '" + element[2] + "', middle_name = '"
-                            + element[3] + "', post = '" + element[4] + "', internal_number = '" + element[5] + "', mobile_number = '" + element[6] + "' WHERE id = " +  id;
+                        AddQuery = "UPDATE dbo.PhoneBook SET first_name = '" + element[0] + "', last_name = '" + element[1] + "', middle_name = '"
+                            + element[2] + "', post = '" + element[3] + "', internal_number = '" + element[4]+ "', mobile_number = '" + element[5] + "' WHERE id = " +  id;
                         break;
                     case "printer":
                         AddQuery = "UPDATE dbo.Printer SET name_user = '" + element[0] + "', name_printer = '" + element[1] + "', model = '" + element[2] + "', name_port = '"
                             + element[3] + "', location = '" + element[4] + "', operation_sustem = '" + element[5] + "' WHERE id = " + id;
                         break;
                     case "simCard":
-                        AddQuery = "UPDATE dbo.SimCard SET operator = , identifaction_number = '" + element[0] + "', type_device = '" + element[1] + "', tms = '" + element[2] + "', icc = '"
-                            + element[3] + "', status = '" + element[5] + "' WHERE id = " + id;
+                        AddQuery = "UPDATE dbo.SimCard SET operator = '" + element[0] + "', identifaction_number = '" + element[1] + "', type_device = '" + element[2] + "', tms = '" + element[3] + "', icc = '"
+                            + element[4] + "', status = '" + element[5] + "' WHERE id = " + id;
+                        break;
+                    case "holder":
+                        AddQuery = "UPDATE dbo.Holder SET first_name = '" + element[0] + "', last_name = '" + element[1] + "', middle_name = '" + element[2] + "'  WHERE id = " + id;
+                        break;
+                    case "user":
+                        AddQuery = "UPDATE dbo.User SET first_name = '" + element[0] + "', last_name = '" + element[1] + "', middle_name = '" + element[2] + "'  WHERE id = " + id;
+                        break;
+                    case "ie":
+                        AddQuery = "UPDATE dbo.IndividualEntrepreneur SET first_name = '" + element[0] + "', last_name = '" + element[1] + "', middle_name = '" + element[2] + "'  WHERE id = " + id;
                         break;
                     default:
                         break;

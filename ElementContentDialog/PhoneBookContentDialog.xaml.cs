@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using TerminalMaster.Model;
 using TerminalMaster.ViewModel;
 using Windows.UI.Xaml;
@@ -15,6 +16,7 @@ namespace TerminalMaster.ElementContentDialog
         private AddElement add = new AddElement();
         private UpdateElement update = new UpdateElement();
         private GetElement get = new GetElement();
+        private Regex regex = new Regex(@"([A-Za-z0-9-\])}[{(,=/~`@!#№;%$:^&?*_|><\\\s]+)");
         public PhoneBookContentDialog()
         {
             this.InitializeComponent();
@@ -25,11 +27,11 @@ namespace TerminalMaster.ElementContentDialog
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             string[] phoneBooks = { FirstNameTextBox.Text, LastNameTextBox.Text, MiddleNameTextBox.Text,
-                PostTextBox.Text, PostTextBox.Text, MobileNumberTextBox.Text};
+                PostTextBox.Text, LocationTextBox.Text, MobileNumberTextBox.Text};
 
-            if (SelectData.Equals("ADD")) { add.AddDataElement((App.Current as App).ConnectionString, phoneBooks, "phoneBooK"); }
+            if (SelectData.Equals("ADD")) { add.AddDataElement((App.Current as App).ConnectionString, phoneBooks, "phoneBook"); }
 
-            if (SelectData.Equals("UPDATE")) { update.UpdateDataElement((App.Current as App).ConnectionString, phoneBooks, SelectIndex, "phoneBooK"); }
+            if (SelectData.Equals("UPDATE")) { update.UpdateDataElement((App.Current as App).ConnectionString, phoneBooks, SelectIndex, "phoneBook"); }
 
             FirstNameTextBox.Text = string.Empty;
             LastNameTextBox.Text = string.Empty;
@@ -49,11 +51,7 @@ namespace TerminalMaster.ElementContentDialog
             MobileNumberTextBox.Text = string.Empty;
         }
 
-        /// <summary>
-        /// Remove number a textbox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
+      
         private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
             if (SelectData.Equals("GET"))
@@ -70,29 +68,33 @@ namespace TerminalMaster.ElementContentDialog
 
         }
 
-        private void FirstNameTextBox_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
-        {
-            args.Cancel = args.NewText.Any(c => char.IsDigit(c));  // Не забыть убрать пробел
-        }
-
-        private void LastNameTextBox_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
-        {
-            args.Cancel = args.NewText.Any(c => char.IsDigit(c));
-        }
-
-        private void MiddleNameTextBox_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
-        {
-           args.Cancel = args.NewText.Any(c => char.IsDigit(c));
-        }
-
-        private void PostTextBox_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
-        {
-           args.Cancel = args.NewText.Any(c => char.IsDigit(c));
-        }
-
+        /// <summary>
+        /// TextChanging: writes with a capital letter, remove space firstname, lastname, middlename
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void FirstNameTextBox_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
         {
-            FirstNameTextBox.Text = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(this.FirstNameTextBox.Text);
+            FirstNameTextBox.Text = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(FirstNameTextBox.Text);
+            FirstNameTextBox.Text = regex.Replace(FirstNameTextBox.Text, "");
+        }
+
+        private void LastNameTextBox_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
+        {
+            LastNameTextBox.Text = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(LastNameTextBox.Text);
+            LastNameTextBox.Text = regex.Replace(LastNameTextBox.Text, "");
+        }
+
+        private void MiddleNameTextBox_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
+        {
+            MiddleNameTextBox.Text = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(MiddleNameTextBox.Text);
+            MiddleNameTextBox.Text = regex.Replace(MiddleNameTextBox.Text, "");
+        }
+
+        private void PostTextBox_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
+        {
+            Regex regexPost = new Regex(@"([A-Za-z0-9-\])}[{(,=/~`@!#№;%$:^&?*_|><\\]+)");
+            PostTextBox.Text = regexPost.Replace(PostTextBox.Text, "");
         }
     }
 }

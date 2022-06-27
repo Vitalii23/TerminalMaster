@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TerminalMaster.Model;
+using TerminalMaster.Model.People;
 
 namespace TerminalMaster.ViewModel
 {
@@ -27,6 +28,9 @@ namespace TerminalMaster.ViewModel
         public ObservableCollection<PhoneBook> _phoneBook = new ObservableCollection<PhoneBook>();
         public ObservableCollection<Printer> _printer = new ObservableCollection<Printer>();
         public ObservableCollection<SimCard> _simCard = new ObservableCollection<SimCard>();
+        public ObservableCollection<Holder> _holder = new ObservableCollection<Holder>();
+        public ObservableCollection<User> _user = new ObservableCollection<User>();
+        public ObservableCollection<IndividualEntrepreneur> _individual = new ObservableCollection<IndividualEntrepreneur>();
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -90,6 +94,33 @@ namespace TerminalMaster.ViewModel
             {
                 _simCard = value;
                 OnPropertyChanged("SimCardList");
+            }
+        }
+        public ObservableCollection<Holder> HolderList
+        {
+            get { return _holder; }
+            set
+            {
+                _holder = value;
+                OnPropertyChanged("HolderList");
+            }
+        }
+        public ObservableCollection<User> UserList
+        {
+            get { return _user; }
+            set
+            {
+                _user = value;
+                OnPropertyChanged( "UserList");
+            }
+        }
+        public ObservableCollection<IndividualEntrepreneur> IndividualEntrepreneurList
+        {
+            get { return _individual; }
+            set
+            {
+                _individual = value;
+                OnPropertyChanged("IndividualEntrepreneurList");
             }
         }
     }

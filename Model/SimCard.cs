@@ -18,6 +18,8 @@ namespace TerminalMaster.Model
         public string Operator { get; set; } // Оператор связи
         [Display(Name = "Идентификационный номер")]
         public string IdentNumber { get; set; } // Идентификационный номер (ИН)
+        [Display(Name ="Фирма")]
+        public string Brend { get; set; }
         [Display(Name = "Тип устройства")]
         public string TypeDevice { get; set; } // Тип устройства
         [Display(Name = "Номер телефона (TMS)")]

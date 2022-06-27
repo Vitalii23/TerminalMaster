@@ -20,11 +20,11 @@
             <RowDefinition Height="1035*"></RowDefinition>
         </Grid.RowDefinitions>
         <CommandBar x:Name="MainCommandBar" Height="51" VerticalAlignment="Center" HorizontalAlignment="Stretch" IsEnabled="False">
-            <AppBarButton x:Name="AppBarButtonAdd" Icon="Add" Label="Добавить" Tapped="AppBarButtonAdd_Tapped"></AppBarButton>
-            <AppBarButton x:Name="AppBarButtonEdit" Icon="Edit" Label="Изменить" Tapped="AppBarButtonEdit_Tapped"></AppBarButton>
-            <AppBarButton x:Name="AppBarButtonDelete" Icon="Delete" Label="Удалить" Tapped="AppBarButtonDelete_Tapped"></AppBarButton>
-            <AppBarButton x:Name="AppBarButtonSave" Icon="Save" Label="Сохранить" Tapped="AppBarButtonSave_Tapped"></AppBarButton>
-            <AppBarButton x:Name="AppBarButtonUpdate" Icon="RepeatAll" Label="Обновление" Tapped="AppBarButtonUpdate_Tapped"></AppBarButton>
+            <AppBarButton x:Name="AppBarButtonAdd" Icon="Add" Label="Добавить" Tapped="AppBarButtonAdd_Tapped"/>
+            <AppBarButton x:Name="AppBarButtonEdit" Icon="Edit" Label="Изменить" Tapped="AppBarButtonEdit_Tapped"/>
+            <AppBarButton x:Name="AppBarButtonDelete" Icon="Delete" Label="Удалить" Tapped="AppBarButtonDelete_Tapped"/>
+            <AppBarButton x:Name="AppBarButtonSave" Icon="Save" Label="Сохранить" Tapped="AppBarButtonSave_Tapped"/>
+            <AppBarButton x:Name="AppBarButtonUpdate" Icon="RepeatAll" Label="Обновление" Tapped="AppBarButtonUpdate_Tapped"/>
         </CommandBar>
 
         <NavigationView x:Name="MainNavigationView"
@@ -36,21 +36,24 @@
                         Grid.Column="0"
                         Margin="0,0,0,0" Grid.RowSpan="2">
             <NavigationView.PaneHeader>
-                <Image Source="/Assets/icons8-water-drop-64.png" HorizontalAlignment="Left"></Image>
+                <Image Source="/Assets/icons8-water-drop-64.png" HorizontalAlignment="Left"/>
             </NavigationView.PaneHeader>
             <NavigationView.MenuItems>
-                <NavigationViewItemHeader>Главная</NavigationViewItemHeader>
-                <NavigationViewItem Icon="Print" Tapped="PrintNavigationItem_Tapped">Принтеры</NavigationViewItem>
-                <NavigationViewItem Icon="StopSlideShow" Tapped="CartridesNavigationItem_Tapped">Картриджи</NavigationViewItem>
-                <NavigationViewItem Icon="Caption" Tapped="CashRegystriNavigationViewItem_Tapped">Контрольная-кассовая машина (ККМ)</NavigationViewItem>
-                <NavigationViewItem Icon="Phone" Tapped="SimCardRegystriNavigationItem_Tapped">Sim-карты</NavigationViewItem>
-                <NavigationViewItem Icon="PhoneBook" Tapped="PhoneBookNavigationItem_Tapped">Телефоны сотрудников</NavigationViewItem>
+                <NavigationViewItemHeader Content="Главная"/>
+                <NavigationViewItem Content="Принтеры" Icon="Print" Tapped="PrintNavigationItem_Tapped"/>
+                <NavigationViewItem Content="Картриджи" Icon="StopSlideShow" Tapped="CartridesNavigationItem_Tapped"/>
+                <NavigationViewItem Content="Контрольная-кассовая машина (ККМ)" Icon="Caption" Tapped="CashRegystriNavigationViewItem_Tapped"/>
+                <NavigationViewItem Content="Sim-карты" Icon="Phone" Tapped="SimCardRegystriNavigationItem_Tapped"/>
+                <NavigationViewItem Content="Телефоны сотрудников" Icon="PhoneBook" Tapped="PhoneBookNavigationItem_Tapped"/>
+                <NavigationViewItem Content="Владельцы" Icon="Contact" Tapped="HolderNavigationViewItem_Tapped"/>
+                <NavigationViewItem Content="Пользователи" Icon="People" Tapped="UserNavigationViewItem_Tapped"/>
+                <NavigationViewItem Content="Индивидуальные предприниматели" Icon="Contact2" Tapped="IndividualEntrepreneurNavigationViewItem_Tapped"/>
                 <NavigationViewItemSeparator/>
-                <NavigationViewItemHeader>Конфигурации</NavigationViewItemHeader>
-                <NavigationViewItem Icon="DisconnectDrive" Tapped="ConnectNavigationItem_Tapped">Подключение</NavigationViewItem>
-                <NavigationViewItem Icon="Setting" Tapped="SettingNavigationItem_Tapped">Настройка</NavigationViewItem>
-                <NavigationViewItem Icon="Library" Tapped="InstructionNavigationItem_Tapped">Инструкция</NavigationViewItem>
-                <NavigationViewItem Icon="ContactInfo" Tapped="AboutNavigationItem_Tapped">О программе</NavigationViewItem>
+                <NavigationViewItemHeader Content="Конфигурации"/>
+                <NavigationViewItem Content="Подключение" Icon="DisconnectDrive" Tapped="ConnectNavigationItem_Tapped"/>
+                <NavigationViewItem Content="Настройка" Icon="Setting" Tapped="SettingNavigationItem_Tapped"/>
+                <NavigationViewItem Content="Инструкция" Icon="Library" Tapped="InstructionNavigationItem_Tapped"/>
+                <NavigationViewItem Content="О программе" Icon="ContactInfo" Tapped="AboutNavigationItem_Tapped"/>
             </NavigationView.MenuItems>
             <!--<NavigationView.PaneFooter>
                 <NavigationViewItem Icon="MapDrive">Подключение</NavigationViewItem>

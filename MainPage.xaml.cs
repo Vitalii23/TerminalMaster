@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Navigation;
 using System.Diagnostics;
 using Windows.UI.ViewManagement;
 using TerminalMaster.ElementContentDialog;
+using TerminalMaster.ElementContentDialog.PeopleContentDialog;
 using TerminalMaster.Model;
 using Windows.UI.Popups;
 
@@ -50,41 +51,77 @@ namespace TerminalMaster
         {
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
+            dataGets.PrinterList = Get.GetPrinter((App.Current as App).ConnectionString, "ALL", 0);
             MainDataGrid.ItemsSource = dataGets.PrinterList;
-            MainDataGrid.ItemsSource = Get.GetPrinter((App.Current as App).ConnectionString, "ALL", 0);
             NameNavigationItem = "printer";
         }
         private void CartridesNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
+            dataGets.CartridgesList = Get.GetCartridges((App.Current as App).ConnectionString, "ALL", 0);
             MainDataGrid.ItemsSource = dataGets.CartridgesList;
-            MainDataGrid.ItemsSource = Get.GetCartridges((App.Current as App).ConnectionString, "ALL", 0);
             NameNavigationItem = "cartrides";
         }
         private void CashRegystriNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
+            dataGets.CashRegisterList = Get.GetCashRegister((App.Current as App).ConnectionString, "ALL", 0);
             MainDataGrid.ItemsSource = dataGets.CashRegisterList;
-            MainDataGrid.ItemsSource = Get.GetCashRegister((App.Current as App).ConnectionString, "ALL", 0);
             NameNavigationItem = "cashRegystry";
         }
         private void SimCardRegystriNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
+            dataGets.SimCardList = Get.GetSimCard((App.Current as App).ConnectionString, "ALL", 0);
             MainDataGrid.ItemsSource = dataGets.SimCardList;
-            MainDataGrid.ItemsSource = Get.GetSimCard((App.Current as App).ConnectionString, "ALL", 0);
             NameNavigationItem = "simCard";
         }
         private void PhoneBookNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
+            dataGets.PhoneBookList = Get.GetPhoneBook((App.Current as App).ConnectionString, "ALL", 0);;
             MainDataGrid.ItemsSource = dataGets.PhoneBookList;
-            MainDataGrid.ItemsSource = Get.GetPhoneBook((App.Current as App).ConnectionString, "ALL", 0);
             NameNavigationItem = "phoneBook";
+        }
+        private void HolderNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            MainCommandBar.IsEnabled = true;
+            MainDataGrid.Columns.Clear();
+            dataGets.HolderList = Get.GetHolder((App.Current as App).ConnectionString, "ALL", 0);
+            MainDataGrid.ItemsSource = dataGets.HolderList;
+            NameNavigationItem = "holder";
+        }
+        private void UserNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            MainCommandBar.IsEnabled = true;
+            MainDataGrid.Columns.Clear();
+            dataGets.UserList = Get.GetUser((App.Current as App).ConnectionString, "ALL", 0);
+            MainDataGrid.ItemsSource = dataGets.UserList;
+            NameNavigationItem = "user";
+        }
+        private void IndividualEntrepreneurNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            MainCommandBar.IsEnabled = true;
+            MainDataGrid.Columns.Clear();
+            dataGets.IndividualEntrepreneurList = Get.GetIndividual((App.Current as App).ConnectionString, "ALL", 0);
+            MainDataGrid.ItemsSource = dataGets.IndividualEntrepreneurList;
+            NameNavigationItem = "ie";
+        }
+        private void SettingNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+        }
+        private void InstructionNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+        }
+        private void AboutNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
         }
         private async void AppBarButtonAdd_Tapped(object sender, TappedRoutedEventArgs e)
         {
@@ -115,6 +152,24 @@ namespace TerminalMaster
                     phoneBook.SelectData = "ADD";
                     await phoneBook.ShowAsync();
                     break;
+                case "holder":
+                    PeopleContentDialog holder = new PeopleContentDialog();
+                    holder.SelectData = "ADD";
+                    holder.people = NameNavigationItem;
+                    await holder.ShowAsync();
+                    break;
+                case "user":
+                    PeopleContentDialog user = new PeopleContentDialog();
+                    user.SelectData = "ADD";
+                    user.people = NameNavigationItem;
+                    await user.ShowAsync();
+                    break;
+                case "ie":
+                    PeopleContentDialog individual = new PeopleContentDialog();
+                    individual.SelectData = "ADD";
+                    individual.people = NameNavigationItem;
+                    await individual.ShowAsync();
+                    break;
                 default:
                     break;
                    
@@ -125,26 +180,120 @@ namespace TerminalMaster
             switch (NameNavigationItem)
             {
                 case "printer":
-                    PrinterContentDialog printer = new PrinterContentDialog();
-                    await printer.ShowAsync();
+                    if (MainDataGrid.SelectedIndex >= 0)
+                    {
+                        PrinterContentDialog printer = new PrinterContentDialog();
+                        printer.SelectData = "GET";
+                        printer.SelectIndex = dataGets.PrinterList[MainDataGrid.SelectedIndex].Id;
+                        await printer.ShowAsync();
+                    }
+                    else
+                    {
+                        MessageDialog message = new MessageDialog("Выберите строку для изменения");
+                        await message.ShowAsync();
+                    }
                     break;
                 case "cartrides":
-                    CartridgeContentDialog cartridge = new CartridgeContentDialog();
-                    cartridge.SelectData = "GET";
-                    cartridge.SelectIndex = MainDataGrid.SelectedIndex + 1;
-                    await cartridge.ShowAsync();
+                    if (MainDataGrid.SelectedIndex >= 0)
+                    {
+                        CartridgeContentDialog cartridge = new CartridgeContentDialog();
+                        cartridge.SelectData = "GET";
+                        cartridge.SelectIndex = dataGets.CartridgesList[MainDataGrid.SelectedIndex].Id;
+                        await cartridge.ShowAsync();
+                    }
+                    else
+                    {
+                        MessageDialog message = new MessageDialog("Выберите строку для изменения");
+                        await message.ShowAsync();
+                    }
                     break;
                 case "cashRegystry":
-                    CashRegisterContentDialog cashRegister = new CashRegisterContentDialog();
-                    await cashRegister.ShowAsync();
+                    if (MainDataGrid.SelectedIndex >= 0)
+                    {
+                        CashRegisterContentDialog cashRegister = new CashRegisterContentDialog();
+                        cashRegister.SelectData = "GET";
+                        cashRegister.SelectIndex = dataGets.CashRegisterList[MainDataGrid.SelectedIndex].Id;
+                        await cashRegister.ShowAsync();
+                    }
+                    else
+                    {
+                        MessageDialog message = new MessageDialog("Выберите строку для изменения");
+                        await message.ShowAsync();
+                    }
                     break;
                 case "simCard":
-                    SimCardContentDialog simCard = new SimCardContentDialog();
-                    await simCard.ShowAsync();
+                    if (MainDataGrid.SelectedIndex >= 0)
+                    {
+                        SimCardContentDialog simCard = new SimCardContentDialog();
+                        simCard.SelectData = "GET";
+                        simCard.SelectIndex = dataGets.SimCardList[MainDataGrid.SelectedIndex].ID;
+                        await simCard.ShowAsync();
+                    }
+                    else
+                    {
+                        MessageDialog message = new MessageDialog("Выберите строку для изменения");
+                        await message.ShowAsync();
+                    }
                     break;
                 case "phoneBook":
-                    PhoneBookContentDialog phoneBook = new PhoneBookContentDialog();
-                    await phoneBook.ShowAsync();
+
+                    if (MainDataGrid.SelectedIndex >= 0)
+                    {
+                        PhoneBookContentDialog phoneBook = new PhoneBookContentDialog();
+                        phoneBook.SelectData = "GET";
+                        phoneBook.SelectIndex = dataGets.PhoneBookList[MainDataGrid.SelectedIndex].Id;
+                        await phoneBook.ShowAsync();
+                    }
+                    else
+                    {
+                        MessageDialog message = new MessageDialog("Выберите строку для изменения");
+                        await message.ShowAsync();
+                    }
+                    break;
+                case "holder":
+                    if(MainDataGrid.SelectedIndex >= 0)
+                    {
+                        PeopleContentDialog holder = new PeopleContentDialog();
+                        holder.SelectData = "GET";
+                        holder.SelectIndex = dataGets.HolderList[MainDataGrid.SelectedIndex].Id;
+                        holder.people = NameNavigationItem;
+                        await holder.ShowAsync();
+                    }
+                    else
+                    {
+                        MessageDialog message = new MessageDialog("Выберите строку для изменения");
+                        await message.ShowAsync();
+                    }
+                    break;
+                case "user":
+                    if (MainDataGrid.SelectedIndex >= 0)
+                    {
+                        PeopleContentDialog user = new PeopleContentDialog();
+                    user.SelectData = "GET";
+                    user.SelectIndex = dataGets.UserList[MainDataGrid.SelectedIndex].Id;
+                    user.people = NameNavigationItem;
+                    await user.ShowAsync();
+                    }
+                    else
+                    {
+                        MessageDialog message = new MessageDialog("Выберите строку для изменения");
+                        await message.ShowAsync();
+                    }
+                    break;
+                case "ie":
+                    if (MainDataGrid.SelectedIndex >= 0)
+                    {
+                        PeopleContentDialog individual = new PeopleContentDialog();
+                        individual.SelectData = "GET";
+                        individual.SelectIndex = dataGets.IndividualEntrepreneurList[MainDataGrid.SelectedIndex].Id;
+                        individual.people = NameNavigationItem;
+                        await individual.ShowAsync();
+                    }
+                    else
+                    {
+                        MessageDialog message = new MessageDialog("Выберите строку для изменения");
+                        await message.ShowAsync();
+                    }
                     break;
                 default:
                     break;
@@ -175,6 +324,15 @@ namespace TerminalMaster
                     if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, MainDataGrid.SelectedIndex + 1, NameNavigationItem); }
                     break;
                 case "phoneBook":
+                    if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, MainDataGrid.SelectedIndex + 1, NameNavigationItem); }
+                    break;
+                case "holder":
+                    if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, MainDataGrid.SelectedIndex + 1, NameNavigationItem); }
+                    break;
+                case "user":
+                    if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, MainDataGrid.SelectedIndex + 1, NameNavigationItem); }
+                    break;
+                case "ie":
                     if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, MainDataGrid.SelectedIndex + 1, NameNavigationItem); }
                     break;
                 default:
@@ -213,17 +371,6 @@ namespace TerminalMaster
         {
 
         }
-        private void SettingNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
-        {
 
-        }
-        private void InstructionNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-
-        }
-        private void AboutNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-
-        }
     }
 }

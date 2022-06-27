@@ -14,16 +14,27 @@ namespace TerminalMaster.ElementContentDialog
         private GetElement get = new GetElement();
         public PrinterContentDialog()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+
+            string[] status = { "В работе", "Сервис", "Списан", "Не исправен" };
+            AddComboxItem(status, StatusComboBox);
         }
 
         public string SelectData { get; set; }
         public int SelectIndex { get; set; }
-
+        public void AddComboxItem(string[] text, ComboBox combo)
+        {
+            for (int i = 0; i < text.Length; i++)
+            {
+                combo.Items.Add(text[i]);
+            }
+        }
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+
+            string status = (string)StatusComboBox.SelectedValue;
             string[] printers = { NameUserTextBox.Text, NamePrinterTextBox.Text, ModelTextBox.Text,
-                NamePortTextBox.Text, LocationTextBox.Text, OcTextBox.Text };
+                NamePortTextBox.Text, LocationTextBox.Text, OcTextBox.Text, status };
 
             if (SelectData.Equals("ADD")) { add.AddDataElement((App.Current as App).ConnectionString, printers, "printer"); }
 
@@ -58,6 +69,7 @@ namespace TerminalMaster.ElementContentDialog
                 NamePortTextBox.Text = printers[0].NamePort;
                 LocationTextBox.Text = printers[0].Location;
                 OcTextBox.Text = printers[0].OC;
+                StatusComboBox.SelectedValue = printers[0].Status;
                 SelectData = "UPDATE";
             }
 

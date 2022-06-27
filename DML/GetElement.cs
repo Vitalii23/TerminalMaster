@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TerminalMaster.Model;
+using TerminalMaster.Model.People;
 using Windows.UI.Popups;
 
 namespace TerminalMaster.ViewModel
@@ -155,7 +156,7 @@ namespace TerminalMaster.ViewModel
                                         LastName = reader.GetString(2),
                                         MiddleName = reader.GetString(3),
                                         Post = reader.GetString(4),
-                                        InternalNumber = reader.GetString(5),
+                                        InternalNumber = Convert.ToString(reader.GetInt32(5)),
                                         MobileNumber = reader.GetString(6)
                                     };
                                     phoneBooks.Add(phoneBook);
@@ -270,6 +271,153 @@ namespace TerminalMaster.ViewModel
                     }
                 }
                 return simCards;
+            }
+            catch (Exception eSql)
+            {
+                Debug.WriteLine("Exception: " + eSql);
+            }
+            return null;
+        }
+        public ObservableCollection<IndividualEntrepreneur> GetIndividual(string connection, string selection, int id)
+        {
+            string GetIndividual = null;
+            if (selection.Equals("ALL"))
+            {
+                GetIndividual = "SELECT * FROM IndividualEntrepreneur;";
+            }
+
+            if (selection.Equals("ONE"))
+            {
+                GetIndividual = "SELECT * FROM IndividualEntrepreneur WHERE id = " + id;
+            }
+
+            var individuals = new ObservableCollection<IndividualEntrepreneur>();
+            try
+            {
+                using (var connect = new SqlConnection(connection))
+                {
+                    connect.Open();
+                    if (connect.State == System.Data.ConnectionState.Open)
+                    {
+                        using (SqlCommand cmd = connect.CreateCommand())
+                        {
+                            cmd.CommandText = GetIndividual;
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    var individual = new IndividualEntrepreneur()
+                                    {
+                                        Id = reader.GetInt32(0),
+                                        FirstName = reader.GetString(1),
+                                        LastName = reader.GetString(2),
+                                        MiddleName = reader.GetString(3),
+                                    };
+                                    individuals.Add(individual);
+                                }
+                            }
+                        }
+                    }
+                }
+                return individuals;
+            }
+            catch (Exception eSql)
+            {
+                Debug.WriteLine("Exception: " + eSql);
+            }
+            return null;
+        }
+        public ObservableCollection<Holder> GetHolder(string connection, string selection, int id)
+        {
+            string GetHolder = null;
+            if (selection.Equals("ALL"))
+            {
+                GetHolder = "SELECT * FROM Holder;";
+            }
+
+            if (selection.Equals("ONE"))
+            {
+                GetHolder = "SELECT * FROM Holder WHERE id = " + id;
+            }
+
+            var holders = new ObservableCollection<Holder>();
+            try
+            {
+                using (var connect = new SqlConnection(connection))
+                {
+                    connect.Open();
+                    if (connect.State == System.Data.ConnectionState.Open)
+                    {
+                        using (SqlCommand cmd = connect.CreateCommand())
+                        {
+                            cmd.CommandText = GetHolder;
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    var holder = new Holder()
+                                    {
+                                        Id = reader.GetInt32(0),
+                                        FirstName = reader.GetString(1),
+                                        LastName = reader.GetString(2),
+                                        MiddleName = reader.GetString(3),
+                                    };
+                                    holders.Add(holder);
+                                }
+                            }
+                        }
+                    }
+                }
+                return holders;
+            }
+            catch (Exception eSql)
+            {
+                Debug.WriteLine("Exception: " + eSql);
+            }
+            return null;
+        }
+        public ObservableCollection<User> GetUser(string connection, string selection, int id)
+        {
+            string GetUser = null;
+            if (selection.Equals("ALL"))
+            {
+                GetUser = "SELECT * FROM UserDevice;";
+            }
+
+            if (selection.Equals("ONE"))
+            {
+                GetUser = "SELECT * FROM UserDevice WHERE id = " + id;
+            }
+
+            var users = new ObservableCollection<User>();
+            try
+            {
+                using (var connect = new SqlConnection(connection))
+                {
+                    connect.Open();
+                    if (connect.State == System.Data.ConnectionState.Open)
+                    {
+                        using (SqlCommand cmd = connect.CreateCommand())
+                        {
+                            cmd.CommandText = GetUser;
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    var user = new User()
+                                    {
+                                        Id = reader.GetInt32(0),
+                                        FirstName = reader.GetString(1),
+                                        LastName = reader.GetString(2),
+                                        MiddleName = reader.GetString(3),
+                                    };
+                                    users.Add(user);
+                                }
+                            }
+                        }
+                    }
+                }
+                return users;
             }
             catch (Exception eSql)
             {

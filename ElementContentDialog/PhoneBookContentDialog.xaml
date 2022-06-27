@@ -14,7 +14,7 @@
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
-    <Grid x:Name="PrinterContentDialogGrid" Height="Auto">
+    <Grid x:Name="PhoneContentDialogGrid" Height="Auto">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
@@ -49,12 +49,12 @@
                     <Setter Property="BorderThickness" Value="2,2,2,2"/>
                 </Style>
             </StackPanel.Resources>
-            <TextBox x:Name="FirstNameTextBox" Header="Имя" BeforeTextChanging="FirstNameTextBox_BeforeTextChanging" TextChanging="FirstNameTextBox_TextChanging"/>
-            <TextBox x:Name="LastNameTextBox" Header="Фамилия" BeforeTextChanging="LastNameTextBox_BeforeTextChanging"/>
-            <TextBox x:Name="MiddleNameTextBox" Header="Отчество" BeforeTextChanging="MiddleNameTextBox_BeforeTextChanging"/>
-            <TextBox x:Name="PostTextBox" Header="Должность" BeforeTextChanging="PostTextBox_BeforeTextChanging"/>
+            <TextBox x:Name="FirstNameTextBox" Header="Имя" TextChanging="FirstNameTextBox_TextChanging"/>
+            <TextBox x:Name="LastNameTextBox" Header="Фамилия" TextChanging="LastNameTextBox_TextChanging"/>
+            <TextBox x:Name="MiddleNameTextBox" Header="Отчество" TextChanging="MiddleNameTextBox_TextChanging"/>
+            <TextBox x:Name="PostTextBox" Header="Должность"  TextChanging="PostTextBox_TextChanging"/>
             <TextBox x:Name="LocationTextBox" Header="Внутренний номер" MaxLength="3"/>
-            <TextBox x:Name="MobileNumberTextBox" Header="Мобильный номер" extensions:TextBoxExtensions.Mask="8-999-999-9999"></TextBox>
+            <TextBox x:Name="MobileNumberTextBox" Header="Мобильный номер" extensions:TextBoxExtensions.Mask="8-999-999-9999"/>
         </StackPanel>
     </Grid>
 </ContentDialog>

@@ -15,45 +15,46 @@
 
     <Grid x:Name="PrinterContentDialogGrid" Height="Auto">
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel x:Name="WriteTextBoxStackPanel" Grid.Row="0" Grid.Column="0">
             <StackPanel.Resources>
                 <Style TargetType="TextBox">
-                    <Setter Property="Margin" Value="0,0,0,5"></Setter>
-                    <Setter Property="Padding" Value="5,5,0,0"></Setter>
-                    <Setter Property="FontSize" Value="14"></Setter>
-                    <Setter Property="Height" Value="55"></Setter>
-                    <Setter Property="Width" Value="300"></Setter>
-                    <Setter Property="BorderThickness" Value="2,2,2,2"></Setter>
+                    <Setter Property="Margin" Value="0,0,0,5"/>
+                    <Setter Property="Padding" Value="5,5,0,0"/>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="Height" Value="55"/>
+                    <Setter Property="Width" Value="300"/>
+                    <Setter Property="BorderThickness" Value="2,2,2,2"/>
                 </Style>
                 <Style TargetType="CalendarDatePicker">
-                    <Setter Property="Margin" Value="22,0,0,5"></Setter>
-                    <Setter Property="Padding" Value="5,0,0,0"></Setter>
-                    <Setter Property="FontSize" Value="14"></Setter>
-                    <Setter Property="Height" Value="55"></Setter>
-                    <Setter Property="Width" Value="300"></Setter>
-                    <Setter Property="BorderThickness" Value="2,2,2,2"></Setter>
+                    <Setter Property="Margin" Value="22,0,0,5"/>
+                    <Setter Property="Padding" Value="5,0,0,0"/>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="Height" Value="55"/>
+                    <Setter Property="Width" Value="300"/>
+                    <Setter Property="BorderThickness" Value="2,2,2,2"/>
                 </Style>
                 <Style TargetType="ComboBox">
-                    <Setter Property="Margin" Value="0,0,0,5"></Setter>
-                    <Setter Property="Padding" Value="5,0,0,0"></Setter>
-                    <Setter Property="FontSize" Value="14"></Setter>
-                    <Setter Property="Height" Value="55"></Setter>
-                    <Setter Property="Width" Value="300"></Setter>
-                    <Setter Property="MaxDropDownHeight" Value="200"></Setter>
-                    <Setter Property="BorderThickness" Value="2,2,2,2"></Setter>
+                    <Setter Property="Margin" Value="0,0,0,5"/>
+                    <Setter Property="Padding" Value="5,0,0,0"/>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="Height" Value="55"/>
+                    <Setter Property="Width" Value="300"/>
+                    <Setter Property="MaxDropDownHeight" Value="200"/>
+                    <Setter Property="BorderThickness" Value="2,2,2,2"/>
                 </Style>
             </StackPanel.Resources>
-            <TextBox x:Name="NameUserTextBox" Header="Имя пользователя"></TextBox>
-            <TextBox x:Name="NamePrinterTextBox" Header="Имя принтера"></TextBox>
-            <TextBox x:Name="ModelTextBox" Header="Модель принтера"></TextBox>
-            <TextBox x:Name="NamePortTextBox" Header="Имена портов"></TextBox>
-            <TextBox x:Name="LocationTextBox" Header="Расположение"></TextBox>
-            <TextBox x:Name="OcTextBox" Header="Среда ОС"></TextBox>
+            <TextBox x:Name="NameUserTextBox" Header="Имя пользователя"/>
+            <TextBox x:Name="NamePrinterTextBox" Header="Имя принтера"/>
+            <TextBox x:Name="ModelTextBox" Header="Модель принтера"/>
+            <TextBox x:Name="NamePortTextBox" Header="Имена портов"/>
+            <TextBox x:Name="LocationTextBox" Header="Расположение"/>
+            <TextBox x:Name="OcTextBox" Header="Среда ОС"/>
+            <ComboBox x:Name="StatusComboBox" Header="Статус"/>
         </StackPanel>
     </Grid>
 </ContentDialog>
