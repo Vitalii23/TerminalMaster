@@ -9,13 +9,6 @@ namespace TerminalMaster.Model
 {
     class Cartridge
     {
-        public List<string> NameDisplayList = new List<string>() { "Бренд", "Модель", "Артикуль", "Статус" };
-        public List<string> ElementContent = new List<string>() { "ComboBox", "ComboBox", "TextBox", "ComboBox" };
-        private string brandValue;
-        private string modelValue;
-        private string text;
-        private string statusValue;
-
         [Display(Name = "ID")]
         public int Id { get; set; }
         [Display(Name ="Бренд")]
@@ -38,14 +31,6 @@ namespace TerminalMaster.Model
 
         public Cartridge()
         {
-        }
-
-        public Cartridge(string brandValue, string modelValue, string text, string statusValue)
-        {
-            this.brandValue = brandValue;
-            this.modelValue = modelValue;
-            this.text = text;
-            this.statusValue = statusValue;
         }
     }
 

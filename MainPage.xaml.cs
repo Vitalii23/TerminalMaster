@@ -34,7 +34,7 @@ namespace TerminalMaster
             InitializeComponent();
             Loaded += MainPage_Loaded;
 
-            
+
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
@@ -83,7 +83,7 @@ namespace TerminalMaster
         {
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
-            dataGets.PhoneBookList = Get.GetPhoneBook((App.Current as App).ConnectionString, "ALL", 0);;
+            dataGets.PhoneBookList = Get.GetPhoneBook((App.Current as App).ConnectionString, "ALL", 0); ;
             MainDataGrid.ItemsSource = dataGets.PhoneBookList;
             NameNavigationItem = "phoneBook";
         }
@@ -111,68 +111,84 @@ namespace TerminalMaster
             MainDataGrid.ItemsSource = dataGets.IndividualEntrepreneurList;
             NameNavigationItem = "ie";
         }
-        private void SettingNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
-        {
+        //private void SettingNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
+        //{
 
-        }
-        private void InstructionNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
-        {
+        //}
+        //private void InstructionNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
+        //{
 
-        }
-        private void AboutNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
-        {
+        //}
+        //private void AboutNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
+        //{
 
-        }
+        //}
         private async void AppBarButtonAdd_Tapped(object sender, TappedRoutedEventArgs e)
         {
             switch (NameNavigationItem)
             {
                 case "printer":
-                    PrinterContentDialog printer = new PrinterContentDialog();
-                    printer.SelectData = "ADD";
+                    PrinterContentDialog printer = new PrinterContentDialog
+                    {
+                        SelectData = "ADD"
+                    };
                     await printer.ShowAsync();
                     break;
                 case "cartrides":
-                    CartridgeContentDialog cartridge = new CartridgeContentDialog();
-                    cartridge.SelectData = "ADD";
+                    CartridgeContentDialog cartridge = new CartridgeContentDialog
+                    {
+                        SelectData = "ADD"
+                    };
                     await cartridge.ShowAsync();
                     break;
                 case "cashRegystry":
-                    CashRegisterContentDialog cashRegister = new CashRegisterContentDialog();
-                    cashRegister.SelectData = "ADD";
+                    CashRegisterContentDialog cashRegister = new CashRegisterContentDialog
+                    {
+                        SelectData = "ADD"
+                    };
                     await cashRegister.ShowAsync();
                     break;
                 case "simCard":
-                    SimCardContentDialog simCard = new SimCardContentDialog();
-                    simCard.SelectData = "ADD";
+                    SimCardContentDialog simCard = new SimCardContentDialog
+                    {
+                        SelectData = "ADD"
+                    };
                     await simCard.ShowAsync();
                     break;
                 case "phoneBook":
-                    PhoneBookContentDialog phoneBook = new PhoneBookContentDialog();
-                    phoneBook.SelectData = "ADD";
+                    PhoneBookContentDialog phoneBook = new PhoneBookContentDialog
+                    {
+                        SelectData = "ADD"
+                    };
                     await phoneBook.ShowAsync();
                     break;
                 case "holder":
-                    PeopleContentDialog holder = new PeopleContentDialog();
-                    holder.SelectData = "ADD";
-                    holder.people = NameNavigationItem;
+                    PeopleContentDialog holder = new PeopleContentDialog
+                    {
+                        SelectData = "ADD",
+                        people = NameNavigationItem
+                    };
                     await holder.ShowAsync();
                     break;
                 case "user":
-                    PeopleContentDialog user = new PeopleContentDialog();
-                    user.SelectData = "ADD";
-                    user.people = NameNavigationItem;
+                    PeopleContentDialog user = new PeopleContentDialog
+                    {
+                        SelectData = "ADD",
+                        people = NameNavigationItem
+                    };
                     await user.ShowAsync();
                     break;
                 case "ie":
-                    PeopleContentDialog individual = new PeopleContentDialog();
-                    individual.SelectData = "ADD";
-                    individual.people = NameNavigationItem;
+                    PeopleContentDialog individual = new PeopleContentDialog
+                    {
+                        SelectData = "ADD",
+                        people = NameNavigationItem
+                    };
                     await individual.ShowAsync();
                     break;
                 default:
                     break;
-                   
+
             }
         }
         private async void AppBarButtonEdit_Tapped(object sender, TappedRoutedEventArgs e)
@@ -182,9 +198,11 @@ namespace TerminalMaster
                 case "printer":
                     if (MainDataGrid.SelectedIndex >= 0)
                     {
-                        PrinterContentDialog printer = new PrinterContentDialog();
-                        printer.SelectData = "GET";
-                        printer.SelectIndex = dataGets.PrinterList[MainDataGrid.SelectedIndex].Id;
+                        PrinterContentDialog printer = new PrinterContentDialog
+                        {
+                            SelectData = "GET",
+                            SelectIndex = dataGets.PrinterList[MainDataGrid.SelectedIndex].Id
+                        };
                         await printer.ShowAsync();
                     }
                     else
@@ -196,23 +214,27 @@ namespace TerminalMaster
                 case "cartrides":
                     if (MainDataGrid.SelectedIndex >= 0)
                     {
-                        CartridgeContentDialog cartridge = new CartridgeContentDialog();
-                        cartridge.SelectData = "GET";
-                        cartridge.SelectIndex = dataGets.CartridgesList[MainDataGrid.SelectedIndex].Id;
+                        CartridgeContentDialog cartridge = new CartridgeContentDialog
+                        {
+                            SelectData = "GET",
+                            SelectIndex = dataGets.CartridgesList[MainDataGrid.SelectedIndex].Id
+                        };
                         await cartridge.ShowAsync();
                     }
                     else
                     {
-                        MessageDialog message = new MessageDialog("Выберите строку для изменения");
-                        await message.ShowAsync();
+                        MessageDialog edit = new MessageDialog("Выберите строку для изменения");
+                        await edit.ShowAsync();
                     }
                     break;
                 case "cashRegystry":
                     if (MainDataGrid.SelectedIndex >= 0)
                     {
-                        CashRegisterContentDialog cashRegister = new CashRegisterContentDialog();
-                        cashRegister.SelectData = "GET";
-                        cashRegister.SelectIndex = dataGets.CashRegisterList[MainDataGrid.SelectedIndex].Id;
+                        CashRegisterContentDialog cashRegister = new CashRegisterContentDialog
+                        {
+                            SelectData = "GET",
+                            SelectIndex = dataGets.CashRegisterList[MainDataGrid.SelectedIndex].Id
+                        };
                         await cashRegister.ShowAsync();
                     }
                     else
@@ -224,9 +246,11 @@ namespace TerminalMaster
                 case "simCard":
                     if (MainDataGrid.SelectedIndex >= 0)
                     {
-                        SimCardContentDialog simCard = new SimCardContentDialog();
-                        simCard.SelectData = "GET";
-                        simCard.SelectIndex = dataGets.SimCardList[MainDataGrid.SelectedIndex].ID;
+                        SimCardContentDialog simCard = new SimCardContentDialog
+                        {
+                            SelectData = "GET",
+                            SelectIndex = dataGets.SimCardList[MainDataGrid.SelectedIndex].Id
+                        };
                         await simCard.ShowAsync();
                     }
                     else
@@ -239,9 +263,11 @@ namespace TerminalMaster
 
                     if (MainDataGrid.SelectedIndex >= 0)
                     {
-                        PhoneBookContentDialog phoneBook = new PhoneBookContentDialog();
-                        phoneBook.SelectData = "GET";
-                        phoneBook.SelectIndex = dataGets.PhoneBookList[MainDataGrid.SelectedIndex].Id;
+                        PhoneBookContentDialog phoneBook = new PhoneBookContentDialog
+                        {
+                            SelectData = "GET",
+                            SelectIndex = dataGets.PhoneBookList[MainDataGrid.SelectedIndex].Id
+                        };
                         await phoneBook.ShowAsync();
                     }
                     else
@@ -251,12 +277,14 @@ namespace TerminalMaster
                     }
                     break;
                 case "holder":
-                    if(MainDataGrid.SelectedIndex >= 0)
+                    if (MainDataGrid.SelectedIndex >= 0)
                     {
-                        PeopleContentDialog holder = new PeopleContentDialog();
-                        holder.SelectData = "GET";
-                        holder.SelectIndex = dataGets.HolderList[MainDataGrid.SelectedIndex].Id;
-                        holder.people = NameNavigationItem;
+                        PeopleContentDialog holder = new PeopleContentDialog
+                        {
+                            SelectData = "GET",
+                            SelectIndex = dataGets.HolderList[MainDataGrid.SelectedIndex].Id,
+                            people = NameNavigationItem
+                        };
                         await holder.ShowAsync();
                     }
                     else
@@ -268,11 +296,13 @@ namespace TerminalMaster
                 case "user":
                     if (MainDataGrid.SelectedIndex >= 0)
                     {
-                        PeopleContentDialog user = new PeopleContentDialog();
-                    user.SelectData = "GET";
-                    user.SelectIndex = dataGets.UserList[MainDataGrid.SelectedIndex].Id;
-                    user.people = NameNavigationItem;
-                    await user.ShowAsync();
+                        PeopleContentDialog user = new PeopleContentDialog
+                        {
+                            SelectData = "GET",
+                            SelectIndex = dataGets.UserList[MainDataGrid.SelectedIndex].Id,
+                            people = NameNavigationItem
+                        };
+                        await user.ShowAsync();
                     }
                     else
                     {
@@ -283,10 +313,12 @@ namespace TerminalMaster
                 case "ie":
                     if (MainDataGrid.SelectedIndex >= 0)
                     {
-                        PeopleContentDialog individual = new PeopleContentDialog();
-                        individual.SelectData = "GET";
-                        individual.SelectIndex = dataGets.IndividualEntrepreneurList[MainDataGrid.SelectedIndex].Id;
-                        individual.people = NameNavigationItem;
+                        PeopleContentDialog individual = new PeopleContentDialog
+                        {
+                            SelectData = "GET",
+                            SelectIndex = dataGets.IndividualEntrepreneurList[MainDataGrid.SelectedIndex].Id,
+                            people = NameNavigationItem
+                        };
                         await individual.ShowAsync();
                     }
                     else
@@ -302,47 +334,57 @@ namespace TerminalMaster
         }
         private async void AppBarButtonDelete_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            MessageDialog message = new MessageDialog("Вы точно хотите удалить этот элемент.");
-            message.Commands.Add(new UICommand("Да", null));
-            message.Commands.Add(new UICommand("Нет", null));
-            message.DefaultCommandIndex = 0;
-            message.CancelCommandIndex = 1;
+            MessageDialog message;
+
+
+            if (MainDataGrid.SelectedIndex >= 0)
+            {
+                message = new MessageDialog("Вы точно хотите удалить этот элемент.");
+                message.Commands.Add(new UICommand("Да", null));
+                message.Commands.Add(new UICommand("Нет", null));
+                message.DefaultCommandIndex = 0;
+                message.CancelCommandIndex = 1;
+            }
+            else
+            {
+                message = new MessageDialog("Выберите строку для удаления");
+            }
 
             IUICommand cmd = await message.ShowAsync();
             switch (NameNavigationItem)
             {
                 case "printer":
-                    if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, MainDataGrid.SelectedIndex + 1, NameNavigationItem); }
+                    if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.PrinterList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
                     break;
                 case "cartrides":
-                    if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, MainDataGrid.SelectedIndex + 1, NameNavigationItem); }
+                    if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.CartridgesList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
                     break;
                 case "cashRegystry":
-                    if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, MainDataGrid.SelectedIndex + 1, NameNavigationItem); }
+                    if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.CashRegisterList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
                     break;
                 case "simCard":
-                    if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, MainDataGrid.SelectedIndex + 1, NameNavigationItem); }
+                    if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.SimCardList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
                     break;
                 case "phoneBook":
-                    if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, MainDataGrid.SelectedIndex + 1, NameNavigationItem); }
+                    if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.PhoneBookList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
                     break;
                 case "holder":
-                    if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, MainDataGrid.SelectedIndex + 1, NameNavigationItem); }
+                    if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.HolderList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
                     break;
                 case "user":
-                    if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, MainDataGrid.SelectedIndex + 1, NameNavigationItem); }
+                    if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.UserList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
                     break;
                 case "ie":
-                    if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, MainDataGrid.SelectedIndex + 1, NameNavigationItem); }
+                    if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.IndividualEntrepreneurList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
                     break;
                 default:
                     break;
             }
         }
-        private void AppBarButtonSave_Tapped(object sender, TappedRoutedEventArgs e)
-        {
+        //private void AppBarButtonSave_Tapped(object sender, TappedRoutedEventArgs e)
+        //{
 
-        }
+        //}
         private void AppBarButtonUpdate_Tapped(object sender, TappedRoutedEventArgs e)
         {
             switch (NameNavigationItem)
@@ -362,15 +404,23 @@ namespace TerminalMaster
                 case "phoneBook":
                     MainDataGrid.ItemsSource = Get.GetPhoneBook((App.Current as App).ConnectionString, "ALL", 0);
                     break;
+                case "holder":
+                    MainDataGrid.ItemsSource = Get.GetHolder((App.Current as App).ConnectionString, "ALL", 0);
+                    break;
+                case "user":
+                    MainDataGrid.ItemsSource = Get.GetUser((App.Current as App).ConnectionString, "ALL", 0);
+                    break;
+                case "ie":
+                    MainDataGrid.ItemsSource = Get.GetIndividual((App.Current as App).ConnectionString, "ALL", 0);
+                    break;
                 default:
                     break;
 
             }
         }
-        private void ConnectNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
-        {
+        //private void ConnectNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
+        //{
 
-        }
-
+        //}
     }
 }

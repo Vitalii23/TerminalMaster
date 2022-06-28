@@ -78,5 +78,10 @@ namespace TerminalMaster.ElementContentDialog
                 SelectData = "UPDATE";
             }
         }
+
+        private void ContentDialog_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
+        {
+
+        }
     }
 }

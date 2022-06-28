@@ -9,8 +9,6 @@ namespace TerminalMaster.Model
 {
     class PhoneBook
     {
-        public List<string> NameDisplayList = new List<string>() { "Имя", "Фамилия", "Отчество", "Должность", "Внутренний номер", "Мобильный номер"};
-        public List<string> ElementContent = new List<string>() { "TextBox", "TextBox", "TextBox", "TextBox", "TextBox", "TextBox"};
         [Display(Name = "ID")]
         public int Id { get; set; }
         [Display(Name = "Имя")]

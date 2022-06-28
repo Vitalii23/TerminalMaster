@@ -12,42 +12,65 @@ namespace TerminalMaster.ElementContentDialog
         private AddElement add = new AddElement();
         private UpdateElement update = new UpdateElement();
         private GetElement get = new GetElement();
+        private ObservableCollection<Holder> holders;
+        private ObservableCollection<User> users;
         public CashRegisterContentDialog()
         {
             this.InitializeComponent();
+            holders = get.GetHolder((App.Current as App).ConnectionString, "ALL", 0);
+            users = get.GetUser((App.Current as App).ConnectionString, "ALL", 0);
+
+            for (int i = 0; i < holders.Count; i++)
+            {
+                HolderComboBox.Items.Add(holders[i].LastName + " " + holders[i].FirstName + " " + holders[i].MiddleName);
+            }
+
+            for (int i = 0; i < users.Count; i++)
+            {
+                UserComboBox.Items.Add(users[i].LastName + " " + users[i].FirstName + " " + users[i].MiddleName);
+            }
+
+            string[] brend = { "AZUR", "MSPOS" };
+            AddComboxItem(brend, BrendComboBox);
         }
 
         public string SelectData { get; set; }
         public int SelectIndex { get; set; }
+        public void AddComboxItem(string[] text, ComboBox combo)
+        {
+            for (int i = 0; i < text.Length; i++)
+            {
+                combo.Items.Add(text[i]);
+            }
+        }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            string[] cashRehisters = { NameTextBox.Text, BrendTextBox.Text, FactoryNumberTextBox.Text, 
-                SerialNumberTextBox.Text, PaymentNumberTextBox.Text, DateReceptionCalendarDatePicker.DateFormat, LocationTextBox.Text };
+            int[] Ids = new int[] { holders[0].Id, users[0].Id };
+            string brandValue = (string)BrendComboBox.SelectedValue;
 
-            if (SelectData.Equals("ADD")) { add.AddDataElement((App.Current as App).ConnectionString, cashRehisters, "cahsRegister"); }
+            var dateTime = DateReceptionCalendarDatePicker.Date;
+            string date = dateTime.Value.Year.ToString() + "-"+ dateTime.Value.Month.ToString() + "-" + dateTime.Value.Day.ToString();
+            string[] cashRehisters = { NameTextBox.Text, brandValue, FactoryNumberTextBox.Text,
+                SerialNumberTextBox.Text, PaymentNumberTextBox.Text, date, LocationTextBox.Text};
 
-            if (SelectData.Equals("UPDATE")) { update.UpdateDataElement((App.Current as App).ConnectionString, cashRehisters, SelectIndex, "cahsRegister"); }
+            if (SelectData.Equals("ADD")) { add.AddDataElement((App.Current as App).ConnectionString, cashRehisters, Ids, "cashRegister"); }
+
+            if (SelectData.Equals("UPDATE")) { update.UpdateDataElement((App.Current as App).ConnectionString, cashRehisters, Ids, SelectIndex, "cashRegister"); }
 
             NameTextBox.Text = string.Empty;
-            BrendTextBox.Text = string.Empty;
             FactoryNumberTextBox.Text = string.Empty;
             SerialNumberTextBox.Text = string.Empty;
             PaymentNumberTextBox.Text = string.Empty;
-            HolderTextBox.Text = string.Empty;
-            UserTextBox.Text = string.Empty;
             LocationTextBox.Text = string.Empty;
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             NameTextBox.Text = string.Empty;
-            BrendTextBox.Text = string.Empty;
             FactoryNumberTextBox.Text = string.Empty;
             SerialNumberTextBox.Text = string.Empty;
             PaymentNumberTextBox.Text = string.Empty;
-            HolderTextBox.Text = string.Empty;
-            UserTextBox.Text = string.Empty;
             LocationTextBox.Text = string.Empty;
         }
 
@@ -57,12 +80,12 @@ namespace TerminalMaster.ElementContentDialog
             {
                 ObservableCollection<CashRegister> cashRegisters = get.GetCashRegister((App.Current as App).ConnectionString, "ONE", SelectIndex);
                 NameTextBox.Text = cashRegisters[0].Name;
-                BrendTextBox.Text = cashRegisters[0].Brend;
+                BrendComboBox.SelectedValue = cashRegisters[0].Brend;
                 FactoryNumberTextBox.Text = cashRegisters[0].FactoryNumber;
                 SerialNumberTextBox.Text = cashRegisters[0].SerialNumber;
                 PaymentNumberTextBox.Text = cashRegisters[0].PaymentNumber;
-                HolderTextBox.Text = cashRegisters[0].Holder;
-                UserTextBox.Text = cashRegisters[0].User;
+                HolderComboBox.SelectedValue = cashRegisters[0].Holder;
+                UserComboBox.SelectedValue = cashRegisters[0].User;
                 DateReceptionCalendarDatePicker.Date = cashRegisters[0].DateReception;
                 LocationTextBox.Text = cashRegisters[0].Location;
                 SelectData = "UPDATE";

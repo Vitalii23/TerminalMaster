@@ -77,7 +77,7 @@ namespace TerminalMaster.ElementContentDialog.PeopleContentDialog
         {
             if (people.Equals("holder")) 
             {
-                PeopleCD.Title = "Владелецы";
+                PeopleCD.Title = "Владельцы";
                 if (SelectData.Equals("GET"))
                 {
                     ObservableCollection<Holder> holders = get.GetHolder((App.Current as App).ConnectionString, "ONE", SelectIndex);

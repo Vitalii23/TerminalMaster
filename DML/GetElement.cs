@@ -79,7 +79,7 @@ namespace TerminalMaster.ViewModel
                 GetCashRegister = "SELECT * FROM CashRegister WHERE id = " + id;
             }
 
-            var cashRegisters = new ObservableCollection<CashRegister>();
+            ObservableCollection<CashRegister> cashRegisters = new ObservableCollection<CashRegister>();
             try
             {
                 using (var connect = new SqlConnection(connection))
@@ -92,22 +92,43 @@ namespace TerminalMaster.ViewModel
                             cmd.CommandText = GetCashRegister;
                             using (SqlDataReader reader = cmd.ExecuteReader())
                             {
+                                
                                 while (reader.Read())
                                 {
-                                    var cashRegister = new CashRegister()
-                                    {
-                                        Id = reader.GetInt32(0),
-                                        Name = reader.GetString(1),
-                                        Brend = reader.GetString(2),
-                                        FactoryNumber = reader.GetString(3),
-                                        SerialNumber = reader.GetString(4),
-                                        PaymentNumber = reader.GetString(5),
-                                        Holder = reader.GetString(6),
-                                        User = reader.GetString(7),
-                                        DateReception = reader.GetDateTime(8),
-                                        Location = reader.GetString(9)
-                                    };
+                                    var cashRegister = new CashRegister();
+                                    cashRegister.Id = reader.GetInt32(0);
+                                    cashRegister.Name = reader.GetString(1);
+                                    cashRegister.Brend = reader.GetString(2);
+                                    cashRegister.FactoryNumber = reader.GetString(3);
+                                    cashRegister.SerialNumber = reader.GetString(4);
+                                    cashRegister.PaymentNumber = reader.GetString(5);
+                                    cashRegister.DateReception = reader.GetDateTime(6);
+                                    cashRegister.Location = reader.GetString(7);
+                                    cashRegister.IdHolder = reader.GetInt32(8);
+                                    cashRegister.IdUser = reader.GetInt32(9);
                                     cashRegisters.Add(cashRegister);
+                                }
+                            }
+
+                           // GetCashRegister = "SELECT CONCAT(last_name, ' ', first_name, ' ', middle_name) AS фио FROM dbo.Holder WHERE id = " + cashRegister.IdHolder;
+                            cmd.CommandText = GetCashRegister;
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                   // cashRegister.Holder = reader.GetString(0);
+                                   // cashRegisters.Add(cashRegister);
+                                }
+                            }
+
+                          //  GetCashRegister = "SELECT CONCAT(last_name, ' ', first_name, ' ', middle_name) AS фио FROM dbo.UserDevice WHERE id = " + cashRegister.IdUser;
+                            cmd.CommandText = GetCashRegister;
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                   // cashRegister.User = reader.GetString(0);
+                                 //   cashRegisters.Add(cashRegister);
                                 }
                             }
                         }
@@ -209,7 +230,8 @@ namespace TerminalMaster.ViewModel
                                         Model = reader.GetString(3),
                                         NamePort = reader.GetString(4),
                                         Location = reader.GetString(5),
-                                        OC = reader.GetString(6)
+                                        OC = reader.GetString(6),
+                                        Status = reader.GetString(7)
                                     };
                                     printers.Add(printer);
                                 }
@@ -253,17 +275,19 @@ namespace TerminalMaster.ViewModel
                             {
                                 while (reader.Read())
                                 {
-                                    var simcard = new SimCard()
+                                    var simcard = new SimCard
                                     {
-                                        ID = reader.GetInt32(0),
+                                        Id = reader.GetInt32(0),
                                         Operator = reader.GetString(1),
                                         IdentNumber = reader.GetString(2),
-                                        TypeDevice = reader.GetString(3),
-                                        TMS = reader.GetInt32(4),
-                                        ICC = reader.GetInt32(5),
-                                        IndividualEntrepreneur = reader.GetString(6),
-                                        Status = reader.GetString(7)
+                                        Brend = reader.GetString(3),
+                                        TypeDevice = reader.GetString(4),
+                                        TMS = reader.GetString(5),
+                                        ICC = reader.GetString(6),
+                                        Status = reader.GetString(7),
+                                        IdIndividual = reader.GetInt32(8)
                                     };
+
                                     simCards.Add(simcard);
                                 }
                             }

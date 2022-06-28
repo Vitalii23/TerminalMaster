@@ -22,8 +22,8 @@ namespace TerminalMaster.ViewModel
                         AddQuery = "UPDATE dbo.Cartrides SET brand = '" + element[0] + "', model = '" + element[1] + "', vendor_code = '" + element[2] + "', status = '" + element[3] + "' WHERE id = " + id;
                         break;
                     case "cashRegister":
-                        AddQuery = "UPDATE dbo.CashRegister SET name = '" + element[0] + "', brand = '" + element[1] + "', factory_number = '" + element[2] + "', serial_number = '"
-                            + element[3] + "', serial_number = '" + element[4] + "', date_reception = '" + element[5] + "', location = '" + element[6] + "' WHERE id = " + id;
+                        AddQuery = "UPDATE dbo.CashRegister SET name = '" + element[0] + "', brand = '" + element[1] + "', factory_number =  '" + element[2] + "', serial_number =  '" + element[3] + "', " +
+                            "payment_number =  '" + element[4] + "', date_reception =  '" + element[5] + "', location =  '" + element[6] + "', id_holder =  '" + element[7] + "', id_user = '" + element[8] + "' WHERE Id = " + id;
                         break;
                     case "phoneBook":
                         AddQuery = "UPDATE dbo.PhoneBook SET first_name = '" + element[0] + "', last_name = '" + element[1] + "', middle_name = '"
@@ -41,7 +41,7 @@ namespace TerminalMaster.ViewModel
                         AddQuery = "UPDATE dbo.Holder SET first_name = '" + element[0] + "', last_name = '" + element[1] + "', middle_name = '" + element[2] + "'  WHERE id = " + id;
                         break;
                     case "user":
-                        AddQuery = "UPDATE dbo.User SET first_name = '" + element[0] + "', last_name = '" + element[1] + "', middle_name = '" + element[2] + "'  WHERE id = " + id;
+                        AddQuery = "UPDATE dbo.UserDevice SET first_name = '" + element[0] + "', last_name = '" + element[1] + "', middle_name = '" + element[2] + "'  WHERE id = " + id;
                         break;
                     case "ie":
                         AddQuery = "UPDATE dbo.IndividualEntrepreneur SET first_name = '" + element[0] + "', last_name = '" + element[1] + "', middle_name = '" + element[2] + "'  WHERE id = " + id;
@@ -49,6 +49,45 @@ namespace TerminalMaster.ViewModel
                     default:
                         break;
                 }
+
+
+                var connect = new SqlConnection(connection);
+                connect.Open();
+                if (connect.State == System.Data.ConnectionState.Open)
+                {
+                    SqlCommand cmd = connect.CreateCommand();
+                    cmd.CommandText = AddQuery;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    reader.Read();
+                }
+            }
+            catch (Exception eSql)
+            {
+                Debug.WriteLine("Exception: " + eSql);
+            }
+
+        }
+
+        public void UpdateDataElement(string connection, string[] element, int[] ids, int id, string items)
+        {
+            try
+            {
+                string AddQuery = null;
+
+
+                if (items.Equals("simCard")) 
+                {
+                    AddQuery = "UPDATE dbo.SimCard SET operator = '" + element[0] + "', identifaction_number =  '" + element[1] + "', brend =  '" + element[2] + "', type_device =  '" + element[3] +
+                        "', tms =  '" + element[4] + "', icc =  '" + element[5] + "', status =  '" + element[6] + "', id_individual_entrepreneur = " + ids[0] + " WHERE id = " + id;
+                }
+
+
+                if (items.Equals("cashRegister"))
+                {
+                    AddQuery = "UPDATE dbo.CashRegister SET name = '" + element[0] + "', brand = '" + element[1] + "', factory_number =  '" + element[2] + "', serial_number =  '" + element[3] + "', " +
+                           "payment_number =  '" + element[4] + "', date_reception =  '" + element[5] + "', location =  '" + element[6] + "', id_holder =  '" + ids[0] + "', id_user = '" + ids[1] + "' WHERE Id = " + id;
+                }
+
 
                 var connect = new SqlConnection(connection);
                 connect.Open();

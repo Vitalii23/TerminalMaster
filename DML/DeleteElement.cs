@@ -34,6 +34,15 @@ namespace TerminalMaster.ViewModel
                     case "simCard":
                         AddQuery = "DELETE FROM dbo.SimCard WHERE id = " + id;
                         break;
+                    case "holder":
+                        AddQuery = "DELETE FROM dbo.Holder WHERE id = " + id;
+                        break;
+                    case "user":
+                        AddQuery = "DELETE FROM dbo.User WHERE id = " + id;
+                        break;
+                    case "ie":
+                        AddQuery = "DELETE FROM dbo.IndividualEntrepreneur WHERE id = " + id;
+                        break;
                     default:
                         break;
                 }

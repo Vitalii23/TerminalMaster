@@ -16,6 +16,7 @@ namespace TerminalMaster.ElementContentDialog
         private AddElement add = new AddElement();
         private UpdateElement update = new UpdateElement();
         private GetElement get = new GetElement();
+        private ObservableCollection<IndividualEntrepreneur> individuals;
         public SimCardContentDialog()
         {
             this.InitializeComponent();
@@ -23,8 +24,11 @@ namespace TerminalMaster.ElementContentDialog
             string[] @operator = { "Билайн", "МТС", "Мегафон", "Теле2" };
             AddComboxItem(@operator, OperatorComboBox);
 
-            string[] individualEntrepreneur = { "Клязьмина Марина Юрьевна", "Волков Михайл Михалович"};
-            AddComboxItem(individualEntrepreneur, IndividualEntrepreneurComboBox);
+            individuals = get.GetIndividual((App.Current as App).ConnectionString, "ALL", 0);
+            for (int i = 0; i < individuals.Count; i++)
+            {
+                IndividualEntrepreneurComboBox.Items.Add(individuals[i].LastName + " " + individuals[i].FirstName + " " + individuals[i].MiddleName);
+            }
 
             string[] brend = { "AZUR", "MSPOS" };
             AddComboxItem(brend, BrendComboBox);
@@ -49,20 +53,19 @@ namespace TerminalMaster.ElementContentDialog
         {
             string @operator = (string)OperatorComboBox.SelectedValue;
             string status = (string)StatusComboBox.SelectedValue;
-            string individualEntrepreneur = (string)IndividualEntrepreneurComboBox.SelectedValue;
             string typeDevice = (string)TypeDeviceComboBox.SelectedValue;
             string brend = (string)BrendComboBox.SelectedValue;
+            int[] Ids = new int[] { individuals[0].Id};
             string[] simCards = { @operator, IdentNumberTextBox.Text, brend, typeDevice,
-                TmsTextBox.Text, IccTextBox.Text, individualEntrepreneur, status };
+                TmsTextBox.Text, IccTextBox.Text, status };
 
-            if (SelectData.Equals("ADD")) { add.AddDataElement((App.Current as App).ConnectionString, simCards, "simCard"); }
+            if (SelectData.Equals("ADD")) { add.AddDataElement((App.Current as App).ConnectionString, simCards, Ids, "simCard"); }
 
-            if (SelectData.Equals("UPDATE")) { update.UpdateDataElement((App.Current as App).ConnectionString, simCards, SelectIndex, "simCard"); }
+            if (SelectData.Equals("UPDATE")) { update.UpdateDataElement((App.Current as App).ConnectionString, simCards, Ids, SelectIndex, "simCard"); }
 
             IdentNumberTextBox.Text = string.Empty;
             TmsTextBox.Text = string.Empty;
             IccTextBox.Text = string.Empty;
-            IndividualEntrepreneurComboBox.Text = string.Empty;
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -70,7 +73,6 @@ namespace TerminalMaster.ElementContentDialog
             IdentNumberTextBox.Text = string.Empty;
             TmsTextBox.Text = string.Empty;
             IccTextBox.Text = string.Empty;
-            IndividualEntrepreneurComboBox.Text = string.Empty;
         }
 
         private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
@@ -78,15 +80,13 @@ namespace TerminalMaster.ElementContentDialog
             if (SelectData.Equals("GET"))
             {
                 ObservableCollection<SimCard> cashRegisters = get.GetSimCard((App.Current as App).ConnectionString, "ONE", SelectIndex);
-                ObservableCollection<IndividualEntrepreneur> individuals = get.GetIndividual((App.Current as App).ConnectionString, "ONE", SelectIndex);
+               // ObservableCollection<IndividualEntrepreneur> individuals = get.GetIndividual((App.Current as App).ConnectionString, "ONE", SelectIndex);
                 OperatorComboBox.SelectedValue = cashRegisters[0].Operator;
                 IdentNumberTextBox.Text = cashRegisters[0].IdentNumber;
                 BrendComboBox.SelectedValue = cashRegisters[0].Brend;
                 TypeDeviceComboBox.SelectedValue = cashRegisters[0].TypeDevice;
-                string tms = Convert.ToString(cashRegisters[0].TMS);
-                string icc = Convert.ToString(cashRegisters[0].ICC);
-                TmsTextBox.Text = tms;
-                IccTextBox.Text = icc;
+                TmsTextBox.Text = cashRegisters[0].TMS;
+                IccTextBox.Text = cashRegisters[0].ICC;
                 IndividualEntrepreneurComboBox.SelectedValue = cashRegisters[0].IndividualEntrepreneur;
                 StatusComboBox.SelectedValue = cashRegisters[0].Status;
                 SelectData = "UPDATE";

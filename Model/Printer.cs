@@ -9,8 +9,6 @@ namespace TerminalMaster.Model
 {
     class Printer
     {
-        public List<string> NameDisplayList = new List<string>() { "Имя пользователя", "Имя принтера", "Модель принтера", "Имена портов", "Расположение", "Среда ОС", "Статус" };
-        public List<string> ElementContent = new List<string>() { "TextBox", "TextBox", "TextBox", "TextBox", "TextBox", "TextBox", "ComboBox"};
         [Display(Name = "ID")]
         public int Id { get; set; }
         [Display(Name = "Имя пользователя")]

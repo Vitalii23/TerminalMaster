@@ -8,7 +8,7 @@
     xmlns:control="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:vm="using:TerminalMaster.ViewModel"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="1080" Width="1920">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="1000" Width="1920">
 
     <Page.DataContext>
         <vm:DataGets/>
@@ -23,7 +23,7 @@
             <AppBarButton x:Name="AppBarButtonAdd" Icon="Add" Label="Добавить" Tapped="AppBarButtonAdd_Tapped"/>
             <AppBarButton x:Name="AppBarButtonEdit" Icon="Edit" Label="Изменить" Tapped="AppBarButtonEdit_Tapped"/>
             <AppBarButton x:Name="AppBarButtonDelete" Icon="Delete" Label="Удалить" Tapped="AppBarButtonDelete_Tapped"/>
-            <AppBarButton x:Name="AppBarButtonSave" Icon="Save" Label="Сохранить" Tapped="AppBarButtonSave_Tapped"/>
+          <!--  <AppBarButton x:Name="AppBarButtonSave" Icon="Save" Label="Сохранить" Tapped="AppBarButtonSave_Tapped"/> -->
             <AppBarButton x:Name="AppBarButtonUpdate" Icon="RepeatAll" Label="Обновление" Tapped="AppBarButtonUpdate_Tapped"/>
         </CommandBar>
 
@@ -48,12 +48,12 @@
                 <NavigationViewItem Content="Владельцы" Icon="Contact" Tapped="HolderNavigationViewItem_Tapped"/>
                 <NavigationViewItem Content="Пользователи" Icon="People" Tapped="UserNavigationViewItem_Tapped"/>
                 <NavigationViewItem Content="Индивидуальные предприниматели" Icon="Contact2" Tapped="IndividualEntrepreneurNavigationViewItem_Tapped"/>
-                <NavigationViewItemSeparator/>
+                <!-- <NavigationViewItemSeparator/>
                 <NavigationViewItemHeader Content="Конфигурации"/>
                 <NavigationViewItem Content="Подключение" Icon="DisconnectDrive" Tapped="ConnectNavigationItem_Tapped"/>
                 <NavigationViewItem Content="Настройка" Icon="Setting" Tapped="SettingNavigationItem_Tapped"/>
                 <NavigationViewItem Content="Инструкция" Icon="Library" Tapped="InstructionNavigationItem_Tapped"/>
-                <NavigationViewItem Content="О программе" Icon="ContactInfo" Tapped="AboutNavigationItem_Tapped"/>
+                <NavigationViewItem Content="О программе" Icon="ContactInfo" Tapped="AboutNavigationItem_Tapped"/>-->
             </NavigationView.MenuItems>
             <!--<NavigationView.PaneFooter>
                 <NavigationViewItem Icon="MapDrive">Подключение</NavigationViewItem>

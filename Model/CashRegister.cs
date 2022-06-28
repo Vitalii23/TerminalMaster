@@ -9,9 +9,6 @@ namespace TerminalMaster.Model
 {
     class CashRegister
     {
-        public List<string> NameDisplayList = new List<string>() { "ККМ", "Бренд", "Заводской номер", "Серийный номер", "Номер счета", 
-            "Владелец", "Пользователь", "Дата получения", "Место нахождения" };
-        public List<string> ElementContent = new List<string>() { "TextBox", "TextBox", "TextBox", "TextBox", "TextBox", "TextBox", "TextBox", "CalendarDatePicker", "TextBox" };
         [Display(Name = "ID")]
         public int Id { get; set; }
         [Display(Name = "ККМ")]
@@ -32,6 +29,8 @@ namespace TerminalMaster.Model
         public DateTime DateReception { get; set; } // Дата получения
         [Display(Name = "Место нахождения")]
         public string Location { get; set; } // Место нахождения
+        public int IdHolder { get; set; }
+        public int IdUser { get; set; }
         public CashRegister(int id, string name, string brend, string factoryNumber, string serialNumber, 
             string paymentNumber, string holder, string user, DateTime dateReception, string location)
         {
