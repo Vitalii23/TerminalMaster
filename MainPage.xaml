@@ -8,7 +8,7 @@
     xmlns:control="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:vm="using:TerminalMaster.ViewModel"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="1000" Width="1920">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="auto" Width="auto">
 
     <Page.DataContext>
         <vm:DataGets/>
@@ -16,10 +16,10 @@
 
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="55*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="1035*"></RowDefinition>
         </Grid.RowDefinitions>
-        <CommandBar x:Name="MainCommandBar" Height="51" VerticalAlignment="Center" HorizontalAlignment="Stretch" IsEnabled="False">
+        <CommandBar x:Name="MainCommandBar" Height="51" VerticalAlignment="Center" HorizontalAlignment="Stretch" IsEnabled="False" Width="Auto">
             <AppBarButton x:Name="AppBarButtonAdd" Icon="Add" Label="Добавить" Tapped="AppBarButtonAdd_Tapped"/>
             <AppBarButton x:Name="AppBarButtonEdit" Icon="Edit" Label="Изменить" Tapped="AppBarButtonEdit_Tapped"/>
             <AppBarButton x:Name="AppBarButtonDelete" Icon="Delete" Label="Удалить" Tapped="AppBarButtonDelete_Tapped"/>
