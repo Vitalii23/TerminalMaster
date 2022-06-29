@@ -42,6 +42,47 @@ namespace TerminalMaster
             var result = ApplicationView.GetForCurrentView().TryResizeView(new Size(1080, 1920));
             Debug.WriteLine("OnLoaded TryResizeView: " + result);
         }
+
+        private void updateTable(string items)
+        {
+            switch (items)
+            {
+                case "printer":
+                    dataGets.PrinterList = Get.GetPrinter((App.Current as App).ConnectionString, "ALL", 0);
+                    MainDataGrid.ItemsSource = dataGets.PrinterList;
+                    break;
+                case "cartrides":
+                    dataGets.CartridgesList = Get.GetCartridges((App.Current as App).ConnectionString, "ALL", 0);
+                    MainDataGrid.ItemsSource = dataGets.CartridgesList;
+                    break;
+                case "cashRegister":
+                    dataGets.CashRegisterList = Get.GetCashRegister((App.Current as App).ConnectionString, "ALL", 0);
+                    MainDataGrid.ItemsSource = dataGets.CashRegisterList;
+                    break;
+                case "simCard":
+                    dataGets.SimCardList = Get.GetSimCard((App.Current as App).ConnectionString, "ALL", 0);
+                    MainDataGrid.ItemsSource = dataGets.SimCardList;
+                    break;
+                case "phoneBook":
+                    dataGets.PhoneBookList = Get.GetPhoneBook((App.Current as App).ConnectionString, "ALL", 0); ;
+                    MainDataGrid.ItemsSource = dataGets.PhoneBookList;
+                    break;
+                case "holder":
+                    dataGets.HolderList = Get.GetHolder((App.Current as App).ConnectionString, "ALL", 0);
+                    MainDataGrid.ItemsSource = dataGets.HolderList;
+                    break;
+                case "user":
+                    dataGets.UserList = Get.GetUser((App.Current as App).ConnectionString, "ALL", 0);
+                    MainDataGrid.ItemsSource = dataGets.UserList;
+                    break;
+                case "ie":
+                    dataGets.IndividualEntrepreneurList = Get.GetIndividual((App.Current as App).ConnectionString, "ALL", 0);
+                    MainDataGrid.ItemsSource = dataGets.IndividualEntrepreneurList;
+                    break;
+                default:
+                    break;
+            }
+        }
         /// <summary>
         /// Taped
         /// </summary>
@@ -51,65 +92,57 @@ namespace TerminalMaster
         {
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
-            dataGets.PrinterList = Get.GetPrinter((App.Current as App).ConnectionString, "ALL", 0);
-            MainDataGrid.ItemsSource = dataGets.PrinterList;
             NameNavigationItem = "printer";
+            updateTable(NameNavigationItem);
         }
         private void CartridesNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
-            dataGets.CartridgesList = Get.GetCartridges((App.Current as App).ConnectionString, "ALL", 0);
-            MainDataGrid.ItemsSource = dataGets.CartridgesList;
             NameNavigationItem = "cartrides";
+            updateTable(NameNavigationItem);
         }
         private void CashRegystriNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
-            dataGets.CashRegisterList = Get.GetCashRegister((App.Current as App).ConnectionString, "ALL", 0);
-            MainDataGrid.ItemsSource = dataGets.CashRegisterList;
-            NameNavigationItem = "cashRegystry";
+            NameNavigationItem = "cashRegister";
+            updateTable(NameNavigationItem);
         }
         private void SimCardRegystriNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
-            dataGets.SimCardList = Get.GetSimCard((App.Current as App).ConnectionString, "ALL", 0);
-            MainDataGrid.ItemsSource = dataGets.SimCardList;
             NameNavigationItem = "simCard";
+            updateTable(NameNavigationItem);
         }
         private void PhoneBookNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
-            dataGets.PhoneBookList = Get.GetPhoneBook((App.Current as App).ConnectionString, "ALL", 0); ;
-            MainDataGrid.ItemsSource = dataGets.PhoneBookList;
             NameNavigationItem = "phoneBook";
+            updateTable(NameNavigationItem);
         }
         private void HolderNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
-            dataGets.HolderList = Get.GetHolder((App.Current as App).ConnectionString, "ALL", 0);
-            MainDataGrid.ItemsSource = dataGets.HolderList;
             NameNavigationItem = "holder";
+            updateTable(NameNavigationItem);
         }
         private void UserNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
-            dataGets.UserList = Get.GetUser((App.Current as App).ConnectionString, "ALL", 0);
-            MainDataGrid.ItemsSource = dataGets.UserList;
             NameNavigationItem = "user";
+            updateTable(NameNavigationItem);
         }
         private void IndividualEntrepreneurNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
-            dataGets.IndividualEntrepreneurList = Get.GetIndividual((App.Current as App).ConnectionString, "ALL", 0);
-            MainDataGrid.ItemsSource = dataGets.IndividualEntrepreneurList;
             NameNavigationItem = "ie";
+            updateTable(NameNavigationItem);
         }
         //private void SettingNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         //{
@@ -125,6 +158,7 @@ namespace TerminalMaster
         //}
         private async void AppBarButtonAdd_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            Debug.WriteLine(MainDataGrid.SelectedIndex);
             switch (NameNavigationItem)
             {
                 case "printer":
@@ -133,6 +167,7 @@ namespace TerminalMaster
                         SelectData = "ADD"
                     };
                     await printer.ShowAsync();
+                    updateTable(NameNavigationItem);
                     break;
                 case "cartrides":
                     CartridgeContentDialog cartridge = new CartridgeContentDialog
@@ -140,13 +175,15 @@ namespace TerminalMaster
                         SelectData = "ADD"
                     };
                     await cartridge.ShowAsync();
+                    updateTable(NameNavigationItem);
                     break;
-                case "cashRegystry":
+                case "cashRegister":
                     CashRegisterContentDialog cashRegister = new CashRegisterContentDialog
                     {
                         SelectData = "ADD"
                     };
                     await cashRegister.ShowAsync();
+                    updateTable(NameNavigationItem);
                     break;
                 case "simCard":
                     SimCardContentDialog simCard = new SimCardContentDialog
@@ -154,6 +191,7 @@ namespace TerminalMaster
                         SelectData = "ADD"
                     };
                     await simCard.ShowAsync();
+                    updateTable(NameNavigationItem);
                     break;
                 case "phoneBook":
                     PhoneBookContentDialog phoneBook = new PhoneBookContentDialog
@@ -161,6 +199,7 @@ namespace TerminalMaster
                         SelectData = "ADD"
                     };
                     await phoneBook.ShowAsync();
+                    updateTable(NameNavigationItem);
                     break;
                 case "holder":
                     PeopleContentDialog holder = new PeopleContentDialog
@@ -169,6 +208,7 @@ namespace TerminalMaster
                         people = NameNavigationItem
                     };
                     await holder.ShowAsync();
+                    updateTable(NameNavigationItem);
                     break;
                 case "user":
                     PeopleContentDialog user = new PeopleContentDialog
@@ -177,6 +217,7 @@ namespace TerminalMaster
                         people = NameNavigationItem
                     };
                     await user.ShowAsync();
+                    updateTable(NameNavigationItem);
                     break;
                 case "ie":
                     PeopleContentDialog individual = new PeopleContentDialog
@@ -185,14 +226,16 @@ namespace TerminalMaster
                         people = NameNavigationItem
                     };
                     await individual.ShowAsync();
+                    updateTable(NameNavigationItem);
                     break;
                 default:
                     break;
-
             }
         }
         private async void AppBarButtonEdit_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            Debug.WriteLine(MainDataGrid.SelectedIndex);
+            Debug.WriteLine(dataGets.PrinterList.Count);
             switch (NameNavigationItem)
             {
                 case "printer":
@@ -204,6 +247,7 @@ namespace TerminalMaster
                             SelectIndex = dataGets.PrinterList[MainDataGrid.SelectedIndex].Id
                         };
                         await printer.ShowAsync();
+                        updateTable(NameNavigationItem);
                     }
                     else
                     {
@@ -220,6 +264,7 @@ namespace TerminalMaster
                             SelectIndex = dataGets.CartridgesList[MainDataGrid.SelectedIndex].Id
                         };
                         await cartridge.ShowAsync();
+                        updateTable(NameNavigationItem);
                     }
                     else
                     {
@@ -227,7 +272,7 @@ namespace TerminalMaster
                         await edit.ShowAsync();
                     }
                     break;
-                case "cashRegystry":
+                case "cashRegister":
                     if (MainDataGrid.SelectedIndex >= 0)
                     {
                         CashRegisterContentDialog cashRegister = new CashRegisterContentDialog
@@ -236,6 +281,7 @@ namespace TerminalMaster
                             SelectIndex = dataGets.CashRegisterList[MainDataGrid.SelectedIndex].Id
                         };
                         await cashRegister.ShowAsync();
+                        updateTable(NameNavigationItem);
                     }
                     else
                     {
@@ -252,6 +298,7 @@ namespace TerminalMaster
                             SelectIndex = dataGets.SimCardList[MainDataGrid.SelectedIndex].Id
                         };
                         await simCard.ShowAsync();
+                        updateTable(NameNavigationItem);
                     }
                     else
                     {
@@ -269,6 +316,7 @@ namespace TerminalMaster
                             SelectIndex = dataGets.PhoneBookList[MainDataGrid.SelectedIndex].Id
                         };
                         await phoneBook.ShowAsync();
+                        updateTable(NameNavigationItem);
                     }
                     else
                     {
@@ -286,6 +334,7 @@ namespace TerminalMaster
                             people = NameNavigationItem
                         };
                         await holder.ShowAsync();
+                        updateTable(NameNavigationItem);
                     }
                     else
                     {
@@ -303,6 +352,7 @@ namespace TerminalMaster
                             people = NameNavigationItem
                         };
                         await user.ShowAsync();
+                        updateTable(NameNavigationItem);
                     }
                     else
                     {
@@ -320,6 +370,7 @@ namespace TerminalMaster
                             people = NameNavigationItem
                         };
                         await individual.ShowAsync();
+                        updateTable(NameNavigationItem);
                     }
                     else
                     {
@@ -331,11 +382,12 @@ namespace TerminalMaster
                     break;
 
             }
+
         }
         private async void AppBarButtonDelete_Tapped(object sender, TappedRoutedEventArgs e)
         {
             MessageDialog message;
-
+            Debug.WriteLine(MainDataGrid.SelectedIndex);
 
             if (MainDataGrid.SelectedIndex >= 0)
             {
@@ -354,32 +406,44 @@ namespace TerminalMaster
             switch (NameNavigationItem)
             {
                 case "printer":
-                    if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.PrinterList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
+                    if (cmd.Label == "Да")
+                    {
+                        Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.PrinterList[MainDataGrid.SelectedIndex].Id, NameNavigationItem);
+                    }
+                    updateTable(NameNavigationItem);
                     break;
                 case "cartrides":
                     if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.CartridgesList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
+                    updateTable(NameNavigationItem);
                     break;
-                case "cashRegystry":
+                case "cashRegister":
                     if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.CashRegisterList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
+                    updateTable(NameNavigationItem);
                     break;
                 case "simCard":
                     if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.SimCardList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
+                    updateTable(NameNavigationItem);
                     break;
                 case "phoneBook":
                     if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.PhoneBookList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
+                    updateTable(NameNavigationItem);
                     break;
                 case "holder":
                     if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.HolderList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
+                    updateTable(NameNavigationItem);
                     break;
                 case "user":
                     if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.UserList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
+                    updateTable(NameNavigationItem);
                     break;
                 case "ie":
                     if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.IndividualEntrepreneurList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
+                    updateTable(NameNavigationItem);
                     break;
                 default:
                     break;
             }
+            Debug.WriteLine(MainDataGrid.SelectedIndex);
         }
         //private void AppBarButtonSave_Tapped(object sender, TappedRoutedEventArgs e)
         //{
@@ -395,7 +459,7 @@ namespace TerminalMaster
                 case "cartrides":
                     MainDataGrid.ItemsSource = Get.GetCartridges((App.Current as App).ConnectionString, "ALL", 0);
                     break;
-                case "cashRegystry":
+                case "cashRegister":
                     MainDataGrid.ItemsSource = Get.GetCashRegister((App.Current as App).ConnectionString, "ALL", 0);
                     break;
                 case "simCard":

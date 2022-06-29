@@ -31,7 +31,7 @@ namespace TerminalMaster.ViewModel
                         break;
                     case "printer":
                         AddQuery = "UPDATE dbo.Printer SET name_user = '" + element[0] + "', name_printer = '" + element[1] + "', model = '" + element[2] + "', name_port = '"
-                            + element[3] + "', location = '" + element[4] + "', operation_sustem = '" + element[5] + "' WHERE id = " + id;
+                            + element[3] + "', location = '" + element[4] + "', operation_system = '" + element[5] + "' WHERE id = " + id;
                         break;
                     case "simCard":
                         AddQuery = "UPDATE dbo.SimCard SET operator = '" + element[0] + "', identifaction_number = '" + element[1] + "', type_device = '" + element[2] + "', tms = '" + element[3] + "', icc = '"

@@ -17,12 +17,6 @@ namespace TerminalMaster.ViewModel
           
         }
 
-        private readonly Cartridge cartridge = new Cartridge();
-        private readonly CashRegister cashRegister = new CashRegister();
-        private readonly PhoneBook phoneBook = new PhoneBook();
-        private readonly Printer printer = new Printer();
-        private readonly SimCard simCard = new SimCard();
-
         public ObservableCollection<Cartridge> _cartridges = new ObservableCollection<Cartridge>();
         public ObservableCollection<CashRegister> _cashRegister = new ObservableCollection<CashRegister>();
         public ObservableCollection<PhoneBook> _phoneBook = new ObservableCollection<PhoneBook>();

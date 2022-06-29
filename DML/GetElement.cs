@@ -34,7 +34,7 @@ namespace TerminalMaster.ViewModel
                 using (SqlConnection connect = new SqlConnection(connection))
                 {
                     connect.Open();
-                    if(connect.State == System.Data.ConnectionState.Open)
+                    if (connect.State == System.Data.ConnectionState.Open)
                     {
                         using (SqlCommand cmd = connect.CreateCommand())
                         {
@@ -71,12 +71,49 @@ namespace TerminalMaster.ViewModel
             string GetCashRegister = null;
             if (selection.Equals("ALL"))
             {
-                GetCashRegister = "SELECT * FROM CashRegister;";
+                GetCashRegister = "SELECT dbo.CashRegister.id, " +
+                    "dbo.CashRegister.name, " +
+                    "dbo.CashRegister.brand, " +
+                    "dbo.CashRegister.factory_number, " +
+                    "dbo.CashRegister.serial_number, " +
+                    "dbo.CashRegister.payment_number, " +
+                    "dbo.CashRegister.date_reception, " +
+                    "dbo.CashRegister.location, " +
+                    "dbo.CashRegister.id_holder," +
+                    "dbo.CashRegister.id_user," +
+                    "dbo.Holder.last_name, " +
+                    "dbo.Holder.first_name, " +
+                    "dbo.Holder.middle_name, " +
+                    "dbo.UserDevice.last_name, " +
+                    "dbo.UserDevice.first_name, " +
+                    "dbo.UserDevice.middle_name " +
+                    "FROM dbo.CashRegister " +
+                    "INNER JOIN dbo.Holder ON dbo.Holder.id = dbo.CashRegister.id_holder " +
+                    "INNER JOIN dbo.UserDevice ON dbo.UserDevice.id = dbo.CashRegister.id_user;";
             }
 
             if (selection.Equals("ONE"))
             {
-                GetCashRegister = "SELECT * FROM CashRegister WHERE id = " + id;
+                GetCashRegister = "SELECT dbo.CashRegister.id, " +
+                    "dbo.CashRegister.name, " +
+                    "dbo.CashRegister.brand, " +
+                    "dbo.CashRegister.factory_number, " +
+                    "dbo.CashRegister.serial_number, " +
+                    "dbo.CashRegister.payment_number, " +
+                    "dbo.CashRegister.date_reception, " +
+                    "dbo.CashRegister.location, " +
+                    "dbo.CashRegister.id_holder," +
+                    "dbo.CashRegister.id_user," +
+                    "dbo.Holder.last_name, " +
+                    "dbo.Holder.first_name, " +
+                    "dbo.Holder.middle_name, " +
+                    "dbo.UserDevice.last_name, " +
+                    "dbo.UserDevice.first_name, " +
+                    "dbo.UserDevice.middle_name " +
+                    "FROM dbo.CashRegister " +
+                    "INNER JOIN dbo.Holder ON dbo.Holder.id = dbo.CashRegister.id_holder " +
+                    "INNER JOIN dbo.UserDevice ON dbo.UserDevice.id = dbo.CashRegister.id_user " +
+                    "WHERE dbo.CashRegister.id =  " + id;
             }
 
             ObservableCollection<CashRegister> cashRegisters = new ObservableCollection<CashRegister>();
@@ -92,7 +129,7 @@ namespace TerminalMaster.ViewModel
                             cmd.CommandText = GetCashRegister;
                             using (SqlDataReader reader = cmd.ExecuteReader())
                             {
-                                
+
                                 while (reader.Read())
                                 {
                                     var cashRegister = new CashRegister();
@@ -106,29 +143,9 @@ namespace TerminalMaster.ViewModel
                                     cashRegister.Location = reader.GetString(7);
                                     cashRegister.IdHolder = reader.GetInt32(8);
                                     cashRegister.IdUser = reader.GetInt32(9);
+                                    cashRegister.Holder = reader.GetString(10) + " " + reader.GetString(11) + " " + reader.GetString(12);
+                                    cashRegister.User = reader.GetString(13) + " " + reader.GetString(14) + " " + reader.GetString(15);
                                     cashRegisters.Add(cashRegister);
-                                }
-                            }
-
-                           // GetCashRegister = "SELECT CONCAT(last_name, ' ', first_name, ' ', middle_name) AS фио FROM dbo.Holder WHERE id = " + cashRegister.IdHolder;
-                            cmd.CommandText = GetCashRegister;
-                            using (SqlDataReader reader = cmd.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                   // cashRegister.Holder = reader.GetString(0);
-                                   // cashRegisters.Add(cashRegister);
-                                }
-                            }
-
-                          //  GetCashRegister = "SELECT CONCAT(last_name, ' ', first_name, ' ', middle_name) AS фио FROM dbo.UserDevice WHERE id = " + cashRegister.IdUser;
-                            cmd.CommandText = GetCashRegister;
-                            using (SqlDataReader reader = cmd.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                   // cashRegister.User = reader.GetString(0);
-                                 //   cashRegisters.Add(cashRegister);
                                 }
                             }
                         }
@@ -252,12 +269,37 @@ namespace TerminalMaster.ViewModel
             string GetSimCard = null;
             if (selection.Equals("ALL"))
             {
-                GetSimCard = "SELECT * FROM SimCard;";
+                GetSimCard = "SELECT dbo.SimCard.id, " +
+                    "dbo.SimCard.operator, " +
+                    "dbo.SimCard.identifaction_number, " +
+                    "dbo.SimCard.brend, " +
+                    "dbo.SimCard.type_device, " +
+                    "dbo.SimCard.tms, " +
+                    "dbo.SimCard.icc, dbo.SimCard.status, " +
+                    "dbo.SimCard.id_individual_entrepreneur, " +
+                    "dbo.IndividualEntrepreneur.last_name, " +
+                    "dbo.IndividualEntrepreneur.first_name, " +
+                    "dbo.IndividualEntrepreneur.middle_name " +
+                    "FROM dbo.SimCard " +
+                    "INNER JOIN dbo.IndividualEntrepreneur ON dbo.IndividualEntrepreneur.id = dbo.SimCard.id_individual_entrepreneur; ";
             }
 
             if (selection.Equals("ONE"))
             {
-                GetSimCard = "SELECT * FROM SimCard WHERE id = " + id;
+                GetSimCard = "SELECT dbo.SimCard.id, " +
+                  "dbo.SimCard.operator, " +
+                  "dbo.SimCard.identifaction_number, " +
+                  "dbo.SimCard.brend, " +
+                  "dbo.SimCard.type_device, " +
+                  "dbo.SimCard.tms, " +
+                  "dbo.SimCard.icc, dbo.SimCard.status, " +
+                  "dbo.SimCard.id_individual_entrepreneur, " +
+                  "dbo.IndividualEntrepreneur.last_name, " +
+                  "dbo.IndividualEntrepreneur.first_name, " +
+                  "dbo.IndividualEntrepreneur.middle_name " +
+                  "FROM dbo.SimCard " +
+                  "INNER JOIN dbo.IndividualEntrepreneur ON dbo.IndividualEntrepreneur.id = dbo.SimCard.id_individual_entrepreneur " +
+                  "WHERE dbo.SimCard.id = " + id;
             }
 
             var simCards = new ObservableCollection<SimCard>();
@@ -285,9 +327,9 @@ namespace TerminalMaster.ViewModel
                                         TMS = reader.GetString(5),
                                         ICC = reader.GetString(6),
                                         Status = reader.GetString(7),
-                                        IdIndividual = reader.GetInt32(8)
+                                        IdIndividual = reader.GetInt32(8),
+                                        IndividualEntrepreneur = reader.GetString(9) + " " + reader.GetString(10) + " " + reader.GetString(11)
                                     };
-
                                     simCards.Add(simcard);
                                 }
                             }

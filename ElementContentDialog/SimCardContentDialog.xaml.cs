@@ -55,7 +55,7 @@ namespace TerminalMaster.ElementContentDialog
             string status = (string)StatusComboBox.SelectedValue;
             string typeDevice = (string)TypeDeviceComboBox.SelectedValue;
             string brend = (string)BrendComboBox.SelectedValue;
-            int[] Ids = new int[] { individuals[0].Id};
+            int[] Ids = new int[] { individuals[IndividualEntrepreneurComboBox.SelectedIndex].Id};
             string[] simCards = { @operator, IdentNumberTextBox.Text, brend, typeDevice,
                 TmsTextBox.Text, IccTextBox.Text, status };
 
@@ -79,16 +79,15 @@ namespace TerminalMaster.ElementContentDialog
         {
             if (SelectData.Equals("GET"))
             {
-                ObservableCollection<SimCard> cashRegisters = get.GetSimCard((App.Current as App).ConnectionString, "ONE", SelectIndex);
-               // ObservableCollection<IndividualEntrepreneur> individuals = get.GetIndividual((App.Current as App).ConnectionString, "ONE", SelectIndex);
-                OperatorComboBox.SelectedValue = cashRegisters[0].Operator;
-                IdentNumberTextBox.Text = cashRegisters[0].IdentNumber;
-                BrendComboBox.SelectedValue = cashRegisters[0].Brend;
-                TypeDeviceComboBox.SelectedValue = cashRegisters[0].TypeDevice;
-                TmsTextBox.Text = cashRegisters[0].TMS;
-                IccTextBox.Text = cashRegisters[0].ICC;
-                IndividualEntrepreneurComboBox.SelectedValue = cashRegisters[0].IndividualEntrepreneur;
-                StatusComboBox.SelectedValue = cashRegisters[0].Status;
+                ObservableCollection<SimCard> simCards = get.GetSimCard((App.Current as App).ConnectionString, "ONE", SelectIndex);
+                OperatorComboBox.SelectedValue = simCards[0].Operator;
+                IdentNumberTextBox.Text = simCards[0].IdentNumber;
+                BrendComboBox.SelectedValue = simCards[0].Brend;
+                TypeDeviceComboBox.SelectedValue = simCards[0].TypeDevice;
+                TmsTextBox.Text = simCards[0].TMS;
+                IccTextBox.Text = simCards[0].ICC;
+                IndividualEntrepreneurComboBox.SelectedValue = simCards[0].IndividualEntrepreneur;
+                StatusComboBox.SelectedValue = simCards[0].Status;
                 SelectData = "UPDATE";
             }
         }

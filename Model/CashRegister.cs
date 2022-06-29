@@ -31,20 +31,6 @@ namespace TerminalMaster.Model
         public string Location { get; set; } // Место нахождения
         public int IdHolder { get; set; }
         public int IdUser { get; set; }
-        public CashRegister(int id, string name, string brend, string factoryNumber, string serialNumber, 
-            string paymentNumber, string holder, string user, DateTime dateReception, string location)
-        {
-            Id = id;
-            Name = name;
-            Brend = brend;
-            FactoryNumber = factoryNumber;
-            SerialNumber = serialNumber;
-            PaymentNumber = paymentNumber;
-            Holder = holder;
-            User = user;
-            DateReception = dateReception;
-            Location = location;
-        }
 
         public CashRegister()
         {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using TerminalMaster.Model;
 using TerminalMaster.ViewModel;
 using Windows.UI.Xaml.Controls;
@@ -16,9 +17,10 @@ namespace TerminalMaster.ElementContentDialog
         private ObservableCollection<User> users;
         public CashRegisterContentDialog()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             holders = get.GetHolder((App.Current as App).ConnectionString, "ALL", 0);
             users = get.GetUser((App.Current as App).ConnectionString, "ALL", 0);
+            
 
             for (int i = 0; i < holders.Count; i++)
             {
@@ -46,17 +48,25 @@ namespace TerminalMaster.ElementContentDialog
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            int[] Ids = new int[] { holders[0].Id, users[0].Id };
+            
             string brandValue = (string)BrendComboBox.SelectedValue;
 
             var dateTime = DateReceptionCalendarDatePicker.Date;
             string date = dateTime.Value.Year.ToString() + "-"+ dateTime.Value.Month.ToString() + "-" + dateTime.Value.Day.ToString();
             string[] cashRehisters = { NameTextBox.Text, brandValue, FactoryNumberTextBox.Text,
                 SerialNumberTextBox.Text, PaymentNumberTextBox.Text, date, LocationTextBox.Text};
+            int[] Ids = new int[] { holders[HolderComboBox.SelectedIndex].Id, users[UserComboBox.SelectedIndex].Id };
 
-            if (SelectData.Equals("ADD")) { add.AddDataElement((App.Current as App).ConnectionString, cashRehisters, Ids, "cashRegister"); }
+            if (SelectData.Equals("ADD")) 
+            {
+                
+                add.AddDataElement((App.Current as App).ConnectionString, cashRehisters, Ids, "cashRegister"); 
+            }
 
-            if (SelectData.Equals("UPDATE")) { update.UpdateDataElement((App.Current as App).ConnectionString, cashRehisters, Ids, SelectIndex, "cashRegister"); }
+            if (SelectData.Equals("UPDATE")) 
+            {
+                update.UpdateDataElement((App.Current as App).ConnectionString, cashRehisters, Ids, SelectIndex, "cashRegister"); 
+            }
 
             NameTextBox.Text = string.Empty;
             FactoryNumberTextBox.Text = string.Empty;
