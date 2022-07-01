@@ -54,8 +54,8 @@
             <TextBox x:Name="FactoryNumberTextBox" Header="Заводской номер"/>
             <TextBox x:Name="SerialNumberTextBox" Header="Серийный номер"/>
             <TextBox x:Name="PaymentNumberTextBox" Header="Номер счета"/>
-            <ComboBox x:Name="HolderComboBox" Header="Владелец"/>
-            <ComboBox x:Name="UserComboBox" Header="Пользователь"/>
+            <ComboBox x:Name="HolderComboBox" Header="Владелец" IsTextSearchEnabled="False" IsEditable="True"/>
+            <ComboBox x:Name="UserComboBox" Header="Пользователь" IsTextSearchEnabled="False" IsEditable="True"/>
             <CalendarDatePicker x:Name="DateReceptionCalendarDatePicker" Header="Дата получения"/>
             <TextBox x:Name="LocationTextBox" Header="Место нахождения"/>
         </StackPanel>

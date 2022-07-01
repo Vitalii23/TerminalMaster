@@ -21,10 +21,6 @@ namespace TerminalMaster.ViewModel
                     case "cartrides":
                         AddQuery = "UPDATE dbo.Cartrides SET brand = '" + element[0] + "', model = '" + element[1] + "', vendor_code = '" + element[2] + "', status = '" + element[3] + "' WHERE id = " + id;
                         break;
-                    case "cashRegister":
-                        AddQuery = "UPDATE dbo.CashRegister SET name = '" + element[0] + "', brand = '" + element[1] + "', factory_number =  '" + element[2] + "', serial_number =  '" + element[3] + "', " +
-                            "payment_number =  '" + element[4] + "', date_reception =  '" + element[5] + "', location =  '" + element[6] + "', id_holder =  '" + element[7] + "', id_user = '" + element[8] + "' WHERE Id = " + id;
-                        break;
                     case "phoneBook":
                         AddQuery = "UPDATE dbo.PhoneBook SET first_name = '" + element[0] + "', last_name = '" + element[1] + "', middle_name = '"
                             + element[2] + "', post = '" + element[3] + "', internal_number = '" + element[4]+ "', mobile_number = '" + element[5] + "' WHERE id = " +  id;
@@ -33,15 +29,11 @@ namespace TerminalMaster.ViewModel
                         AddQuery = "UPDATE dbo.Printer SET name_user = '" + element[0] + "', name_printer = '" + element[1] + "', model = '" + element[2] + "', name_port = '"
                             + element[3] + "', location = '" + element[4] + "', operation_system = '" + element[5] + "' WHERE id = " + id;
                         break;
-                    case "simCard":
-                        AddQuery = "UPDATE dbo.SimCard SET operator = '" + element[0] + "', identifaction_number = '" + element[1] + "', type_device = '" + element[2] + "', tms = '" + element[3] + "', icc = '"
-                            + element[4] + "', status = '" + element[5] + "' WHERE id = " + id;
-                        break;
                     case "holder":
-                        AddQuery = "UPDATE dbo.Holder SET first_name = '" + element[0] + "', last_name = '" + element[1] + "', middle_name = '" + element[2] + "'  WHERE id = " + id;
+                        AddQuery = "UPDATE dbo.Holder SET first_name = '" + element[0] + "', last_name = '" + element[1] + "', middle_name = '" + element[2] + "', status = '" + element[3] + "'  WHERE id = " + id;
                         break;
                     case "user":
-                        AddQuery = "UPDATE dbo.UserDevice SET first_name = '" + element[0] + "', last_name = '" + element[1] + "', middle_name = '" + element[2] + "'  WHERE id = " + id;
+                        AddQuery = "UPDATE dbo.UserDevice SET first_name = '" + element[0] + "', last_name = '" + element[1] + "', middle_name = '" + element[2] + "', status = '" + element[3] + "'  WHERE id = " + id;
                         break;
                     case "ie":
                         AddQuery = "UPDATE dbo.IndividualEntrepreneur SET first_name = '" + element[0] + "', last_name = '" + element[1] + "', middle_name = '" + element[2] + "'  WHERE id = " + id;
@@ -77,8 +69,8 @@ namespace TerminalMaster.ViewModel
 
                 if (items.Equals("simCard")) 
                 {
-                    AddQuery = "UPDATE dbo.SimCard SET operator = '" + element[0] + "', identifaction_number =  '" + element[1] + "', brend =  '" + element[2] + "', type_device =  '" + element[3] +
-                        "', tms =  '" + element[4] + "', icc =  '" + element[5] + "', status =  '" + element[6] + "', id_individual_entrepreneur = " + ids[0] + " WHERE id = " + id;
+                    AddQuery = "UPDATE dbo.SimCard SET operator = '" + element[0] + "', identifaction_number =  '" + element[1] + "', type_device =  '" + element[2] +
+                        "', tms =  '" + element[3] + "', icc =  '" + element[4] + "', status =  '" + element[5] + "', id_individual_entrepreneur = " + ids[0] + ", id_cahsRegister = " + ids[1] + " WHERE id = " + id;
                 }
 
 

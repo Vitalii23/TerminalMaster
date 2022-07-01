@@ -38,7 +38,7 @@ namespace TerminalMaster.ViewModel
                         AddQuery = "DELETE FROM dbo.Holder WHERE id = " + id;
                         break;
                     case "user":
-                        AddQuery = "DELETE FROM dbo.User WHERE id = " + id;
+                        AddQuery = "DELETE FROM dbo.UserDevice WHERE id = " + id;
                         break;
                     case "ie":
                         AddQuery = "DELETE FROM dbo.IndividualEntrepreneur WHERE id = " + id;

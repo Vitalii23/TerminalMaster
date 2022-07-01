@@ -11,12 +11,14 @@ namespace TerminalMaster.Model
     {
         [Display(Name = "ID")]
         public int Id { get; set; }
+        [Display(Name = "Имя терминала")]
+        public int Name { get; set; }
         [Display(Name = "Оператор связи")]
         public string Operator { get; set; } // Оператор связи
         [Display(Name = "Идентификационный номер")]
         public string IdentNumber { get; set; } // Идентификационный номер (ИН)
         [Display(Name ="Фирма")]
-        public string Brend { get; set; }
+        public string Brand { get; set; }
         [Display(Name = "Тип устройства")]
         public string TypeDevice { get; set; } // Тип устройства
         [Display(Name = "Номер телефона (TMS)")]
@@ -28,18 +30,7 @@ namespace TerminalMaster.Model
         [Display(Name = "Статус")]
         public string Status { get; set; } // Статус
         public int IdIndividual { get; set; }
-
-        public SimCard(int iD, string @operator, string identNumber, string typeDevice, string tms, string icc, string individualEntrepreneur, string status)
-        {
-            Id = iD;
-            Operator = @operator;
-            IdentNumber = identNumber;
-            TypeDevice = typeDevice;
-            TMS = tms;
-            ICC = icc;
-            IndividualEntrepreneur = individualEntrepreneur;
-            Status = status;
-        }
+        public int IdCashRegister { get; set; }
 
         public SimCard()
         {

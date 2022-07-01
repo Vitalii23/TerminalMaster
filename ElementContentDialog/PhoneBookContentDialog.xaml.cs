@@ -16,7 +16,7 @@ namespace TerminalMaster.ElementContentDialog
         private AddElement add = new AddElement();
         private UpdateElement update = new UpdateElement();
         private GetElement get = new GetElement();
-        private Regex regex = new Regex(@"([A-Za-z0-9-\])}[{(,=/~`@!#№;%$:^&?*_|><\\\s]+)");
+        private Regex regex = new Regex(@"([A-Za-z0-9-\])}[{(,=\/~`@!#+№;%$:^&?*_|><\\\s]+)");
         public PhoneBookContentDialog()
         {
             this.InitializeComponent();
@@ -93,8 +93,13 @@ namespace TerminalMaster.ElementContentDialog
 
         private void PostTextBox_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
         {
-            Regex regexPost = new Regex(@"([A-Za-z0-9-\])}[{(,=/~`@!#№;%$:^&?*_|><\\]+)");
+            Regex regexPost = new Regex(@"([A-Z2-9\])}[{(,=\/~`@!#+№;%$:^&?*_|><\\]+)");
             PostTextBox.Text = regexPost.Replace(PostTextBox.Text, "");
+        }
+
+        private void LocationTextBox_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        {
+            args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
         }
     }
 }

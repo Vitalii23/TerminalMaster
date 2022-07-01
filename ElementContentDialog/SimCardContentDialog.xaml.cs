@@ -17,6 +17,8 @@ namespace TerminalMaster.ElementContentDialog
         private UpdateElement update = new UpdateElement();
         private GetElement get = new GetElement();
         private ObservableCollection<IndividualEntrepreneur> individuals;
+        private ObservableCollection<CashRegister> cashRegisters;
+        private string brand;
         public SimCardContentDialog()
         {
             this.InitializeComponent();
@@ -30,8 +32,11 @@ namespace TerminalMaster.ElementContentDialog
                 IndividualEntrepreneurComboBox.Items.Add(individuals[i].LastName + " " + individuals[i].FirstName + " " + individuals[i].MiddleName);
             }
 
-            string[] brend = { "AZUR", "MSPOS" };
-            AddComboxItem(brend, BrendComboBox);
+            cashRegisters = get.GetCashRegister((App.Current as App).ConnectionString, "ALL", 0);
+            for(int i = 0; i < cashRegisters.Count; i++)
+            {
+                nameCashRegisterComboBox.Items.Add(cashRegisters[i].Name);
+            }
 
             string[] typeDevice = { "ККМ" };
             AddComboxItem(typeDevice, TypeDeviceComboBox);
@@ -54,9 +59,8 @@ namespace TerminalMaster.ElementContentDialog
             string @operator = (string)OperatorComboBox.SelectedValue;
             string status = (string)StatusComboBox.SelectedValue;
             string typeDevice = (string)TypeDeviceComboBox.SelectedValue;
-            string brend = (string)BrendComboBox.SelectedValue;
             int[] Ids = new int[] { individuals[IndividualEntrepreneurComboBox.SelectedIndex].Id};
-            string[] simCards = { @operator, IdentNumberTextBox.Text, brend, typeDevice,
+            string[] simCards = { @operator, IdentNumberTextBox.Text, typeDevice,
                 TmsTextBox.Text, IccTextBox.Text, status };
 
             if (SelectData.Equals("ADD")) { add.AddDataElement((App.Current as App).ConnectionString, simCards, Ids, "simCard"); }
@@ -80,9 +84,9 @@ namespace TerminalMaster.ElementContentDialog
             if (SelectData.Equals("GET"))
             {
                 ObservableCollection<SimCard> simCards = get.GetSimCard((App.Current as App).ConnectionString, "ONE", SelectIndex);
+                nameCashRegisterComboBox.SelectedValue = simCards[0].Name;
                 OperatorComboBox.SelectedValue = simCards[0].Operator;
                 IdentNumberTextBox.Text = simCards[0].IdentNumber;
-                BrendComboBox.SelectedValue = simCards[0].Brend;
                 TypeDeviceComboBox.SelectedValue = simCards[0].TypeDevice;
                 TmsTextBox.Text = simCards[0].TMS;
                 IccTextBox.Text = simCards[0].ICC;

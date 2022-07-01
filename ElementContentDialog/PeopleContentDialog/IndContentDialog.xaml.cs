@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text.RegularExpressions;
-using TerminalMaster.Model;
+using TerminalMaster.Model.People;
 using TerminalMaster.ViewModel;
 using Windows.UI.Xaml.Controls;
 
@@ -8,46 +9,44 @@ using Windows.UI.Xaml.Controls;
 
 namespace TerminalMaster.ElementContentDialog.PeopleContentDialog
 {
-    public sealed partial class PeopleContentDialog : ContentDialog
+    public sealed partial class indContentDialog : ContentDialog
     {
         private AddElement add = new AddElement();
         private UpdateElement update = new UpdateElement();
         private GetElement get = new GetElement();
         private Regex regex = new Regex(@"([A-Za-z0-9-\])}[{(,=/~`@!#№;%$:^&?*_|><\\\s]+)");
-        public PeopleContentDialog()
+
+        public indContentDialog()
         {
-            this.InitializeComponent();
-            string[] status = { "Рабочий", "Уволен", "Стажировка" };
-            AddComboxItem(status, StatusComboBox);
+            InitializeComponent();
         }
-        public void AddComboxItem(string[] text, ComboBox combo)
-        {
-            for (int i = 0; i < text.Length; i++)
-            {
-                combo.Items.Add(text[i]);
-            }
-        }
+
         public string SelectData { get; set; }
         public int SelectIndex { get; set; }
         public string People { get; set; }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            string statusValue = (string)StatusComboBox.SelectedValue;
-            string[] peoples = { FirstNameTextBox.Text, LastNameTextBox.Text, MiddleNameTextBox.Text, statusValue};
+            string[] ie = { FirstNameTextBox.Text, LastNameTextBox.Text, MiddleNameTextBox.Text, PSRNIETextBox.Text, TINTextBox.Text, };
 
-            if (SelectData.Equals("ADD")) { add.AddDataElement((App.Current as App).ConnectionString, peoples, People); }
+            if (SelectData.Equals("ADD")) { add.AddDataElement((App.Current as App).ConnectionString, ie, People); }
 
-            if (SelectData.Equals("UPDATE")) { update.UpdateDataElement((App.Current as App).ConnectionString, peoples, SelectIndex, People); }
+            if (SelectData.Equals("UPDATE")) { update.UpdateDataElement((App.Current as App).ConnectionString, ie, SelectIndex, People); }
 
             FirstNameTextBox.Text = string.Empty;
             LastNameTextBox.Text = string.Empty;
             MiddleNameTextBox.Text = string.Empty;
+            PSRNIETextBox.Text = string.Empty;
+            TINTextBox.Text = string.Empty;
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-           
+            FirstNameTextBox.Text = string.Empty;
+            LastNameTextBox.Text = string.Empty;
+            MiddleNameTextBox.Text = string.Empty;
+            PSRNIETextBox.Text = string.Empty;
+            TINTextBox.Text = string.Empty;
         }
 
         private void FirstNameTextBox_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
@@ -68,32 +67,28 @@ namespace TerminalMaster.ElementContentDialog.PeopleContentDialog
             MiddleNameTextBox.Text = regex.Replace(MiddleNameTextBox.Text, "");
         }
 
-        private void PeopleContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
+        private void PSRNIE_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
-            if (People.Equals("holder")) 
-            {
-                PeopleCD.Title = "Владельцы";
-                if (SelectData.Equals("GET"))
-                {
-                    ObservableCollection<Holder> holders = get.GetHolder((App.Current as App).ConnectionString, "ONE", SelectIndex);
-                    LastNameTextBox.Text = holders[0].LastName;
-                    FirstNameTextBox.Text = holders[0].FirstName;
-                    MiddleNameTextBox.Text = holders[0].MiddleName;
-                    StatusComboBox.SelectedValue = holders[0].Status;
-                    SelectData = "UPDATE";
-                }
-            }
+            args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
+        }
 
-            if (People.Equals("user"))
+        private void TIN_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        {
+            args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
+        }
+
+        private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
+        {
+            if (People.Equals("ie"))
             {
-                PeopleCD.Title = "Пользователи";
                 if (SelectData.Equals("GET"))
                 {
-                    ObservableCollection<User> user = get.GetUser((App.Current as App).ConnectionString, "ONE", SelectIndex);
-                    LastNameTextBox.Text = user[0].LastName;
-                    FirstNameTextBox.Text = user[0].FirstName;
-                    MiddleNameTextBox.Text = user[0].MiddleName;
-                    StatusComboBox.SelectedValue = user[0].Status;
+                    ObservableCollection<IndividualEntrepreneur> ie = get.GetIndividual((App.Current as App).ConnectionString, "ONE", SelectIndex);
+                    LastNameTextBox.Text = ie[0].LastName;
+                    FirstNameTextBox.Text = ie[0].FirstName;
+                    MiddleNameTextBox.Text = ie[0].MiddleName;
+                    PSRNIETextBox.Text = ie[0].PSRNIE;
+                    TINTextBox.Text = ie[0].TIN;
                     SelectData = "UPDATE";
                 }
             }

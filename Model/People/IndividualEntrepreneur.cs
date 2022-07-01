@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace TerminalMaster.Model.People
 {
@@ -11,11 +6,15 @@ namespace TerminalMaster.Model.People
     {
         [Display(Name = "ID")]
         public int Id { get; set; }
-        [Display(Name = "Имя")]
-        public string FirstName { get; set; } // Имя
         [Display(Name = "Фамилия")]
         public string LastName { get; set; } // Фамилия 
+        [Display(Name = "Имя")]
+        public string FirstName { get; set; } // Имя
         [Display(Name = "Отчество")]
         public string MiddleName { get; set; } // Отчество
+        [Display(Name = "ОГРНИП")]
+        public string PSRNIE { get; set; }  // ОГРНИП
+        [Display(Name = "ИНН")]
+        public string TIN { get; set; } // ИНН
     }
 }

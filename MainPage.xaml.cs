@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Diagnostics;
 using Windows.UI.ViewManagement;
+using TerminalMaster;
 using TerminalMaster.ElementContentDialog;
 using TerminalMaster.ElementContentDialog.PeopleContentDialog;
 using TerminalMaster.Model;
@@ -205,7 +206,7 @@ namespace TerminalMaster
                     PeopleContentDialog holder = new PeopleContentDialog
                     {
                         SelectData = "ADD",
-                        people = NameNavigationItem
+                        People = NameNavigationItem
                     };
                     await holder.ShowAsync();
                     updateTable(NameNavigationItem);
@@ -214,16 +215,16 @@ namespace TerminalMaster
                     PeopleContentDialog user = new PeopleContentDialog
                     {
                         SelectData = "ADD",
-                        people = NameNavigationItem
+                        People = NameNavigationItem
                     };
                     await user.ShowAsync();
                     updateTable(NameNavigationItem);
                     break;
                 case "ie":
-                    PeopleContentDialog individual = new PeopleContentDialog
+                    indContentDialog individual = new indContentDialog
                     {
                         SelectData = "ADD",
-                        people = NameNavigationItem
+                        People = NameNavigationItem
                     };
                     await individual.ShowAsync();
                     updateTable(NameNavigationItem);
@@ -331,7 +332,7 @@ namespace TerminalMaster
                         {
                             SelectData = "GET",
                             SelectIndex = dataGets.HolderList[MainDataGrid.SelectedIndex].Id,
-                            people = NameNavigationItem
+                            People = NameNavigationItem
                         };
                         await holder.ShowAsync();
                         updateTable(NameNavigationItem);
@@ -349,7 +350,7 @@ namespace TerminalMaster
                         {
                             SelectData = "GET",
                             SelectIndex = dataGets.UserList[MainDataGrid.SelectedIndex].Id,
-                            people = NameNavigationItem
+                            People = NameNavigationItem
                         };
                         await user.ShowAsync();
                         updateTable(NameNavigationItem);
@@ -363,11 +364,11 @@ namespace TerminalMaster
                 case "ie":
                     if (MainDataGrid.SelectedIndex >= 0)
                     {
-                        PeopleContentDialog individual = new PeopleContentDialog
+                        indContentDialog individual = new indContentDialog
                         {
                             SelectData = "GET",
                             SelectIndex = dataGets.IndividualEntrepreneurList[MainDataGrid.SelectedIndex].Id,
-                            people = NameNavigationItem
+                            People = NameNavigationItem
                         };
                         await individual.ShowAsync();
                         updateTable(NameNavigationItem);

@@ -8,7 +8,7 @@
 
   <Identity
     Name="f40111d6-210e-4b09-b1b7-accb40dbee16"
-    Publisher="CN=Admin-Teh"
+    Publisher="CN=admin-teh"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="f40111d6-210e-4b09-b1b7-accb40dbee16" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
@@ -32,7 +32,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="TerminalMaster.App">
       <uap:VisualElements
-        DisplayName="TerminalMaster"
+        DisplayName="Terminal Master"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="TerminalMaster"

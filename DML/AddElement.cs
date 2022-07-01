@@ -41,19 +41,19 @@ namespace TerminalMaster.ViewModel
                         AddQuery = "INSERT INTO dbo.Cartrides (brand, model, vendor_code, status) VALUES " + values;
                         break;
                     case "phoneBook":
-                        AddQuery = "INSERT INTO dbo.PhoneBook (first_name, last_name, middle_name, post, internal_number, mobile_number) VALUES " + values;
+                        AddQuery = "INSERT INTO dbo.PhoneBook (last_name, first_name, middle_name, post, internal_number, mobile_number) VALUES " + values;
                         break;
                     case "printer":
                         AddQuery = "INSERT INTO dbo.Printer (name_user, name_printer, model, name_port, location, operation_system, status) VALUES " + values;
                         break;
                     case "holder":
-                        AddQuery = "INSERT INTO dbo.Holder (first_name, last_name, middle_name) VALUES " + values;
+                        AddQuery = "INSERT INTO dbo.Holder (last_name, first_name, middle_name, status) VALUES " + values;
                         break;
                     case "user":
-                        AddQuery = "INSERT INTO dbo.UserDevice (first_name, last_name, middle_name) VALUES " + values;
+                        AddQuery = "INSERT INTO dbo.UserDevice (last_name, first_name, middle_name, status) VALUES " + values;
                         break;
                     case "ie":
-                        AddQuery = "INSERT INTO dbo.IndividualEntrepreneur (first_name, last_name, middle_name) VALUES " + values;
+                        AddQuery = "INSERT INTO dbo.IndividualEntrepreneur (last_name, first_name, middle_name, psrnie, tin) VALUES " + values;
                         break;
                     default:
                         break;
@@ -107,7 +107,7 @@ namespace TerminalMaster.ViewModel
 
                 if (items.Equals("simCard"))
                 {
-                    AddQuery = "INSERT INTO dbo.SimCard (operator, identifaction_number, brend, type_device, tms, icc, status, id_individual_entrepreneur) VALUES " + values + id[0] + ")";
+                    AddQuery = "INSERT INTO dbo.SimCard (operator, identifaction_number, type_device, tms, icc, status, id_individual_entrepreneur, id_cashRegister) VALUES " + values + id[0] + "," + id[1] + ")";
                 }
 
                 var connect = new SqlConnection(connection);

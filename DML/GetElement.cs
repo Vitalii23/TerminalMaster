@@ -270,9 +270,10 @@ namespace TerminalMaster.ViewModel
             if (selection.Equals("ALL"))
             {
                 GetSimCard = "SELECT dbo.SimCard.id, " +
+                    "dbo.CashRegister.name, " +
                     "dbo.SimCard.operator, " +
                     "dbo.SimCard.identifaction_number, " +
-                    "dbo.SimCard.brend, " +
+                    "dbo.CashRegister.brand, " +
                     "dbo.SimCard.type_device, " +
                     "dbo.SimCard.tms, " +
                     "dbo.SimCard.icc, dbo.SimCard.status, " +
@@ -281,7 +282,8 @@ namespace TerminalMaster.ViewModel
                     "dbo.IndividualEntrepreneur.first_name, " +
                     "dbo.IndividualEntrepreneur.middle_name " +
                     "FROM dbo.SimCard " +
-                    "INNER JOIN dbo.IndividualEntrepreneur ON dbo.IndividualEntrepreneur.id = dbo.SimCard.id_individual_entrepreneur; ";
+                    "INNER JOIN dbo.IndividualEntrepreneur ON dbo.IndividualEntrepreneur.id = dbo.SimCard.id_individual_entrepreneur " +
+                    "INNER JOIN dbo.CashRegister ON dbo.CashRegister.id = dbo.Simcard.id_cashRegister;";
             }
 
             if (selection.Equals("ONE"))
@@ -299,6 +301,7 @@ namespace TerminalMaster.ViewModel
                   "dbo.IndividualEntrepreneur.middle_name " +
                   "FROM dbo.SimCard " +
                   "INNER JOIN dbo.IndividualEntrepreneur ON dbo.IndividualEntrepreneur.id = dbo.SimCard.id_individual_entrepreneur " +
+                  "INNER JOIN dbo.CashRegister ON dbo.CashRegister.id = dbo.Simcard.id_cashRegister " +
                   "WHERE dbo.SimCard.id = " + id;
             }
 
@@ -322,7 +325,7 @@ namespace TerminalMaster.ViewModel
                                         Id = reader.GetInt32(0),
                                         Operator = reader.GetString(1),
                                         IdentNumber = reader.GetString(2),
-                                        Brend = reader.GetString(3),
+                                        Brand = reader.GetString(3),
                                         TypeDevice = reader.GetString(4),
                                         TMS = reader.GetString(5),
                                         ICC = reader.GetString(6),
@@ -372,12 +375,14 @@ namespace TerminalMaster.ViewModel
                             {
                                 while (reader.Read())
                                 {
-                                    var individual = new IndividualEntrepreneur()
+                                    IndividualEntrepreneur individual = new IndividualEntrepreneur()
                                     {
                                         Id = reader.GetInt32(0),
-                                        FirstName = reader.GetString(1),
-                                        LastName = reader.GetString(2),
+                                        LastName = reader.GetString(1),
+                                        FirstName = reader.GetString(2),
                                         MiddleName = reader.GetString(3),
+                                        PSRNIE = reader.GetString(4),
+                                        TIN = reader.GetString(5),
                                     };
                                     individuals.Add(individual);
                                 }
@@ -424,9 +429,10 @@ namespace TerminalMaster.ViewModel
                                     var holder = new Holder()
                                     {
                                         Id = reader.GetInt32(0),
-                                        FirstName = reader.GetString(1),
-                                        LastName = reader.GetString(2),
+                                        LastName = reader.GetString(1),
+                                        FirstName = reader.GetString(2),
                                         MiddleName = reader.GetString(3),
+                                        Status = reader.GetString(4)
                                     };
                                     holders.Add(holder);
                                 }
@@ -473,9 +479,10 @@ namespace TerminalMaster.ViewModel
                                     var user = new User()
                                     {
                                         Id = reader.GetInt32(0),
-                                        FirstName = reader.GetString(1),
-                                        LastName = reader.GetString(2),
+                                        LastName = reader.GetString(1),
+                                        FirstName = reader.GetString(2),
                                         MiddleName = reader.GetString(3),
+                                        Status = reader.GetString(4)
                                     };
                                     users.Add(user);
                                 }
