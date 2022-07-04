@@ -18,6 +18,6 @@ namespace TerminalMaster.Model
         [Display(Name = "Отчество")]
         public string MiddleName { get; set; } // Отчество
         [Display(Name = "Статус")]
-        public string Status { get; set; }
+        public string Status { get; set; } // Статус
     }
 }

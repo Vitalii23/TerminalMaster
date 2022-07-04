@@ -21,6 +21,10 @@ using TerminalMaster.ElementContentDialog;
 using TerminalMaster.ElementContentDialog.PeopleContentDialog;
 using TerminalMaster.Model;
 using Windows.UI.Popups;
+using System.ComponentModel;
+using Microsoft.Toolkit.Uwp.UI;
+using System.Collections.ObjectModel;
+using TerminalMaster.DML;
 
 namespace TerminalMaster
 {
@@ -30,6 +34,9 @@ namespace TerminalMaster
         private readonly DataGets dataGets = new DataGets();
         private GetElement Get = new GetElement();
         private DeleteElement Delete = new DeleteElement();
+        private OrderByElement Order = new OrderByElement();
+        private DataGridSortDirection? CheckSort;
+        private bool triggerSort = true;
         public MainPage()
         {
             InitializeComponent();
@@ -37,13 +44,11 @@ namespace TerminalMaster
 
 
         }
-
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             var result = ApplicationView.GetForCurrentView().TryResizeView(new Size(1080, 1920));
             Debug.WriteLine("OnLoaded TryResizeView: " + result);
         }
-
         private void updateTable(string items)
         {
             switch (items)
@@ -94,6 +99,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
             NameNavigationItem = "printer";
+            triggerSort = true;
             updateTable(NameNavigationItem);
         }
         private void CartridesNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
@@ -101,6 +107,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
             NameNavigationItem = "cartrides";
+            triggerSort = true;
             updateTable(NameNavigationItem);
         }
         private void CashRegystriNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
@@ -108,6 +115,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
             NameNavigationItem = "cashRegister";
+            triggerSort = true;
             updateTable(NameNavigationItem);
         }
         private void SimCardRegystriNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
@@ -115,6 +123,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
             NameNavigationItem = "simCard";
+            triggerSort = true;
             updateTable(NameNavigationItem);
         }
         private void PhoneBookNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
@@ -122,6 +131,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
             NameNavigationItem = "phoneBook";
+            triggerSort = true;
             updateTable(NameNavigationItem);
         }
         private void HolderNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
@@ -129,6 +139,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
             NameNavigationItem = "holder";
+            triggerSort = true;
             updateTable(NameNavigationItem);
         }
         private void UserNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
@@ -136,6 +147,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
             NameNavigationItem = "user";
+            triggerSort = true;
             updateTable(NameNavigationItem);
         }
         private void IndividualEntrepreneurNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
@@ -143,6 +155,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             MainDataGrid.Columns.Clear();
             NameNavigationItem = "ie";
+            triggerSort = true;
             updateTable(NameNavigationItem);
         }
         //private void SettingNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
@@ -159,7 +172,6 @@ namespace TerminalMaster
         //}
         private async void AppBarButtonAdd_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Debug.WriteLine(MainDataGrid.SelectedIndex);
             switch (NameNavigationItem)
             {
                 case "printer":
@@ -235,8 +247,6 @@ namespace TerminalMaster
         }
         private async void AppBarButtonEdit_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Debug.WriteLine(MainDataGrid.SelectedIndex);
-            Debug.WriteLine(dataGets.PrinterList.Count);
             switch (NameNavigationItem)
             {
                 case "printer":
@@ -388,7 +398,6 @@ namespace TerminalMaster
         private async void AppBarButtonDelete_Tapped(object sender, TappedRoutedEventArgs e)
         {
             MessageDialog message;
-            Debug.WriteLine(MainDataGrid.SelectedIndex);
 
             if (MainDataGrid.SelectedIndex >= 0)
             {
@@ -481,6 +490,89 @@ namespace TerminalMaster
                 default:
                     break;
 
+            }
+        }
+
+        private void MainDataGrid_Sorting(object sender, DataGridColumnEventArgs e)
+        {
+            if (triggerSort)
+            {
+                CheckSort = e.Column.SortDirection;
+                triggerSort = false;
+            }
+
+
+            switch (NameNavigationItem)
+            {
+                case "printer":
+                    break;
+                case "cartrides":
+                    break;
+                case "cashRegister":
+                    break;
+                case "simCard":
+                    break;
+                case "phoneBook":
+                    break;
+                case "holder":
+
+                    if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
+                    {
+                        CheckSort = DataGridSortDirection.Ascending;
+                        MainDataGrid.ItemsSource = Order.GetOrderByHolder((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                    }
+                    else
+                    {
+                        CheckSort = DataGridSortDirection.Descending;
+                        MainDataGrid.ItemsSource = Order.GetOrderByHolder((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                    }
+
+                    break;
+                case "user":
+                    if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
+                    {
+                        CheckSort = DataGridSortDirection.Ascending;
+                        MainDataGrid.ItemsSource = Order.GetOrderByUser((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                    }
+                    else
+                    {
+                        CheckSort = DataGridSortDirection.Descending;
+                        MainDataGrid.ItemsSource = Order.GetOrderByUser((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                    }
+                    break;
+                case "ie":
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void MainDataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "Id":
+                    e.Column.Header = "ID";
+                    e.Column.Tag = "id";
+                    break;
+                case "LastName":
+                    e.Column.Header = "Фамилия";
+                    e.Column.Tag = "last_name";
+                    break;
+                case "FirstName":
+                    e.Column.Header = "Имя";
+                    e.Column.Tag = "first_name";
+                    break;
+                case "MiddleName":
+                    e.Column.Header = "Отчество";
+                    e.Column.Tag = "middle_name";
+                    break;
+                case "Status":
+                    e.Column.Header = "Статус";
+                    e.Column.Tag = "status";
+                    break;
+                default:
+                    break;
             }
         }
         //private void ConnectNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)

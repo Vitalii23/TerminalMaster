@@ -132,6 +132,7 @@
     <Compile Include="DML\AddElement.cs" />
     <Compile Include="DML\DeleteElement.cs" />
     <Compile Include="DML\GetElement.cs" />
+    <Compile Include="DML\OrderByElement.cs" />
     <Compile Include="DML\SaveElement.cs" />
     <Compile Include="DML\UpdateElement.cs" />
     <Compile Include="ElementContentDialog\CartridgeContentDialog.xaml.cs">

@@ -26,6 +26,7 @@ namespace TerminalMaster.Model
         [Display(Name = "Пользователь")]
         public string User { get; set; } // Пользователь
         [Display(Name = "Дата получения")]
+        [DisplayFormat(DataFormatString = "yyyy-MM-dd")]
         public DateTime DateReception { get; set; } // Дата получения
         [Display(Name = "Место нахождения")]
         public string Location { get; set; } // Место нахождения

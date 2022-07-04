@@ -60,7 +60,8 @@
             </NavigationView.PaneFooter>-->
             <NavigationView.Content>
                 <control:DataGrid x:Name="MainDataGrid" 
-                                  AutoGenerateColumns="True" 
+                                  AutoGeneratingColumn="MainDataGrid_AutoGeneratingColumn"
+                                  CanUserSortColumns="True"
                                   ScrollViewer.CanContentRenderOutsideBounds="True"
                                   ColumnWidth="Auto"
                                   ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -68,7 +69,8 @@
                                   CanUserReorderColumns="True" 
                                   CanUserResizeColumns="True"
                                   Margin="0,42,0,0"
-                                  IsReadOnly="True">
+                                  IsReadOnly="True" 
+                                  Sorting="MainDataGrid_Sorting">
                 </control:DataGrid>
             </NavigationView.Content>
         </NavigationView>

@@ -33,7 +33,7 @@ namespace TerminalMaster.ElementContentDialog
                 UserComboBox.Items.Add(users[i].LastName + " " + users[i].FirstName + " " + users[i].MiddleName);
             }
 
-            string[] brend = { "AZUR", "MSPOS" };
+            string[] brend = { "AZUR", "MSPOS", "Атол FPrint-22ПТК", "Атол 55Ф" };
             AddComboxItem(brend, BrendComboBox);
         }
 

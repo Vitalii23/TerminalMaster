@@ -18,7 +18,7 @@ namespace TerminalMaster.Model
         [Display(Name = "Идентификационный номер")]
         public string IdentNumber { get; set; } // Идентификационный номер (ИН)
         [Display(Name ="Фирма")]
-        public string Brand { get; set; }
+        public string Brand { get; set; } // Фирма
         [Display(Name = "Тип устройства")]
         public string TypeDevice { get; set; } // Тип устройства
         [Display(Name = "Номер телефона (TMS)")]
