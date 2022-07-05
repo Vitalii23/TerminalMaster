@@ -44,7 +44,7 @@ namespace TerminalMaster.ViewModel
                         AddQuery = "INSERT INTO dbo.PhoneBook (last_name, first_name, middle_name, post, internal_number, mobile_number) VALUES " + values;
                         break;
                     case "printer":
-                        AddQuery = "INSERT INTO dbo.Printer (name_user, name_printer, model, name_port, location, operation_system, status) VALUES " + values;
+                        AddQuery = "INSERT INTO dbo.Printer (model, name_port, location, operation_system, status) VALUES " + values;
                         break;
                     case "holder":
                         AddQuery = "INSERT INTO dbo.Holder (last_name, first_name, middle_name, status) VALUES " + values;

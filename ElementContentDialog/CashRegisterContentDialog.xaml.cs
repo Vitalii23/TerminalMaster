@@ -90,8 +90,8 @@ namespace TerminalMaster.ElementContentDialog
             if (SelectData.Equals("GET"))
             {
                 ObservableCollection<CashRegister> cashRegisters = get.GetCashRegister((App.Current as App).ConnectionString, "ONE", SelectIndex);
-                NameTextBox.Text = cashRegisters[0].Name;
-                BrendComboBox.SelectedValue = cashRegisters[0].Brend;
+                NameTextBox.Text = cashRegisters[0].NameDevice;
+                BrendComboBox.SelectedValue = cashRegisters[0].Brand;
                 FactoryNumberTextBox.Text = cashRegisters[0].FactoryNumber;
                 SerialNumberTextBox.Text = cashRegisters[0].SerialNumber;
                 PaymentNumberTextBox.Text = cashRegisters[0].PaymentNumber;

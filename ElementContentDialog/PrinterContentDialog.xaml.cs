@@ -33,15 +33,12 @@ namespace TerminalMaster.ElementContentDialog
         {
 
             string status = (string)StatusComboBox.SelectedValue;
-            string[] printers = { NameUserTextBox.Text, NamePrinterTextBox.Text, ModelTextBox.Text,
-                NamePortTextBox.Text, LocationTextBox.Text, OcTextBox.Text, status };
+            string[] printers = { ModelTextBox.Text, NamePortTextBox.Text, LocationTextBox.Text, OcTextBox.Text, status };
 
             if (SelectData.Equals("ADD")) { add.AddDataElement((App.Current as App).ConnectionString, printers, "printer"); }
 
             if (SelectData.Equals("UPDATE")) { update.UpdateDataElement((App.Current as App).ConnectionString, printers, SelectIndex, "printer"); }
 
-            NameUserTextBox.Text = string.Empty;
-            NamePrinterTextBox.Text = string.Empty;
             ModelTextBox.Text = string.Empty;
             NamePortTextBox.Text = string.Empty;
             LocationTextBox.Text = string.Empty;
@@ -50,8 +47,6 @@ namespace TerminalMaster.ElementContentDialog
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            NameUserTextBox.Text = string.Empty;
-            NamePrinterTextBox.Text = string.Empty;
             ModelTextBox.Text = string.Empty;
             NamePortTextBox.Text = string.Empty;
             LocationTextBox.Text = string.Empty;
@@ -63,11 +58,9 @@ namespace TerminalMaster.ElementContentDialog
             if (SelectData.Equals("GET"))
             {
                 ObservableCollection<Printer> printers = get.GetPrinter((App.Current as App).ConnectionString, "ONE", SelectIndex);
-                NameUserTextBox.Text = printers[0].NameUser;
-                NamePrinterTextBox.Text = printers[0].NamePrinter;
-                ModelTextBox.Text = printers[0].Model;
+                ModelTextBox.Text = printers[0].ModelPrinter;
                 NamePortTextBox.Text = printers[0].NamePort;
-                LocationTextBox.Text = printers[0].Location;
+                LocationTextBox.Text = printers[0].LocationPrinter;
                 OcTextBox.Text = printers[0].OC;
                 StatusComboBox.SelectedValue = printers[0].Status;
                 SelectData = "UPDATE";

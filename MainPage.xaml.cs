@@ -492,7 +492,6 @@ namespace TerminalMaster
 
             }
         }
-
         private void MainDataGrid_Sorting(object sender, DataGridColumnEventArgs e)
         {
             if (triggerSort)
@@ -505,17 +504,66 @@ namespace TerminalMaster
             switch (NameNavigationItem)
             {
                 case "printer":
+                    if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
+                    {
+                        CheckSort = DataGridSortDirection.Ascending;
+                        MainDataGrid.ItemsSource = Order.GetOrderByPrinter((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                    }
+                    else
+                    {
+                        CheckSort = DataGridSortDirection.Descending;
+                        MainDataGrid.ItemsSource = Order.GetOrderByPrinter((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                    }
                     break;
                 case "cartrides":
+                    if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
+                    {
+                        CheckSort = DataGridSortDirection.Ascending;
+                        MainDataGrid.ItemsSource = Order.GetOrderByCartridges((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                    }
+                    else
+                    {
+                        CheckSort = DataGridSortDirection.Descending;
+                        MainDataGrid.ItemsSource = Order.GetOrderByCartridges((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                    }
                     break;
                 case "cashRegister":
+                    if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
+                    {
+                        CheckSort = DataGridSortDirection.Ascending;
+                        MainDataGrid.ItemsSource = Order.GetOrderByCashRegister((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                    }
+                    else
+                    {
+                        CheckSort = DataGridSortDirection.Descending;
+                        MainDataGrid.ItemsSource = Order.GetOrderByCashRegister((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                    }
                     break;
                 case "simCard":
+                    if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
+                    {
+                        CheckSort = DataGridSortDirection.Ascending;
+                        MainDataGrid.ItemsSource = Order.GetOrderBySimCard((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                    }
+                    else
+                    {
+                        CheckSort = DataGridSortDirection.Descending;
+                        MainDataGrid.ItemsSource = Order.GetOrderBySimCard((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                    }
                     break;
                 case "phoneBook":
+                    if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
+                    {
+                        CheckSort = DataGridSortDirection.Ascending;
+                        MainDataGrid.ItemsSource = Order.GetOrderByPhoneBook((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                    }
+                    else
+                    {
+                        CheckSort = DataGridSortDirection.Descending;
+                        MainDataGrid.ItemsSource = Order.GetOrderByPhoneBook((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                    }
                     break;
                 case "holder":
-
                     if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
                     {
                         CheckSort = DataGridSortDirection.Ascending;
@@ -526,7 +574,6 @@ namespace TerminalMaster
                         CheckSort = DataGridSortDirection.Descending;
                         MainDataGrid.ItemsSource = Order.GetOrderByHolder((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
                     }
-
                     break;
                 case "user":
                     if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
@@ -541,12 +588,21 @@ namespace TerminalMaster
                     }
                     break;
                 case "ie":
+                    if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
+                    {
+                        CheckSort = DataGridSortDirection.Ascending;
+                        MainDataGrid.ItemsSource = Order.GetOrderByIndividual((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                    }
+                    else
+                    {
+                        CheckSort = DataGridSortDirection.Descending;
+                        MainDataGrid.ItemsSource = Order.GetOrderByIndividual((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                    }
                     break;
                 default:
                     break;
             }
         }
-
         private void MainDataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             switch (e.PropertyName)
@@ -571,9 +627,156 @@ namespace TerminalMaster
                     e.Column.Header = "Статус";
                     e.Column.Tag = "status";
                     break;
+                case "PSRNIE":
+                    e.Column.Header = "ОГРНИП";
+                    e.Column.Tag = "psrnie";
+                    break;
+                case "TIN":
+                    e.Column.Header = "ИНН";
+                    e.Column.Tag = "tin";
+                    break;
+                case "Brand":
+                    e.Column.Header = "Бренд";
+                    e.Column.Tag = "brand";
+                    break;
+                case "Model":
+                    e.Column.Header = "Модель";
+                    e.Column.Tag = "model";
+                    break;
+                case "VendorCode":
+                    e.Column.Header = "Артикуль";
+                    e.Column.Tag = "vendor_code";
+                    break;
+                case "NameDevice":
+                    e.Column.Header = "ККМ";
+                    e.Column.Tag = "name";
+                    break;
+                case "FactoryNumber":
+                    e.Column.Header = "Заводской номер";
+                    e.Column.Tag = "factory_number";
+                    break;
+                case "SerialNumber":
+                    e.Column.Header = "Серийный номер";
+                    e.Column.Tag = "serial_number";
+                    break;
+                case "PaymentNumber":
+                    e.Column.Header = "Номер счета";
+                    e.Column.Tag = "payment_number";
+                    break;
+                case "Holder":
+                    e.Column.Header = "Владелец";
+                    e.Column.Tag = "holder";
+                    break;
+                case "User":
+                    e.Column.Header = "Пользователь";
+                    e.Column.Tag = "user";
+                    break;
+                case "DateReception":
+                    e.Column.CanUserSort = false;
+                    e.Column.Header = "Дата получения";
+                    e.Column.Tag = "date_reception";
+                    e.Column.Visibility = Visibility.Collapsed;
+                    break;
+                case "DateReceptionString":
+                    e.Column.Header = "Дата получения";
+                    e.Column.Tag = "date_reception";
+                    break;
+                case "Location":
+                    e.Column.Header = "Место нахождения";
+                    e.Column.Tag = "location";
+                    break;
+                case "Post":
+                    e.Column.Header = "Должность";
+                    e.Column.Tag = "post";
+                    break;
+                case "InternalNumber":
+                    e.Column.Header = "Внутренный номер";
+                    e.Column.Tag = "internal_number";
+                    break;
+                case "MobileNumber":
+                    e.Column.Header = "Мобильный номер";
+                    e.Column.Tag = "mobile_number";
+                    break;
+                case "ModelPrinter":
+                    e.Column.Header = "Модель";
+                    e.Column.Tag = "model";
+                    break;
+                case "NamePort":
+                    e.Column.Header = "Имена портов";
+                    e.Column.Tag = "name_port";
+                    break;
+                case "LocationPrinter":
+                    e.Column.Header = "Расположение принтера";
+                    e.Column.Tag = "name_port";
+                    break;
+                case "OC":
+                    e.Column.Header = "Среда ОС";
+                    e.Column.Tag = "operation_system";
+                    break;
+                case "NameTerminal":
+                    e.Column.Header = "Имя терминала";
+                    e.Column.Tag = "name_terminal";
+                    break;
+                case "Operator":
+                    e.Column.Header = "Оператор связи";
+                    e.Column.Tag = "operator";
+                    break;
+                case "IdentNumber":
+                    e.Column.Header = "Идентификационный номер (ИН)";
+                    e.Column.Tag = "identifaction_number";
+                    break;
+                case "TypeDevice":
+                    e.Column.Header = "Тип устройства";
+                    e.Column.Tag = "type_device";
+                    break;
+                case "TMS":
+                    e.Column.Header = "Номер телефона (TMS)";
+                    e.Column.Tag = "tms";
+                    break;
+                case "ICC":
+                    e.Column.Header = "Уникальный серийный номер (ICC)";
+                    e.Column.Tag = "icc";
+                    break;
+                case "IndividualEntrepreneur":
+                    e.Column.Header = "Индивидуальный предприниматель (ИП)";
+                    e.Column.Tag = "individual_entrepreneur";
+                    break;
+                case "IdHolder":
+                    e.Column.CanUserSort = false;
+                    e.Column.Header = "IdHolder";
+                    e.Column.Tag = "IdHolder";
+                    e.Column.Visibility = Visibility.Collapsed;
+                    break;
+                case "IdUser":
+                    e.Column.CanUserSort = false;
+                    e.Column.Header = "IdUser";
+                    e.Column.Tag = "IdUser";
+                    e.Column.Visibility = Visibility.Collapsed;
+                    break;
+                case "IdIndividual":
+                    e.Column.CanUserSort = false;
+                    e.Column.Header = "IdIndividual";
+                    e.Column.Tag = "IdIndividual";
+                    e.Column.Visibility = Visibility.Collapsed;
+                    break;
+                case "IdCashRegister":
+                    e.Column.CanUserSort = false;
+                    e.Column.Header = "IdCashRegister";
+                    e.Column.Tag = "IdCashRegister";
+                    e.Column.Visibility = Visibility.Collapsed;
+                    break;
                 default:
                     break;
             }
+        }
+        private void MainDataGrid_LoadingRowGroup(object sender, DataGridRowGroupHeaderEventArgs e)
+        {
+
+        }
+
+        private void SearcherTextBox_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
+        {
+            Debug.WriteLine(args.QueryText);
         }
         //private void ConnectNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         //{

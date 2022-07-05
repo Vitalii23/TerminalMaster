@@ -134,12 +134,13 @@ namespace TerminalMaster.ViewModel
                                 {
                                     var cashRegister = new CashRegister();
                                     cashRegister.Id = reader.GetInt32(0);
-                                    cashRegister.Name = reader.GetString(1);
-                                    cashRegister.Brend = reader.GetString(2);
+                                    cashRegister.NameDevice = reader.GetString(1);
+                                    cashRegister.Brand = reader.GetString(2);
                                     cashRegister.FactoryNumber = reader.GetString(3);
                                     cashRegister.SerialNumber = reader.GetString(4);
                                     cashRegister.PaymentNumber = reader.GetString(5);
                                     cashRegister.DateReception = reader.GetDateTime(6);
+                                    cashRegister.DateReceptionString = cashRegister.DateReception.ToShortDateString();
                                     cashRegister.Location = reader.GetString(7);
                                     cashRegister.IdHolder = reader.GetInt32(8);
                                     cashRegister.IdUser = reader.GetInt32(9);
@@ -242,13 +243,11 @@ namespace TerminalMaster.ViewModel
                                     var printer = new Printer()
                                     {
                                         Id = reader.GetInt32(0),
-                                        NameUser = reader.GetString(1),
-                                        NamePrinter = reader.GetString(2),
-                                        Model = reader.GetString(3),
-                                        NamePort = reader.GetString(4),
-                                        Location = reader.GetString(5),
-                                        OC = reader.GetString(6),
-                                        Status = reader.GetString(7)
+                                        ModelPrinter = reader.GetString(1),
+                                        NamePort = reader.GetString(2),
+                                        LocationPrinter = reader.GetString(3),
+                                        OC = reader.GetString(4),
+                                        Status = reader.GetString(5)
                                     };
                                     printers.Add(printer);
                                 }
@@ -289,13 +288,15 @@ namespace TerminalMaster.ViewModel
             if (selection.Equals("ONE"))
             {
                 GetSimCard = "SELECT dbo.SimCard.id, " +
+                  "dbo.CashRegister.name, " +
                   "dbo.SimCard.operator, " +
                   "dbo.SimCard.identifaction_number, " +
-                  "dbo.SimCard.brend, " +
+                  "dbo.CashRegister.brand, " +
                   "dbo.SimCard.type_device, " +
                   "dbo.SimCard.tms, " +
                   "dbo.SimCard.icc, dbo.SimCard.status, " +
                   "dbo.SimCard.id_individual_entrepreneur, " +
+                  "dbo.SimCard.id_cahRegister, " +
                   "dbo.IndividualEntrepreneur.last_name, " +
                   "dbo.IndividualEntrepreneur.first_name, " +
                   "dbo.IndividualEntrepreneur.middle_name " +
@@ -323,14 +324,16 @@ namespace TerminalMaster.ViewModel
                                     var simcard = new SimCard
                                     {
                                         Id = reader.GetInt32(0),
-                                        Operator = reader.GetString(1),
-                                        IdentNumber = reader.GetString(2),
-                                        Brand = reader.GetString(3),
-                                        TypeDevice = reader.GetString(4),
-                                        TMS = reader.GetString(5),
-                                        ICC = reader.GetString(6),
-                                        Status = reader.GetString(7),
-                                        IdIndividual = reader.GetInt32(8),
+                                        NameTerminal = reader.GetInt32(1),
+                                        Operator = reader.GetString(2),
+                                        IdentNumber = reader.GetString(3),
+                                        Brand = reader.GetString(4),
+                                        TypeDevice = reader.GetString(5),
+                                        TMS = reader.GetString(6),
+                                        ICC = reader.GetString(7),
+                                        Status = reader.GetString(8),
+                                        IdIndividual = reader.GetInt32(7),
+                                        IdCashRegister = reader.GetInt32(8),
                                         IndividualEntrepreneur = reader.GetString(9) + " " + reader.GetString(10) + " " + reader.GetString(11)
                                     };
                                     simCards.Add(simcard);
