@@ -35,7 +35,7 @@ namespace TerminalMaster.ElementContentDialog
             cashRegisters = get.GetCashRegister((App.Current as App).ConnectionString, "ALL", 0);
             for(int i = 0; i < cashRegisters.Count; i++)
             {
-                nameCashRegisterComboBox.Items.Add(cashRegisters[i].NameDevice);
+                NameCashRegisterComboBox.Items.Add(cashRegisters[i].NameDevice);
             }
 
             string[] typeDevice = { "ККМ" };
@@ -84,7 +84,7 @@ namespace TerminalMaster.ElementContentDialog
             if (SelectData.Equals("GET"))
             {
                 ObservableCollection<SimCard> simCards = get.GetSimCard((App.Current as App).ConnectionString, "ONE", SelectIndex);
-                nameCashRegisterComboBox.SelectedValue = simCards[0].NameTerminal;
+                NameCashRegisterComboBox.SelectedValue = simCards[0].NameTerminal;
                 OperatorComboBox.SelectedValue = simCards[0].Operator;
                 IdentNumberTextBox.Text = simCards[0].IdentNumber;
                 TypeDeviceComboBox.SelectedValue = simCards[0].TypeDevice;

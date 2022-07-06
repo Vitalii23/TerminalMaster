@@ -57,6 +57,8 @@
             <ComboBox x:Name="HolderComboBox" Header="Владелец" IsTextSearchEnabled="False" IsEditable="True"/>
             <ComboBox x:Name="UserComboBox" Header="Пользователь" IsTextSearchEnabled="False" IsEditable="True"/>
             <CalendarDatePicker x:Name="DateReceptionCalendarDatePicker" Header="Дата получения"/>
+            <CalendarDatePicker x:Name="DateEndFiscalMemoryCalendarDatePicker" Header="Дата активация ОФД"/>
+            <CalendarDatePicker x:Name="DateKeyActivationFiscalDataOperatorCalendarDatePicker" Header="Дата окончания ФН"/>
             <TextBox x:Name="LocationTextBox" Header="Место нахождения"/>
         </StackPanel>
     </Grid>

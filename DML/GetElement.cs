@@ -78,6 +78,8 @@ namespace TerminalMaster.ViewModel
                     "dbo.CashRegister.serial_number, " +
                     "dbo.CashRegister.payment_number, " +
                     "dbo.CashRegister.date_reception, " +
+                    "dbo.CashRegister.date_end_fiscal_memory, " +
+                    "dbo.CashRegister.date_key_activ_fisc_data, " +
                     "dbo.CashRegister.location, " +
                     "dbo.CashRegister.id_holder," +
                     "dbo.CashRegister.id_user," +
@@ -101,6 +103,8 @@ namespace TerminalMaster.ViewModel
                     "dbo.CashRegister.serial_number, " +
                     "dbo.CashRegister.payment_number, " +
                     "dbo.CashRegister.date_reception, " +
+                    "dbo.CashRegister.date_end_fiscal_memory, " +
+                    "dbo.CashRegister.date_key_activ_fisc_data, " +
                     "dbo.CashRegister.location, " +
                     "dbo.CashRegister.id_holder," +
                     "dbo.CashRegister.id_user," +
@@ -141,11 +145,15 @@ namespace TerminalMaster.ViewModel
                                     cashRegister.PaymentNumber = reader.GetString(5);
                                     cashRegister.DateReception = reader.GetDateTime(6);
                                     cashRegister.DateReceptionString = cashRegister.DateReception.ToShortDateString();
-                                    cashRegister.Location = reader.GetString(7);
-                                    cashRegister.IdHolder = reader.GetInt32(8);
-                                    cashRegister.IdUser = reader.GetInt32(9);
-                                    cashRegister.Holder = reader.GetString(10) + " " + reader.GetString(11) + " " + reader.GetString(12);
-                                    cashRegister.User = reader.GetString(13) + " " + reader.GetString(14) + " " + reader.GetString(15);
+                                    cashRegister.DateEndFiscalMemory = reader.GetDateTime(7);
+                                    cashRegister.DateEndFiscalMemoryString = cashRegister.DateEndFiscalMemory.ToShortDateString();
+                                    cashRegister.DateKeyActivationFiscalDataOperator = reader.GetDateTime(8);
+                                    cashRegister.DateKeyActivationFiscalDataOperatorString = cashRegister.DateKeyActivationFiscalDataOperator.ToShortDateString();
+                                    cashRegister.Location = reader.GetString(9);
+                                    cashRegister.IdHolder = reader.GetInt32(10);
+                                    cashRegister.IdUser = reader.GetInt32(11);
+                                    cashRegister.Holder = reader.GetString(12) + " " + reader.GetString(13) + " " + reader.GetString(14);
+                                    cashRegister.User = reader.GetString(15) + " " + reader.GetString(16) + " " + reader.GetString(17);
                                     cashRegisters.Add(cashRegister);
                                 }
                             }
@@ -324,7 +332,7 @@ namespace TerminalMaster.ViewModel
                                     var simcard = new SimCard
                                     {
                                         Id = reader.GetInt32(0),
-                                        NameTerminal = reader.GetInt32(1),
+                                        NameTerminal = reader.GetString(1),
                                         Operator = reader.GetString(2),
                                         IdentNumber = reader.GetString(3),
                                         Brand = reader.GetString(4),

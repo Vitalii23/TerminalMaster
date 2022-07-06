@@ -52,10 +52,15 @@ namespace TerminalMaster.ElementContentDialog
             
             string brandValue = (string)BrendComboBox.SelectedValue;
 
-            var dateTime = DateReceptionCalendarDatePicker.Date;
-            string date = dateTime.Value.Year.ToString() + "-"+ dateTime.Value.Month.ToString() + "-" + dateTime.Value.Day.ToString();
+            DateTimeOffset? dateTime = DateReceptionCalendarDatePicker.Date;
+            string dateReception = dateTime.Value.Year.ToString() + "-"+ dateTime.Value.Month.ToString() + "-" + dateTime.Value.Day.ToString();
+            dateTime = DateEndFiscalMemoryCalendarDatePicker.Date;
+            string dateEndFiscal = dateTime.Value.Year.ToString() + "-" + dateTime.Value.Month.ToString() + "-" + dateTime.Value.Day.ToString();
+            dateTime = DateEndFiscalMemoryCalendarDatePicker.Date;
+            string dateActivatFiscal = dateTime.Value.Year.ToString() + "-" + dateTime.Value.Month.ToString() + "-" + dateTime.Value.Day.ToString();
+
             string[] cashRehisters = { NameTextBox.Text, brandValue, FactoryNumberTextBox.Text,
-                SerialNumberTextBox.Text, PaymentNumberTextBox.Text, date, LocationTextBox.Text};
+                SerialNumberTextBox.Text, PaymentNumberTextBox.Text, dateReception, dateEndFiscal, dateActivatFiscal, LocationTextBox.Text};
             int[] Ids = new int[] { holders[HolderComboBox.SelectedIndex].Id, users[UserComboBox.SelectedIndex].Id };
 
             if (SelectData.Equals("ADD")) 
@@ -98,6 +103,8 @@ namespace TerminalMaster.ElementContentDialog
                 HolderComboBox.SelectedValue = cashRegisters[0].Holder;
                 UserComboBox.SelectedValue = cashRegisters[0].User;
                 DateReceptionCalendarDatePicker.Date = cashRegisters[0].DateReception;
+                DateEndFiscalMemoryCalendarDatePicker.Date = cashRegisters[0].DateEndFiscalMemory;
+                DateKeyActivationFiscalDataOperatorCalendarDatePicker.Date = cashRegisters[0].DateKeyActivationFiscalDataOperator;
                 LocationTextBox.Text = cashRegisters[0].Location;
                 SelectData = "UPDATE";
             }

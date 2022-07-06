@@ -253,6 +253,8 @@ namespace TerminalMaster.DML
                    "dbo.CashRegister.serial_number, " +
                    "dbo.CashRegister.payment_number, " +
                    "dbo.CashRegister.date_reception, " +
+                   "dbo.CashRegister.date_end_fiscal_memory, " +
+                   "dbo.CashRegister.date_key_activ_fisc_data, " +
                    "dbo.CashRegister.location, " +
                    "dbo.CashRegister.id_holder," +
                    "dbo.CashRegister.id_user," +
@@ -276,6 +278,8 @@ namespace TerminalMaster.DML
                                        "dbo.CashRegister.serial_number, " +
                                        "dbo.CashRegister.payment_number, " +
                                        "dbo.CashRegister.date_reception, " +
+                                       "dbo.CashRegister.date_end_fiscal_memory, " +
+                                       "dbo.CashRegister.date_key_activ_fisc_data, " +
                                        "dbo.CashRegister.location, " +
                                        "dbo.CashRegister.id_holder," +
                                        "dbo.CashRegister.id_user," +
@@ -299,6 +303,8 @@ namespace TerminalMaster.DML
                                        "dbo.CashRegister.serial_number, " +
                                        "dbo.CashRegister.payment_number, " +
                                        "dbo.CashRegister.date_reception, " +
+                                       "dbo.CashRegister.date_end_fiscal_memory, " +
+                                       "dbo.CashRegister.date_key_activ_fisc_data, " +
                                        "dbo.CashRegister.location, " +
                                        "dbo.CashRegister.id_holder," +
                                        "dbo.CashRegister.id_user," +
@@ -523,7 +529,7 @@ namespace TerminalMaster.DML
                                     var simcard = new SimCard
                                     {
                                         Id = reader.GetInt32(0),
-                                        NameTerminal = reader.GetInt32(1),
+                                        NameTerminal = reader.GetString(1),
                                         Operator = reader.GetString(2),
                                         IdentNumber = reader.GetString(3),
                                         Brand = reader.GetString(4),

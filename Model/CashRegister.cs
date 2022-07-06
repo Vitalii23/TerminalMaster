@@ -15,7 +15,13 @@ namespace TerminalMaster.Model
         public string User { get; set; } // Пользователь
         [DisplayFormat(DataFormatString = "yyyy-MM-dd")]
         public DateTime DateReception { get; set; } // Дата получения
-        public string DateReceptionString { get; set; } // Дата получения
+        public string DateReceptionString { get; set; } // Дата получения ТЕХТ
+        [DisplayFormat(DataFormatString = "yyyy-MM-dd")]
+        public DateTime DateEndFiscalMemory { get; set; }
+        public string DateEndFiscalMemoryString { get; set; }
+        [DisplayFormat(DataFormatString = "yyyy-MM-dd")]
+        public DateTime DateKeyActivationFiscalDataOperator { get; set; }
+        public string DateKeyActivationFiscalDataOperatorString { get; set; }
         public string Location { get; set; } // Место нахождения
         public int IdHolder { get; set; }
         public int IdUser { get; set; }

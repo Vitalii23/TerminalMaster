@@ -49,7 +49,7 @@
                     <Setter Property="BorderThickness" Value="2,2,2,2"/>
                 </Style>
             </StackPanel.Resources>
-            <ComboBox x:Name="nameCashRegisterComboBox" Header="Имя терминала"/>
+            <ComboBox x:Name="NameCashRegisterComboBox" Header="Имя терминала"/>
             <ComboBox x:Name="OperatorComboBox" Header="Операторы связи" FontWeight="SemiBold"/>
             <TextBox x:Name="IdentNumberTextBox" Header="Индентификационный номер (ИН)" MaxLength="15"/>
             <ComboBox x:Name="TypeDeviceComboBox" Header="Тип устройства"/>

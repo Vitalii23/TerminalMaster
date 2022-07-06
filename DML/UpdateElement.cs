@@ -69,15 +69,32 @@ namespace TerminalMaster.ViewModel
 
                 if (items.Equals("simCard")) 
                 {
-                    AddQuery = "UPDATE dbo.SimCard SET operator = '" + element[0] + "', identifaction_number =  '" + element[1] + "', type_device =  '" + element[2] +
-                        "', tms =  '" + element[3] + "', icc =  '" + element[4] + "', status =  '" + element[5] + "', id_individual_entrepreneur = " + ids[0] + ", id_cahsRegister = " + ids[1] + " WHERE id = " + id;
+                    AddQuery = "UPDATE dbo.SimCard SET operator = '" + element[0] + 
+                        "', identifaction_number =  '" + element[1] + 
+                        "', type_device =  '" + element[2] +
+                        "', tms =  '" + element[3] + 
+                        "', icc =  '" + element[4] + 
+                        "', status =  '" + element[5] + 
+                        "', id_individual_entrepreneur = " + ids[0] + 
+                        ", id_cahsRegister = " + ids[1] + 
+                        " WHERE id = " + id;
                 }
 
 
                 if (items.Equals("cashRegister"))
                 {
-                    AddQuery = "UPDATE dbo.CashRegister SET name = '" + element[0] + "', brand = '" + element[1] + "', factory_number =  '" + element[2] + "', serial_number =  '" + element[3] + "', " +
-                           "payment_number =  '" + element[4] + "', date_reception =  '" + element[5] + "', location =  '" + element[6] + "', id_holder =  '" + ids[0] + "', id_user = '" + ids[1] + "' WHERE Id = " + id;
+                    AddQuery = "UPDATE dbo.CashRegister SET name = '" + element[0] + 
+                        "', brand = '" + element[1] + 
+                        "', factory_number =  '" + element[2] + 
+                        "', serial_number =  '" + element[3] + 
+                        "', payment_number =  '" + element[4] + 
+                        "', date_reception =  '" + element[5] +
+                        "', date_end_fiscal_memory =  '" + element[6] +
+                        "', date_key_activ_fisc_data =  '" + element[7] +
+                        "', location =  '" + element[8] + 
+                        "', id_holder =  '" + ids[0] + 
+                        "', id_user = '" + ids[1] + 
+                        "' WHERE Id = " + id;
                 }
 
 

@@ -25,6 +25,7 @@ using System.ComponentModel;
 using Microsoft.Toolkit.Uwp.UI;
 using System.Collections.ObjectModel;
 using TerminalMaster.DML;
+using TerminalMaster.Model.People;
 
 namespace TerminalMaster
 {
@@ -36,7 +37,8 @@ namespace TerminalMaster
         private DeleteElement Delete = new DeleteElement();
         private OrderByElement Order = new OrderByElement();
         private DataGridSortDirection? CheckSort;
-        private bool triggerSort = true;
+        private bool triggerSort = true, triggerHeader, triggerPropertyNameList;
+        private Dictionary<string, string> PropertyNameDictionary;
         public MainPage()
         {
             InitializeComponent();
@@ -49,7 +51,7 @@ namespace TerminalMaster
             var result = ApplicationView.GetForCurrentView().TryResizeView(new Size(1080, 1920));
             Debug.WriteLine("OnLoaded TryResizeView: " + result);
         }
-        private void updateTable(string items)
+        private void UpdateTable(string items)
         {
             switch (items)
             {
@@ -89,6 +91,13 @@ namespace TerminalMaster
                     break;
             }
         }
+        public void AddComboxItem(List<string> text, ComboBox combo)
+        {
+            for (int i = 0; i < text.Count; i++)
+            {
+                combo.Items.Add(text[i]);
+            }
+        }
         /// <summary>
         /// Taped
         /// </summary>
@@ -96,67 +105,106 @@ namespace TerminalMaster
         /// <param name="e"></param>
         private void PrintNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            PropertyNameDictionary = new Dictionary<string, string>();
             MainCommandBar.IsEnabled = true;
+            triggerPropertyNameList = true;
+            triggerHeader = true;
             MainDataGrid.Columns.Clear();
+            SelectionItemComboBox.Items.Clear();
+            PropertyNameDictionary.Clear();
             NameNavigationItem = "printer";
             triggerSort = true;
-            updateTable(NameNavigationItem);
+            UpdateTable(NameNavigationItem);
         }
         private void CartridesNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            PropertyNameDictionary = new Dictionary<string, string>();
             MainCommandBar.IsEnabled = true;
+            triggerPropertyNameList = true;
+            triggerHeader = true;
             MainDataGrid.Columns.Clear();
+            SelectionItemComboBox.Items.Clear();
             NameNavigationItem = "cartrides";
             triggerSort = true;
-            updateTable(NameNavigationItem);
+            UpdateTable(NameNavigationItem);
         }
         private void CashRegystriNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            PropertyNameDictionary = new Dictionary<string, string>();
             MainCommandBar.IsEnabled = true;
+            triggerPropertyNameList = true;
+            triggerHeader = true;
             MainDataGrid.Columns.Clear();
+            SelectionItemComboBox.Items.Clear();
+            PropertyNameDictionary.Clear();
             NameNavigationItem = "cashRegister";
             triggerSort = true;
-            updateTable(NameNavigationItem);
+            UpdateTable(NameNavigationItem);
         }
         private void SimCardRegystriNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            PropertyNameDictionary = new Dictionary<string, string>();
             MainCommandBar.IsEnabled = true;
+            triggerPropertyNameList = true;
+            triggerHeader = true;
             MainDataGrid.Columns.Clear();
+            SelectionItemComboBox.Items.Clear();
+            PropertyNameDictionary.Clear();
             NameNavigationItem = "simCard";
             triggerSort = true;
-            updateTable(NameNavigationItem);
+            UpdateTable(NameNavigationItem);
         }
         private void PhoneBookNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            PropertyNameDictionary = new Dictionary<string, string>();
             MainCommandBar.IsEnabled = true;
+            triggerPropertyNameList = true;
+            triggerHeader = true;
             MainDataGrid.Columns.Clear();
+            SelectionItemComboBox.Items.Clear();
+            PropertyNameDictionary.Clear();
             NameNavigationItem = "phoneBook";
             triggerSort = true;
-            updateTable(NameNavigationItem);
+            UpdateTable(NameNavigationItem);
         }
         private void HolderNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            PropertyNameDictionary = new Dictionary<string, string>();
             MainCommandBar.IsEnabled = true;
+            triggerPropertyNameList = true;
+            triggerHeader = true;
             MainDataGrid.Columns.Clear();
+            SelectionItemComboBox.Items.Clear();
+            PropertyNameDictionary.Clear();
             NameNavigationItem = "holder";
             triggerSort = true;
-            updateTable(NameNavigationItem);
+            UpdateTable(NameNavigationItem);
         }
         private void UserNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            PropertyNameDictionary = new Dictionary<string, string>();
             MainCommandBar.IsEnabled = true;
+            triggerPropertyNameList = true;
+            triggerHeader = true;
             MainDataGrid.Columns.Clear();
+            SelectionItemComboBox.Items.Clear();
+            PropertyNameDictionary.Clear();
             NameNavigationItem = "user";
             triggerSort = true;
-            updateTable(NameNavigationItem);
+            UpdateTable(NameNavigationItem);
         }
         private void IndividualEntrepreneurNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            PropertyNameDictionary = new Dictionary<string, string>();
             MainCommandBar.IsEnabled = true;
+            triggerPropertyNameList = true;
+            triggerHeader = true;
             MainDataGrid.Columns.Clear();
+            SelectionItemComboBox.Items.Clear();
+            PropertyNameDictionary.Clear();
             NameNavigationItem = "ie";
             triggerSort = true;
-            updateTable(NameNavigationItem);
+            UpdateTable(NameNavigationItem);
         }
         //private void SettingNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         //{
@@ -172,6 +220,8 @@ namespace TerminalMaster
         //}
         private async void AppBarButtonAdd_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            triggerPropertyNameList = false;
+            triggerHeader = false;
             switch (NameNavigationItem)
             {
                 case "printer":
@@ -180,7 +230,7 @@ namespace TerminalMaster
                         SelectData = "ADD"
                     };
                     await printer.ShowAsync();
-                    updateTable(NameNavigationItem);
+                    UpdateTable(NameNavigationItem);
                     break;
                 case "cartrides":
                     CartridgeContentDialog cartridge = new CartridgeContentDialog
@@ -188,7 +238,7 @@ namespace TerminalMaster
                         SelectData = "ADD"
                     };
                     await cartridge.ShowAsync();
-                    updateTable(NameNavigationItem);
+                    UpdateTable(NameNavigationItem);
                     break;
                 case "cashRegister":
                     CashRegisterContentDialog cashRegister = new CashRegisterContentDialog
@@ -196,7 +246,7 @@ namespace TerminalMaster
                         SelectData = "ADD"
                     };
                     await cashRegister.ShowAsync();
-                    updateTable(NameNavigationItem);
+                    UpdateTable(NameNavigationItem);
                     break;
                 case "simCard":
                     SimCardContentDialog simCard = new SimCardContentDialog
@@ -204,7 +254,7 @@ namespace TerminalMaster
                         SelectData = "ADD"
                     };
                     await simCard.ShowAsync();
-                    updateTable(NameNavigationItem);
+                    UpdateTable(NameNavigationItem);
                     break;
                 case "phoneBook":
                     PhoneBookContentDialog phoneBook = new PhoneBookContentDialog
@@ -212,7 +262,7 @@ namespace TerminalMaster
                         SelectData = "ADD"
                     };
                     await phoneBook.ShowAsync();
-                    updateTable(NameNavigationItem);
+                    UpdateTable(NameNavigationItem);
                     break;
                 case "holder":
                     PeopleContentDialog holder = new PeopleContentDialog
@@ -221,7 +271,7 @@ namespace TerminalMaster
                         People = NameNavigationItem
                     };
                     await holder.ShowAsync();
-                    updateTable(NameNavigationItem);
+                    UpdateTable(NameNavigationItem);
                     break;
                 case "user":
                     PeopleContentDialog user = new PeopleContentDialog
@@ -230,7 +280,7 @@ namespace TerminalMaster
                         People = NameNavigationItem
                     };
                     await user.ShowAsync();
-                    updateTable(NameNavigationItem);
+                    UpdateTable(NameNavigationItem);
                     break;
                 case "ie":
                     indContentDialog individual = new indContentDialog
@@ -239,7 +289,7 @@ namespace TerminalMaster
                         People = NameNavigationItem
                     };
                     await individual.ShowAsync();
-                    updateTable(NameNavigationItem);
+                    UpdateTable(NameNavigationItem);
                     break;
                 default:
                     break;
@@ -247,6 +297,8 @@ namespace TerminalMaster
         }
         private async void AppBarButtonEdit_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            triggerPropertyNameList = false;
+            triggerHeader = false;
             switch (NameNavigationItem)
             {
                 case "printer":
@@ -258,7 +310,7 @@ namespace TerminalMaster
                             SelectIndex = dataGets.PrinterList[MainDataGrid.SelectedIndex].Id
                         };
                         await printer.ShowAsync();
-                        updateTable(NameNavigationItem);
+                        UpdateTable(NameNavigationItem);
                     }
                     else
                     {
@@ -275,7 +327,7 @@ namespace TerminalMaster
                             SelectIndex = dataGets.CartridgesList[MainDataGrid.SelectedIndex].Id
                         };
                         await cartridge.ShowAsync();
-                        updateTable(NameNavigationItem);
+                        UpdateTable(NameNavigationItem);
                     }
                     else
                     {
@@ -292,7 +344,7 @@ namespace TerminalMaster
                             SelectIndex = dataGets.CashRegisterList[MainDataGrid.SelectedIndex].Id
                         };
                         await cashRegister.ShowAsync();
-                        updateTable(NameNavigationItem);
+                        UpdateTable(NameNavigationItem);
                     }
                     else
                     {
@@ -309,7 +361,7 @@ namespace TerminalMaster
                             SelectIndex = dataGets.SimCardList[MainDataGrid.SelectedIndex].Id
                         };
                         await simCard.ShowAsync();
-                        updateTable(NameNavigationItem);
+                        UpdateTable(NameNavigationItem);
                     }
                     else
                     {
@@ -327,7 +379,7 @@ namespace TerminalMaster
                             SelectIndex = dataGets.PhoneBookList[MainDataGrid.SelectedIndex].Id
                         };
                         await phoneBook.ShowAsync();
-                        updateTable(NameNavigationItem);
+                        UpdateTable(NameNavigationItem);
                     }
                     else
                     {
@@ -345,7 +397,7 @@ namespace TerminalMaster
                             People = NameNavigationItem
                         };
                         await holder.ShowAsync();
-                        updateTable(NameNavigationItem);
+                        UpdateTable(NameNavigationItem);
                     }
                     else
                     {
@@ -363,7 +415,7 @@ namespace TerminalMaster
                             People = NameNavigationItem
                         };
                         await user.ShowAsync();
-                        updateTable(NameNavigationItem);
+                        UpdateTable(NameNavigationItem);
                     }
                     else
                     {
@@ -381,7 +433,7 @@ namespace TerminalMaster
                             People = NameNavigationItem
                         };
                         await individual.ShowAsync();
-                        updateTable(NameNavigationItem);
+                        UpdateTable(NameNavigationItem);
                     }
                     else
                     {
@@ -399,6 +451,8 @@ namespace TerminalMaster
         {
             MessageDialog message;
 
+            triggerPropertyNameList = false;
+            triggerHeader = false;
             if (MainDataGrid.SelectedIndex >= 0)
             {
                 message = new MessageDialog("Вы точно хотите удалить этот элемент.");
@@ -420,40 +474,39 @@ namespace TerminalMaster
                     {
                         Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.PrinterList[MainDataGrid.SelectedIndex].Id, NameNavigationItem);
                     }
-                    updateTable(NameNavigationItem);
+                    UpdateTable(NameNavigationItem);
                     break;
                 case "cartrides":
                     if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.CartridgesList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
-                    updateTable(NameNavigationItem);
+                    UpdateTable(NameNavigationItem);
                     break;
                 case "cashRegister":
                     if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.CashRegisterList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
-                    updateTable(NameNavigationItem);
+                    UpdateTable(NameNavigationItem);
                     break;
                 case "simCard":
                     if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.SimCardList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
-                    updateTable(NameNavigationItem);
+                    UpdateTable(NameNavigationItem);
                     break;
                 case "phoneBook":
                     if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.PhoneBookList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
-                    updateTable(NameNavigationItem);
+                    UpdateTable(NameNavigationItem);
                     break;
                 case "holder":
                     if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.HolderList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
-                    updateTable(NameNavigationItem);
+                    UpdateTable(NameNavigationItem);
                     break;
                 case "user":
                     if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.UserList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
-                    updateTable(NameNavigationItem);
+                    UpdateTable(NameNavigationItem);
                     break;
                 case "ie":
                     if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.IndividualEntrepreneurList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
-                    updateTable(NameNavigationItem);
+                    UpdateTable(NameNavigationItem);
                     break;
                 default:
                     break;
             }
-            Debug.WriteLine(MainDataGrid.SelectedIndex);
         }
         //private void AppBarButtonSave_Tapped(object sender, TappedRoutedEventArgs e)
         //{
@@ -461,6 +514,8 @@ namespace TerminalMaster
         //}
         private void AppBarButtonUpdate_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            triggerPropertyNameList = false;
+            triggerHeader = false;
             switch (NameNavigationItem)
             {
                 case "printer":
@@ -500,6 +555,8 @@ namespace TerminalMaster
                 triggerSort = false;
             }
 
+            triggerPropertyNameList = false;
+            triggerHeader = false;
 
             switch (NameNavigationItem)
             {
@@ -676,10 +733,36 @@ namespace TerminalMaster
                     e.Column.Header = "Дата получения";
                     e.Column.Tag = "date_reception";
                     e.Column.Visibility = Visibility.Collapsed;
+                    triggerPropertyNameList = false;
+                    triggerHeader = false;
                     break;
                 case "DateReceptionString":
                     e.Column.Header = "Дата получения";
                     e.Column.Tag = "date_reception";
+                    break;
+                case "DateEndFiscalMemory":
+                    e.Column.CanUserSort = false;
+                    e.Column.Header = "Дата окончания ФН";
+                    e.Column.Tag = "date_end_fiscal_memory";
+                    e.Column.Visibility = Visibility.Collapsed;
+                    triggerPropertyNameList = false;
+                    triggerHeader = false;
+                    break;
+                case "DateEndFiscalMemoryString":
+                    e.Column.Header = "Дата окончания ФН";
+                    e.Column.Tag = "date_end_fiscal_memory";
+                    break;
+                case "DateKeyActivationFiscalDataOperator":
+                    e.Column.CanUserSort = false;
+                    e.Column.Header = "Дата активации ОФД";
+                    e.Column.Tag = "date_key_activ_fisc_data";
+                    e.Column.Visibility = Visibility.Collapsed;
+                    triggerPropertyNameList = false;
+                    triggerHeader = false;
+                    break;
+                case "DateKeyActivationFiscalDataOperatorString":
+                    e.Column.Header = "Дата активации ОФД";
+                    e.Column.Tag = "date_key_activ_fisc_data";
                     break;
                 case "Location":
                     e.Column.Header = "Место нахождения";
@@ -746,27 +829,44 @@ namespace TerminalMaster
                     e.Column.Header = "IdHolder";
                     e.Column.Tag = "IdHolder";
                     e.Column.Visibility = Visibility.Collapsed;
+                    triggerPropertyNameList = false;
+                    triggerHeader = false;
                     break;
                 case "IdUser":
                     e.Column.CanUserSort = false;
                     e.Column.Header = "IdUser";
                     e.Column.Tag = "IdUser";
                     e.Column.Visibility = Visibility.Collapsed;
+                    triggerPropertyNameList = false;
+                    triggerHeader = false;
                     break;
                 case "IdIndividual":
                     e.Column.CanUserSort = false;
                     e.Column.Header = "IdIndividual";
                     e.Column.Tag = "IdIndividual";
                     e.Column.Visibility = Visibility.Collapsed;
+                    triggerPropertyNameList = false;
+                    triggerHeader = false;
                     break;
                 case "IdCashRegister":
                     e.Column.CanUserSort = false;
                     e.Column.Header = "IdCashRegister";
                     e.Column.Tag = "IdCashRegister";
                     e.Column.Visibility = Visibility.Collapsed;
+                    triggerPropertyNameList = false;
+                    triggerHeader = false;
                     break;
                 default:
                     break;
+            }
+            if (triggerPropertyNameList)
+            {
+                PropertyNameDictionary.Add(e.Column.Header.ToString(), e.PropertyName);
+            }
+
+            if (triggerHeader) 
+            { 
+                SelectionItemComboBox.Items.Add(e.Column.Header);
             }
         }
         private void MainDataGrid_LoadingRowGroup(object sender, DataGridRowGroupHeaderEventArgs e)
@@ -776,7 +876,272 @@ namespace TerminalMaster
 
         private void SearcherTextBox_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
         {
-            Debug.WriteLine(args.QueryText);
+            triggerPropertyNameList = false;
+            triggerHeader = false;
+            foreach (KeyValuePair<string, string> kvp in PropertyNameDictionary)
+            {
+                if (SelectionItemComboBox.SelectedValue.Equals(kvp.Key))
+                {
+                    switch (kvp.Value)
+                    {
+                        case "Id":
+                            switch (NameNavigationItem)
+                            {
+                                case "printer":
+                                    break;
+                                case "cartrides":
+                                    break;
+                                case "cashRegister":
+                                    break;
+                                case "simCard":
+                                    break;
+                                case "phoneBook":
+                                    break;
+                                case "holder":
+                                    break;
+                                case "user":
+                                    break;
+                                case "ie":
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        case "LastName":
+                            switch (NameNavigationItem)
+                            {
+                                case "phoneBook":
+                                    IEnumerable<PhoneBook> PhoneBookFilter = dataGets.PhoneBookList.Where(PhoneBook => PhoneBook.LastName.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = PhoneBookFilter;
+                                    break;
+                                case "holder":
+                                    IEnumerable<Holder> HolderFilter = dataGets.HolderList.Where(Holder => Holder.LastName.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = HolderFilter;
+                                    break;
+                                case "user":
+                                    IEnumerable<User> UserFilter = dataGets.UserList.Where(User => User.LastName.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = UserFilter;
+                                    break;
+                                case "ie":
+                                    IEnumerable<IndividualEntrepreneur> IndividualEntrepreneurFilter = dataGets.IndividualEntrepreneurList.Where(IndividualEntrepreneur => IndividualEntrepreneur.LastName.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = IndividualEntrepreneurFilter;
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        case "FirstName":
+                            switch (NameNavigationItem)
+                            {
+                                case "phoneBook":
+                                    IEnumerable<PhoneBook> PhoneBookFilter = dataGets.PhoneBookList.Where(PhoneBook => PhoneBook.FirstName.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = PhoneBookFilter;
+                                    break;
+                                case "holder":
+                                    IEnumerable<Holder> HolderFilter = dataGets.HolderList.Where(Holder => Holder.FirstName.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = HolderFilter;
+                                    break;
+                                case "user":
+                                    IEnumerable<User> UserFilter = dataGets.UserList.Where(User => User.FirstName.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = UserFilter;
+                                    break;
+                                case "ie":
+                                    IEnumerable<IndividualEntrepreneur> IndividualEntrepreneurFilter = dataGets.IndividualEntrepreneurList.Where(IndividualEntrepreneur => IndividualEntrepreneur.FirstName.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = IndividualEntrepreneurFilter;
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        case "MiddleName":
+                            switch (NameNavigationItem)
+                            {
+                                case "phoneBook":
+                                    IEnumerable<PhoneBook> PhoneBookFilter = dataGets.PhoneBookList.Where(PhoneBook => PhoneBook.MiddleName.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = PhoneBookFilter;
+                                    break;
+                                case "holder":
+                                    IEnumerable<Holder> HolderFilter = dataGets.HolderList.Where(Holder => Holder.MiddleName.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = HolderFilter;
+                                    break;
+                                case "user":
+                                    IEnumerable<User> UserFilter = dataGets.UserList.Where(User => User.MiddleName.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = UserFilter;
+                                    break;
+                                case "ie":
+                                    IEnumerable<IndividualEntrepreneur> IndividualEntrepreneurFilter = dataGets.IndividualEntrepreneurList.Where(IndividualEntrepreneur => IndividualEntrepreneur.MiddleName.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = IndividualEntrepreneurFilter;
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        case "Status":
+                            switch (NameNavigationItem)
+                            {
+                                case "printer":
+                                    IEnumerable<Printer> PrinterStatusFilter = dataGets.PrinterList.Where(Printer => Printer.Status.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = PrinterStatusFilter;
+                                    break;
+                                case "cartrides":
+                                    IEnumerable<Cartridge> CartridgeStatusFilter = dataGets.CartridgesList.Where(Cartridge => Cartridge.Status.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = CartridgeStatusFilter;
+                                    break;
+                                case "simCard":
+                                    IEnumerable<SimCard> SimCardStatusFilter = dataGets.SimCardList.Where(SimCard => SimCard.Status.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = SimCardStatusFilter;
+                                    break;
+                                case "holder":
+                                    IEnumerable<Holder> HolderStatusFilter = dataGets.HolderList.Where(Holder => Holder.Status.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = HolderStatusFilter;
+                                    break;
+                                case "user":
+                                    IEnumerable<User> UserStatusFilter = dataGets.UserList.Where(User => User.Status.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = UserStatusFilter;
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        case "PSRNIE":
+                            IEnumerable<IndividualEntrepreneur> IndividualEntrepreneurPSTNIEFilter = dataGets.IndividualEntrepreneurList.Where(IndividualEntrepreneur => IndividualEntrepreneur.PSRNIE.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = IndividualEntrepreneurPSTNIEFilter;
+                            break;
+                        case "TIN":
+                            IEnumerable<IndividualEntrepreneur> IndividualEntrepreneurTINFilter = dataGets.IndividualEntrepreneurList.Where(IndividualEntrepreneur => IndividualEntrepreneur.TIN.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = IndividualEntrepreneurTINFilter;
+                            break;
+                        case "Brand":
+                            switch (NameNavigationItem)
+                            {
+                                case "cartrides":
+                                    IEnumerable<Cartridge> CartridgeFilter = dataGets.CartridgesList.Where(Cartridge => Cartridge.Brand.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = CartridgeFilter;
+                                    break;
+                                case "cashRegister":
+                                    IEnumerable<CashRegister> CashRegisterFilter = dataGets.CashRegisterList.Where(CashRegister => CashRegister.Brand.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = CashRegisterFilter;
+                                    break;
+                                case "simCard":
+                                    IEnumerable<SimCard> SimCardFilter = dataGets.SimCardList.Where(SimCard => SimCard.Brand.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = SimCardFilter;
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        case "Model":
+                            IEnumerable<Cartridge> CartridgeModelFilter = dataGets.CartridgesList.Where(Cartridge => Cartridge.Model.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = CartridgeModelFilter;
+                            break;
+                        case "VendorCode":
+                            IEnumerable<Cartridge> CartridgeVendorCodeFilter = dataGets.CartridgesList.Where(Cartridge => Cartridge.VendorCode.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = CartridgeVendorCodeFilter;
+                            break;
+                        case "NameDevice":
+                            IEnumerable<CashRegister> CashRegisterNameFilter = dataGets.CashRegisterList.Where(Cartridge => Cartridge.NameDevice.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = CashRegisterNameFilter;
+                            break;
+                        case "FactoryNumber":
+                            IEnumerable<CashRegister> CashFactoryNumberFilter = dataGets.CashRegisterList.Where(Cartridge => Cartridge.FactoryNumber.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = CashFactoryNumberFilter;
+                            break;
+                        case "SerialNumber":
+                            IEnumerable<CashRegister> CashSerialNumberFilter = dataGets.CashRegisterList.Where(Cartridge => Cartridge.SerialNumber.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = CashSerialNumberFilter;
+                            break;
+                        case "PaymentNumber":
+                            IEnumerable<CashRegister> CashPaymentNumberFilter = dataGets.CashRegisterList.Where(Cartridge => Cartridge.PaymentNumber.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = CashPaymentNumberFilter;
+                            break;
+                        case "Holder":
+                            IEnumerable<CashRegister> CashHolderFilter = dataGets.CashRegisterList.Where(Cartridge => Cartridge.Holder.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = CashHolderFilter;
+                            break;
+                        case "User":
+                            IEnumerable<CashRegister> CashUserFilter = dataGets.CashRegisterList.Where(Cartridge => Cartridge.User.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = CashUserFilter;
+                            break;
+                        case "DateReceptionString":
+                            IEnumerable<CashRegister> CashDateFilter = dataGets.CashRegisterList.Where(Cartridge => Cartridge.DateReceptionString.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = CashDateFilter;
+                            break;
+                        case "DateEndFiscalMemoryString":
+                            IEnumerable<CashRegister> CashDateEndFiscalMemoryFilter = dataGets.CashRegisterList.Where(Cartridge => Cartridge.DateEndFiscalMemoryString.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = CashDateEndFiscalMemoryFilter;
+                            break;
+                        case "DateKeyActivationFiscalDataOperatorString":
+                            IEnumerable<CashRegister> CashDateActivationFiscalFilter = dataGets.CashRegisterList.Where(Cartridge => Cartridge.DateKeyActivationFiscalDataOperatorString.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = CashDateActivationFiscalFilter;
+                            break;
+                        case "Location":
+                            IEnumerable<CashRegister> CashLocationFilter = dataGets.CashRegisterList.Where(Cartridge => Cartridge.Location.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = CashLocationFilter;
+                            break;
+                        case "Post":
+                            IEnumerable<PhoneBook> PhoneBookPostFilter = dataGets.PhoneBookList.Where(PhoneBook => PhoneBook.Post.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = PhoneBookPostFilter;
+                            break;
+                        case "InternalNumber":
+                            IEnumerable<PhoneBook> PhoneBookInternalFilter = dataGets.PhoneBookList.Where(PhoneBook => PhoneBook.InternalNumber.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = PhoneBookInternalFilter;
+                            break;
+                        case "MobileNumber":
+                            IEnumerable<PhoneBook> PhoneBookMobileFilter = dataGets.PhoneBookList.Where(PhoneBook => PhoneBook.InternalNumber.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = PhoneBookMobileFilter;
+                            break;
+                        case "ModelPrinter":
+                            IEnumerable<Printer> PrinterFilter = dataGets.PrinterList.Where(Printer => Printer.ModelPrinter.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = PrinterFilter;
+                            break;
+                        case "NamePort":
+                            IEnumerable<Printer> PrinterNamePortFilter = dataGets.PrinterList.Where(Printer => Printer.NamePort.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = PrinterNamePortFilter;
+                            break;
+                        case "LocationPrinter":
+                            IEnumerable<Printer> PrinterLocationFilter = dataGets.PrinterList.Where(Printer => Printer.LocationPrinter.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = PrinterLocationFilter;
+                            break;
+                        case "OC":
+                            IEnumerable<Printer> PrinterOCFilter = dataGets.PrinterList.Where(Printer => Printer.OC.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = PrinterOCFilter;
+                            break;
+                        case "NameTerminal":
+                            IEnumerable<SimCard> SimCardNameFilter = dataGets.SimCardList.Where(SimCard => SimCard.NameTerminal.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = SimCardNameFilter;
+                            break;
+                        case "Operator":
+                            IEnumerable<SimCard> SimCardOperatorFilter = dataGets.SimCardList.Where(SimCard => SimCard.Operator.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = SimCardOperatorFilter;
+                            break;
+                        case "IdentNumber":
+                            IEnumerable<SimCard> SimCardIdentNumberFilter = dataGets.SimCardList.Where(SimCard => SimCard.IdentNumber.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = SimCardIdentNumberFilter;
+                            break;
+                        case "TypeDevice":
+                            IEnumerable<SimCard> SimCardTypeDeviceFilter = dataGets.SimCardList.Where(SimCard => SimCard.TypeDevice.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = SimCardTypeDeviceFilter;
+                            break;
+                        case "TMS":
+                            IEnumerable<SimCard> SimCardTMSFilter = dataGets.SimCardList.Where(SimCard => SimCard.TMS.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = SimCardTMSFilter;
+                            break;
+                        case "ICC":
+                            IEnumerable<SimCard> SimCardICCFilter = dataGets.SimCardList.Where(SimCard => SimCard.ICC.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = SimCardICCFilter;
+                            break;
+                        case "IndividualEntrepreneur":
+                            IEnumerable<SimCard> SimCardIndividualEntrepreneurFilter = dataGets.SimCardList.Where(SimCard => SimCard.IndividualEntrepreneur.StartsWith(args.QueryText));
+                            MainDataGrid.ItemsSource = SimCardIndividualEntrepreneurFilter;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+
+            //IEnumerable<CashRegister> filtered = dataGets.CashRegisterList.Where(CashRegister => CashRegister.NameDevice.StartsWith(args.QueryText));
         }
         //private void ConnectNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         //{

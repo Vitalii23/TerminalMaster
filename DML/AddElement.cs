@@ -101,7 +101,7 @@ namespace TerminalMaster.ViewModel
 
                 if (items.Equals("cashRegister"))
                 {
-                    AddQuery = "INSERT INTO dbo.CashRegister (name, brand, factory_number, serial_number, payment_number, date_reception, location, id_holder, id_user) VALUES " + values  + id[0] + "," + id[1] + ")";
+                    AddQuery = "INSERT INTO dbo.CashRegister (name, brand, factory_number, serial_number, payment_number, date_reception, date_end_fiscal_memory, date_key_activ_fisc_data,  location, id_holder, id_user) VALUES " + values  + id[0] + "," + id[1] + ")";
                     Debug.WriteLine(AddQuery);
                 }
 

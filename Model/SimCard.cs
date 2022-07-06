@@ -3,8 +3,8 @@
     internal class SimCard
     {
         public int Id { get; set; }
-        public int NameTerminal { get; set; }
-        public string Operator { get; set; } // Оператор связи]
+        public string NameTerminal { get; set; }
+        public string Operator { get; set; } // Оператор связи
         public string IdentNumber { get; set; } // Идентификационный номер (ИН)
         public string Brand { get; set; } // Фирма
         public string TypeDevice { get; set; } // Тип устройства
