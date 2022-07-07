@@ -54,13 +54,15 @@ namespace TerminalMaster.ElementContentDialog
 
             DateTimeOffset? dateTime = DateReceptionCalendarDatePicker.Date;
             string dateReception = dateTime.Value.Year.ToString() + "-"+ dateTime.Value.Month.ToString() + "-" + dateTime.Value.Day.ToString();
+
             dateTime = DateEndFiscalMemoryCalendarDatePicker.Date;
             string dateEndFiscal = dateTime.Value.Year.ToString() + "-" + dateTime.Value.Month.ToString() + "-" + dateTime.Value.Day.ToString();
-            dateTime = DateEndFiscalMemoryCalendarDatePicker.Date;
+
+            dateTime = DateKeyActivationFiscalDataOperatorCalendarDatePicker.Date;
             string dateActivatFiscal = dateTime.Value.Year.ToString() + "-" + dateTime.Value.Month.ToString() + "-" + dateTime.Value.Day.ToString();
 
             string[] cashRehisters = { NameTextBox.Text, brandValue, FactoryNumberTextBox.Text,
-                SerialNumberTextBox.Text, PaymentNumberTextBox.Text, dateReception, dateEndFiscal, dateActivatFiscal, LocationTextBox.Text};
+                SerialNumberTextBox.Text, PaymentNumberTextBox.Text, dateReception, dateActivatFiscal, dateEndFiscal, LocationTextBox.Text};
             int[] Ids = new int[] { holders[HolderComboBox.SelectedIndex].Id, users[UserComboBox.SelectedIndex].Id };
 
             if (SelectData.Equals("ADD")) 

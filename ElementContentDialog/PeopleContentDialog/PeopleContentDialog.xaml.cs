@@ -34,7 +34,7 @@ namespace TerminalMaster.ElementContentDialog.PeopleContentDialog
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             string statusValue = (string)StatusComboBox.SelectedValue;
-            string[] peoples = { FirstNameTextBox.Text, LastNameTextBox.Text, MiddleNameTextBox.Text, statusValue};
+            string[] peoples = { LastNameTextBox.Text, FirstNameTextBox.Text, MiddleNameTextBox.Text, statusValue};
 
             if (SelectData.Equals("ADD")) { add.AddDataElement((App.Current as App).ConnectionString, peoples, People); }
 

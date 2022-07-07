@@ -43,8 +43,6 @@ namespace TerminalMaster
         {
             InitializeComponent();
             Loaded += MainPage_Loaded;
-
-
         }
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
@@ -206,6 +204,7 @@ namespace TerminalMaster
             triggerSort = true;
             UpdateTable(NameNavigationItem);
         }
+
         //private void SettingNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         //{
 
@@ -218,6 +217,7 @@ namespace TerminalMaster
         //{
 
         //}
+
         private async void AppBarButtonAdd_Tapped(object sender, TappedRoutedEventArgs e)
         {
             triggerPropertyNameList = false;
@@ -508,10 +508,12 @@ namespace TerminalMaster
                     break;
             }
         }
+
         //private void AppBarButtonSave_Tapped(object sender, TappedRoutedEventArgs e)
         //{
 
         //}
+
         private void AppBarButtonUpdate_Tapped(object sender, TappedRoutedEventArgs e)
         {
             triggerPropertyNameList = false;
@@ -873,7 +875,6 @@ namespace TerminalMaster
         {
 
         }
-
         private void SearcherTextBox_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
         {
             triggerPropertyNameList = false;
@@ -1143,6 +1144,7 @@ namespace TerminalMaster
 
             //IEnumerable<CashRegister> filtered = dataGets.CashRegisterList.Where(CashRegister => CashRegister.NameDevice.StartsWith(args.QueryText));
         }
+
         //private void ConnectNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         //{
 

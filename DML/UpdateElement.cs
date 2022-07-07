@@ -19,24 +19,51 @@ namespace TerminalMaster.ViewModel
                 switch (items)
                 {
                     case "cartrides":
-                        AddQuery = "UPDATE dbo.Cartrides SET brand = '" + element[0] + "', model = '" + element[1] + "', vendor_code = '" + element[2] + "', status = '" + element[3] + "' WHERE id = " + id;
+                        AddQuery = "UPDATE dbo.Cartrides SET brand = '" + element[0] + 
+                            "', model = '" + element[1] + 
+                            "', vendor_code = '" + element[2] +
+                            "', status = '" + element[3] + 
+                            "' WHERE id = " + id;
                         break;
                     case "phoneBook":
-                        AddQuery = "UPDATE dbo.PhoneBook SET first_name = '" + element[0] + "', last_name = '" + element[1] + "', middle_name = '"
-                            + element[2] + "', post = '" + element[3] + "', internal_number = '" + element[4]+ "', mobile_number = '" + element[5] + "' WHERE id = " +  id;
+                        AddQuery = "UPDATE dbo.PhoneBook SET first_name = '" + element[0] + 
+                            "', last_name = '" + element[1] + 
+                            "', middle_name = '" + element[2] + 
+                            "', post = '" + element[3] + 
+                            "', internal_number = '" + element[4]+ 
+                            "', mobile_number = '" + element[5] + 
+                            "' WHERE id = " +  id;
                         break;
                     case "printer":
-                        AddQuery = "UPDATE dbo.Printer SET name_user = '" + element[0] + "', name_printer = '" + element[1] + "', model = '" + element[2] + "', name_port = '"
-                            + element[3] + "', location = '" + element[4] + "', operation_system = '" + element[5] + "' WHERE id = " + id;
+                        AddQuery = "UPDATE dbo.Printer SET name_user = '" + element[0] + 
+                            "', name_printer = '" + element[1] + 
+                            "', model = '" + element[2] + 
+                            "', name_port = '" + element[3] + 
+                            "', location = '" + element[4] + 
+                            "', operation_system = '" + element[5] + 
+                            "' WHERE id = " + id;
                         break;
                     case "holder":
-                        AddQuery = "UPDATE dbo.Holder SET first_name = '" + element[0] + "', last_name = '" + element[1] + "', middle_name = '" + element[2] + "', status = '" + element[3] + "'  WHERE id = " + id;
+                        AddQuery = "UPDATE dbo.Holder SET last_name = '" + element[0] +
+                            "', first_name = '" + element[1] +
+                            "', middle_name = '" + element[2] +
+                            "', status = '" + element[3] +
+                            "'  WHERE id = " + id;
                         break;
                     case "user":
-                        AddQuery = "UPDATE dbo.UserDevice SET first_name = '" + element[0] + "', last_name = '" + element[1] + "', middle_name = '" + element[2] + "', status = '" + element[3] + "'  WHERE id = " + id;
+                        AddQuery = "UPDATE dbo.UserDevice SET last_name = '" + element[0] +
+                            "', first_name = '" + element[1] + 
+                            "', middle_name = '" + element[2] + 
+                            "', status = '" + element[3] + 
+                            "'  WHERE id = " + id;
                         break;
                     case "ie":
-                        AddQuery = "UPDATE dbo.IndividualEntrepreneur SET first_name = '" + element[0] + "', last_name = '" + element[1] + "', middle_name = '" + element[2] + "'  WHERE id = " + id;
+                        AddQuery = "UPDATE dbo.IndividualEntrepreneur SET SET last_name = '" + element[0] +
+                            "', first_name = '" + element[1] +
+                            "', middle_name = '" + element[2] +
+                            "', psrnie = '" + element[3] +
+                            "', tin = '" + element[4] +
+                            "'  WHERE id = " + id;
                         break;
                     default:
                         break;
@@ -76,7 +103,7 @@ namespace TerminalMaster.ViewModel
                         "', icc =  '" + element[4] + 
                         "', status =  '" + element[5] + 
                         "', id_individual_entrepreneur = " + ids[0] + 
-                        ", id_cahsRegister = " + ids[1] + 
+                        ", id_cashRegister = " + ids[1] + 
                         " WHERE id = " + id;
                 }
 

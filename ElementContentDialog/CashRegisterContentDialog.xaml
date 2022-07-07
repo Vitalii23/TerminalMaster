@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI"
     mc:Ignorable="d"
-    Title="ККМ"
     PrimaryButtonText="ОК"
     SecondaryButtonText="Отмена"
     Opened="ContentDialog_Opened"
@@ -21,7 +20,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel x:Name="WriteTextBoxStackPanel" Grid.Row="0" Grid.Column="0">
+        <StackPanel x:Name="WriteTextBoxStackPanel" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0">
             <StackPanel.Resources>
                 <Style TargetType="TextBox">
                     <Setter Property="Margin" Value="0,0,0,5"/>

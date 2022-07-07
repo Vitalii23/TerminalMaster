@@ -18,12 +18,11 @@ namespace TerminalMaster.ElementContentDialog
         private GetElement get = new GetElement();
         private ObservableCollection<IndividualEntrepreneur> individuals;
         private ObservableCollection<CashRegister> cashRegisters;
-        private string brand;
         public SimCardContentDialog()
         {
             this.InitializeComponent();
 
-            string[] @operator = { "Билайн", "МТС", "Мегафон", "Теле2" };
+            string[] @operator = { "Билайн", "МТС", "Мегафон", "Теле2", "Неизвестно" };
             AddComboxItem(@operator, OperatorComboBox);
 
             individuals = get.GetIndividual((App.Current as App).ConnectionString, "ALL", 0);
@@ -41,7 +40,7 @@ namespace TerminalMaster.ElementContentDialog
             string[] typeDevice = { "ККМ" };
             AddComboxItem(typeDevice, TypeDeviceComboBox);
 
-            string[] status = { "Нет симки-карты", "Замена", "Сервис", "Истек срок ФН" };
+            string[] status = { "Рабочий", "Нет симки-карты", "Замена", "Сервис", "Истек срок ФН", "Неизвестно" };
             AddComboxItem(status, StatusComboBox);
         }
 
@@ -59,7 +58,7 @@ namespace TerminalMaster.ElementContentDialog
             string @operator = (string)OperatorComboBox.SelectedValue;
             string status = (string)StatusComboBox.SelectedValue;
             string typeDevice = (string)TypeDeviceComboBox.SelectedValue;
-            int[] Ids = new int[] { individuals[IndividualEntrepreneurComboBox.SelectedIndex].Id};
+            int[] Ids = new int[] { individuals[IndividualEntrepreneurComboBox.SelectedIndex].Id, cashRegisters[NameCashRegisterComboBox.SelectedIndex].Id };
             string[] simCards = { @operator, IdentNumberTextBox.Text, typeDevice,
                 TmsTextBox.Text, IccTextBox.Text, status };
 

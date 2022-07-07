@@ -103,8 +103,8 @@ namespace TerminalMaster.ViewModel
                     "dbo.CashRegister.serial_number, " +
                     "dbo.CashRegister.payment_number, " +
                     "dbo.CashRegister.date_reception, " +
-                    "dbo.CashRegister.date_end_fiscal_memory, " +
                     "dbo.CashRegister.date_key_activ_fisc_data, " +
+                    "dbo.CashRegister.date_end_fiscal_memory, " +
                     "dbo.CashRegister.location, " +
                     "dbo.CashRegister.id_holder," +
                     "dbo.CashRegister.id_user," +
@@ -283,8 +283,10 @@ namespace TerminalMaster.ViewModel
                     "dbo.CashRegister.brand, " +
                     "dbo.SimCard.type_device, " +
                     "dbo.SimCard.tms, " +
-                    "dbo.SimCard.icc, dbo.SimCard.status, " +
+                    "dbo.SimCard.icc, " +
+                    "dbo.SimCard.status, " +
                     "dbo.SimCard.id_individual_entrepreneur, " +
+                    "dbo.SimCard.id_cashRegister, " +
                     "dbo.IndividualEntrepreneur.last_name, " +
                     "dbo.IndividualEntrepreneur.first_name, " +
                     "dbo.IndividualEntrepreneur.middle_name " +
@@ -302,9 +304,10 @@ namespace TerminalMaster.ViewModel
                   "dbo.CashRegister.brand, " +
                   "dbo.SimCard.type_device, " +
                   "dbo.SimCard.tms, " +
-                  "dbo.SimCard.icc, dbo.SimCard.status, " +
+                  "dbo.SimCard.icc, " +
+                  "dbo.SimCard.status, " +
                   "dbo.SimCard.id_individual_entrepreneur, " +
-                  "dbo.SimCard.id_cahRegister, " +
+                  "dbo.SimCard.id_cashRegister, " +
                   "dbo.IndividualEntrepreneur.last_name, " +
                   "dbo.IndividualEntrepreneur.first_name, " +
                   "dbo.IndividualEntrepreneur.middle_name " +
@@ -329,21 +332,19 @@ namespace TerminalMaster.ViewModel
                             {
                                 while (reader.Read())
                                 {
-                                    var simcard = new SimCard
-                                    {
-                                        Id = reader.GetInt32(0),
-                                        NameTerminal = reader.GetString(1),
-                                        Operator = reader.GetString(2),
-                                        IdentNumber = reader.GetString(3),
-                                        Brand = reader.GetString(4),
-                                        TypeDevice = reader.GetString(5),
-                                        TMS = reader.GetString(6),
-                                        ICC = reader.GetString(7),
-                                        Status = reader.GetString(8),
-                                        IdIndividual = reader.GetInt32(7),
-                                        IdCashRegister = reader.GetInt32(8),
-                                        IndividualEntrepreneur = reader.GetString(9) + " " + reader.GetString(10) + " " + reader.GetString(11)
-                                    };
+                                    var simcard = new SimCard();
+                                    simcard.Id = reader.GetInt32(0);
+                                    simcard.NameTerminal = reader.GetString(1);
+                                    simcard.Operator = reader.GetString(2);
+                                    simcard.IdentNumber = reader.GetString(3);
+                                    simcard.Brand = reader.GetString(4);
+                                    simcard.TypeDevice = reader.GetString(5);
+                                    simcard.TMS = reader.GetString(6);
+                                    simcard.ICC = reader.GetString(7);
+                                    simcard.Status = reader.GetString(8);
+                                    simcard.IdIndividual = reader.GetInt32(9);
+                                    simcard.IdCashRegister = reader.GetInt32(10);
+                                    simcard.IndividualEntrepreneur = reader.GetString(11) + " " + reader.GetString(12) + " " + reader.GetString(13);
                                     simCards.Add(simcard);
                                 }
                             }

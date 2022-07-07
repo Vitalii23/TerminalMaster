@@ -174,25 +174,27 @@ namespace TerminalMaster.DML
                 if (element.Equals("holder"))
                 {
                     GetCashRegister = "SELECT dbo.CashRegister.id, " +
-                   "dbo.CashRegister.name, " +
-                   "dbo.CashRegister.brand, " +
-                   "dbo.CashRegister.factory_number, " +
-                   "dbo.CashRegister.serial_number, " +
-                   "dbo.CashRegister.payment_number, " +
-                   "dbo.CashRegister.date_reception, " +
-                   "dbo.CashRegister.location, " +
-                   "dbo.CashRegister.id_holder," +
-                   "dbo.CashRegister.id_user," +
-                   "dbo.Holder.last_name, " +
-                   "dbo.Holder.first_name, " +
-                   "dbo.Holder.middle_name, " +
-                   "dbo.UserDevice.last_name, " +
-                   "dbo.UserDevice.first_name, " +
-                   "dbo.UserDevice.middle_name " +
-                   "FROM dbo.CashRegister " +
-                   "INNER JOIN dbo.Holder ON dbo.Holder.id = dbo.CashRegister.id_holder " +
-                   "INNER JOIN dbo.UserDevice ON dbo.UserDevice.id = dbo.CashRegister.id_user " +
-                   "ORDER BY dbo.Holder.last_name;";
+                                       "dbo.CashRegister.name, " +
+                                       "dbo.CashRegister.brand, " +
+                                       "dbo.CashRegister.factory_number, " +
+                                       "dbo.CashRegister.serial_number, " +
+                                       "dbo.CashRegister.payment_number, " +
+                                       "dbo.CashRegister.date_reception, " +
+                                       "dbo.CashRegister.date_end_fiscal_memory, " +
+                                       "dbo.CashRegister.date_key_activ_fisc_data, " +
+                                       "dbo.CashRegister.location, " +
+                                       "dbo.CashRegister.id_holder," +
+                                       "dbo.CashRegister.id_user," +
+                                       "dbo.Holder.last_name, " +
+                                       "dbo.Holder.first_name, " +
+                                       "dbo.Holder.middle_name, " +
+                                       "dbo.UserDevice.last_name, " +
+                                       "dbo.UserDevice.first_name, " +
+                                       "dbo.UserDevice.middle_name " +
+                                       "FROM dbo.CashRegister " +
+                                       "INNER JOIN dbo.Holder ON dbo.Holder.id = dbo.CashRegister.id_holder " +
+                                       "INNER JOIN dbo.UserDevice ON dbo.UserDevice.id = dbo.CashRegister.id_user " +
+                                       "ORDER BY dbo.Holder.last_name;";
                 } else if (element.Equals("user"))
                 {
                     GetCashRegister = "SELECT dbo.CashRegister.id, " +
@@ -202,6 +204,8 @@ namespace TerminalMaster.DML
                                        "dbo.CashRegister.serial_number, " +
                                        "dbo.CashRegister.payment_number, " +
                                        "dbo.CashRegister.date_reception, " +
+                                       "dbo.CashRegister.date_end_fiscal_memory, " +
+                                       "dbo.CashRegister.date_key_activ_fisc_data, " +
                                        "dbo.CashRegister.location, " +
                                        "dbo.CashRegister.id_holder," +
                                        "dbo.CashRegister.id_user," +
@@ -225,6 +229,8 @@ namespace TerminalMaster.DML
                                        "dbo.CashRegister.serial_number, " +
                                        "dbo.CashRegister.payment_number, " +
                                        "dbo.CashRegister.date_reception, " +
+                                       "dbo.CashRegister.date_end_fiscal_memory, " +
+                                       "dbo.CashRegister.date_key_activ_fisc_data, " +
                                        "dbo.CashRegister.location, " +
                                        "dbo.CashRegister.id_holder," +
                                        "dbo.CashRegister.id_user," +
@@ -247,27 +253,27 @@ namespace TerminalMaster.DML
                 if (element.Equals("holder"))
                 {
                     GetCashRegister = "SELECT dbo.CashRegister.id, " +
-                   "dbo.CashRegister.name, " +
-                   "dbo.CashRegister.brand, " +
-                   "dbo.CashRegister.factory_number, " +
-                   "dbo.CashRegister.serial_number, " +
-                   "dbo.CashRegister.payment_number, " +
-                   "dbo.CashRegister.date_reception, " +
-                   "dbo.CashRegister.date_end_fiscal_memory, " +
-                   "dbo.CashRegister.date_key_activ_fisc_data, " +
-                   "dbo.CashRegister.location, " +
-                   "dbo.CashRegister.id_holder," +
-                   "dbo.CashRegister.id_user," +
-                   "dbo.Holder.last_name, " +
-                   "dbo.Holder.first_name, " +
-                   "dbo.Holder.middle_name, " +
-                   "dbo.UserDevice.last_name, " +
-                   "dbo.UserDevice.first_name, " +
-                   "dbo.UserDevice.middle_name " +
-                   "FROM dbo.CashRegister " +
-                   "INNER JOIN dbo.Holder ON dbo.Holder.id = dbo.CashRegister.id_holder " +
-                   "INNER JOIN dbo.UserDevice ON dbo.UserDevice.id = dbo.CashRegister.id_user " +
-                   "ORDER BY dbo.Holder.last_name DESC;";
+                                       "dbo.CashRegister.name, " +
+                                       "dbo.CashRegister.brand, " +
+                                       "dbo.CashRegister.factory_number, " +
+                                       "dbo.CashRegister.serial_number, " +
+                                       "dbo.CashRegister.payment_number, " +
+                                       "dbo.CashRegister.date_reception, " +
+                                       "dbo.CashRegister.date_end_fiscal_memory, " +
+                                       "dbo.CashRegister.date_key_activ_fisc_data, " +
+                                       "dbo.CashRegister.location, " +
+                                       "dbo.CashRegister.id_holder," +
+                                       "dbo.CashRegister.id_user," +
+                                       "dbo.Holder.last_name, " +
+                                       "dbo.Holder.first_name, " +
+                                       "dbo.Holder.middle_name, " +
+                                       "dbo.UserDevice.last_name, " +
+                                       "dbo.UserDevice.first_name, " +
+                                       "dbo.UserDevice.middle_name " +
+                                       "FROM dbo.CashRegister " +
+                                       "INNER JOIN dbo.Holder ON dbo.Holder.id = dbo.CashRegister.id_holder " +
+                                       "INNER JOIN dbo.UserDevice ON dbo.UserDevice.id = dbo.CashRegister.id_user " +
+                                       "ORDER BY dbo.Holder.last_name DESC;";
                 }
                 else if (element.Equals("user"))
                 {
@@ -346,11 +352,15 @@ namespace TerminalMaster.DML
                                     cashRegister.PaymentNumber = reader.GetString(5);
                                     cashRegister.DateReception = reader.GetDateTime(6);
                                     cashRegister.DateReceptionString = cashRegister.DateReception.ToShortDateString();
-                                    cashRegister.Location = reader.GetString(7);
-                                    cashRegister.IdHolder = reader.GetInt32(8);
-                                    cashRegister.IdUser = reader.GetInt32(9);
-                                    cashRegister.Holder = reader.GetString(10) + " " + reader.GetString(11) + " " + reader.GetString(12);
-                                    cashRegister.User = reader.GetString(13) + " " + reader.GetString(14) + " " + reader.GetString(15);
+                                    cashRegister.DateEndFiscalMemory = reader.GetDateTime(7);
+                                    cashRegister.DateEndFiscalMemoryString = cashRegister.DateEndFiscalMemory.ToShortDateString();
+                                    cashRegister.DateKeyActivationFiscalDataOperator = reader.GetDateTime(8);
+                                    cashRegister.DateKeyActivationFiscalDataOperatorString = cashRegister.DateKeyActivationFiscalDataOperator.ToShortDateString();
+                                    cashRegister.Location = reader.GetString(9);
+                                    cashRegister.IdHolder = reader.GetInt32(10);
+                                    cashRegister.IdUser = reader.GetInt32(11);
+                                    cashRegister.Holder = reader.GetString(12) + " " + reader.GetString(13) + " " + reader.GetString(14);
+                                    cashRegister.User = reader.GetString(15) + " " + reader.GetString(16) + " " + reader.GetString(17);
                                     cashRegisters.Add(cashRegister);
                                 }
                             }
