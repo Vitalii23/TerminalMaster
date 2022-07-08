@@ -75,7 +75,6 @@ namespace TerminalMaster.ViewModel
             }
 
         }
-
         public void AddDataElement(string connection, string[] element, int[] id,  string items)
         {
             try

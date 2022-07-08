@@ -299,6 +299,7 @@ namespace TerminalMaster
         {
             triggerPropertyNameList = false;
             triggerHeader = false;
+            Debug.WriteLine(dataGets.PhoneBookList[MainDataGrid.SelectedIndex].Id);
             switch (NameNavigationItem)
             {
                 case "printer":
@@ -443,7 +444,6 @@ namespace TerminalMaster
                     break;
                 default:
                     break;
-
             }
 
         }
@@ -914,18 +914,22 @@ namespace TerminalMaster
                                 case "phoneBook":
                                     IEnumerable<PhoneBook> PhoneBookFilter = dataGets.PhoneBookList.Where(PhoneBook => PhoneBook.LastName.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = PhoneBookFilter;
+                                    dataGets.PhoneBookList = new ObservableCollection<PhoneBook>(PhoneBookFilter);
                                     break;
                                 case "holder":
                                     IEnumerable<Holder> HolderFilter = dataGets.HolderList.Where(Holder => Holder.LastName.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = HolderFilter;
+                                    dataGets.HolderList = new ObservableCollection<Holder>(HolderFilter);
                                     break;
                                 case "user":
                                     IEnumerable<User> UserFilter = dataGets.UserList.Where(User => User.LastName.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = UserFilter;
+                                    dataGets.UserList = new ObservableCollection<User>(UserFilter);
                                     break;
                                 case "ie":
                                     IEnumerable<IndividualEntrepreneur> IndividualEntrepreneurFilter = dataGets.IndividualEntrepreneurList.Where(IndividualEntrepreneur => IndividualEntrepreneur.LastName.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = IndividualEntrepreneurFilter;
+                                    dataGets.IndividualEntrepreneurList = new ObservableCollection<IndividualEntrepreneur>(IndividualEntrepreneurFilter);
                                     break;
                                 default:
                                     break;
@@ -937,18 +941,22 @@ namespace TerminalMaster
                                 case "phoneBook":
                                     IEnumerable<PhoneBook> PhoneBookFilter = dataGets.PhoneBookList.Where(PhoneBook => PhoneBook.FirstName.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = PhoneBookFilter;
+                                    dataGets.PhoneBookList = new ObservableCollection<PhoneBook>(PhoneBookFilter);
                                     break;
                                 case "holder":
                                     IEnumerable<Holder> HolderFilter = dataGets.HolderList.Where(Holder => Holder.FirstName.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = HolderFilter;
+                                    dataGets.HolderList = new ObservableCollection<Holder>(HolderFilter);
                                     break;
                                 case "user":
                                     IEnumerable<User> UserFilter = dataGets.UserList.Where(User => User.FirstName.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = UserFilter;
+                                    dataGets.UserList = new ObservableCollection<User>(UserFilter);
                                     break;
                                 case "ie":
                                     IEnumerable<IndividualEntrepreneur> IndividualEntrepreneurFilter = dataGets.IndividualEntrepreneurList.Where(IndividualEntrepreneur => IndividualEntrepreneur.FirstName.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = IndividualEntrepreneurFilter;
+                                    dataGets.IndividualEntrepreneurList = new ObservableCollection<IndividualEntrepreneur>(IndividualEntrepreneurFilter);
                                     break;
                                 default:
                                     break;
@@ -960,18 +968,22 @@ namespace TerminalMaster
                                 case "phoneBook":
                                     IEnumerable<PhoneBook> PhoneBookFilter = dataGets.PhoneBookList.Where(PhoneBook => PhoneBook.MiddleName.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = PhoneBookFilter;
+                                    dataGets.PhoneBookList = new ObservableCollection<PhoneBook>(PhoneBookFilter);
                                     break;
                                 case "holder":
                                     IEnumerable<Holder> HolderFilter = dataGets.HolderList.Where(Holder => Holder.MiddleName.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = HolderFilter;
+                                    dataGets.HolderList = new ObservableCollection<Holder>(HolderFilter);
                                     break;
                                 case "user":
                                     IEnumerable<User> UserFilter = dataGets.UserList.Where(User => User.MiddleName.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = UserFilter;
+                                    dataGets.UserList = new ObservableCollection<User>(UserFilter);
                                     break;
                                 case "ie":
                                     IEnumerable<IndividualEntrepreneur> IndividualEntrepreneurFilter = dataGets.IndividualEntrepreneurList.Where(IndividualEntrepreneur => IndividualEntrepreneur.MiddleName.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = IndividualEntrepreneurFilter;
+                                    dataGets.IndividualEntrepreneurList = new ObservableCollection<IndividualEntrepreneur>(IndividualEntrepreneurFilter);
                                     break;
                                 default:
                                     break;
@@ -983,22 +995,27 @@ namespace TerminalMaster
                                 case "printer":
                                     IEnumerable<Printer> PrinterStatusFilter = dataGets.PrinterList.Where(Printer => Printer.Status.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = PrinterStatusFilter;
+                                    dataGets.PrinterList = new ObservableCollection<Printer>(PrinterStatusFilter);
                                     break;
                                 case "cartrides":
                                     IEnumerable<Cartridge> CartridgeStatusFilter = dataGets.CartridgesList.Where(Cartridge => Cartridge.Status.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = CartridgeStatusFilter;
+                                    dataGets.CartridgesList = new ObservableCollection<Cartridge>(CartridgeStatusFilter);
                                     break;
                                 case "simCard":
                                     IEnumerable<SimCard> SimCardStatusFilter = dataGets.SimCardList.Where(SimCard => SimCard.Status.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = SimCardStatusFilter;
+                                    dataGets.SimCardList = new ObservableCollection<SimCard>(SimCardStatusFilter);
                                     break;
                                 case "holder":
                                     IEnumerable<Holder> HolderStatusFilter = dataGets.HolderList.Where(Holder => Holder.Status.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = HolderStatusFilter;
+                                    dataGets.HolderList = new ObservableCollection<Holder>(HolderStatusFilter);
                                     break;
                                 case "user":
                                     IEnumerable<User> UserStatusFilter = dataGets.UserList.Where(User => User.Status.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = UserStatusFilter;
+                                    dataGets.UserList = new ObservableCollection<User>(UserStatusFilter);
                                     break;
                                 default:
                                     break;
@@ -1007,10 +1024,12 @@ namespace TerminalMaster
                         case "PSRNIE":
                             IEnumerable<IndividualEntrepreneur> IndividualEntrepreneurPSTNIEFilter = dataGets.IndividualEntrepreneurList.Where(IndividualEntrepreneur => IndividualEntrepreneur.PSRNIE.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = IndividualEntrepreneurPSTNIEFilter;
+                            dataGets.IndividualEntrepreneurList = new ObservableCollection<IndividualEntrepreneur>(IndividualEntrepreneurPSTNIEFilter);
                             break;
                         case "TIN":
                             IEnumerable<IndividualEntrepreneur> IndividualEntrepreneurTINFilter = dataGets.IndividualEntrepreneurList.Where(IndividualEntrepreneur => IndividualEntrepreneur.TIN.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = IndividualEntrepreneurTINFilter;
+                            dataGets.IndividualEntrepreneurList = new ObservableCollection<IndividualEntrepreneur>(IndividualEntrepreneurTINFilter);
                             break;
                         case "Brand":
                             switch (NameNavigationItem)
@@ -1018,14 +1037,17 @@ namespace TerminalMaster
                                 case "cartrides":
                                     IEnumerable<Cartridge> CartridgeFilter = dataGets.CartridgesList.Where(Cartridge => Cartridge.Brand.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = CartridgeFilter;
+                                    dataGets.CartridgesList = new ObservableCollection<Cartridge>(CartridgeFilter);
                                     break;
                                 case "cashRegister":
                                     IEnumerable<CashRegister> CashRegisterFilter = dataGets.CashRegisterList.Where(CashRegister => CashRegister.Brand.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = CashRegisterFilter;
+                                    dataGets.CashRegisterList = new ObservableCollection<CashRegister>(CashRegisterFilter);
                                     break;
                                 case "simCard":
                                     IEnumerable<SimCard> SimCardFilter = dataGets.SimCardList.Where(SimCard => SimCard.Brand.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = SimCardFilter;
+                                    dataGets.SimCardList = new ObservableCollection<SimCard>(SimCardFilter);
                                     break;
                                 default:
                                     break;
@@ -1034,106 +1056,132 @@ namespace TerminalMaster
                         case "Model":
                             IEnumerable<Cartridge> CartridgeModelFilter = dataGets.CartridgesList.Where(Cartridge => Cartridge.Model.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = CartridgeModelFilter;
+                            dataGets.CartridgesList = new ObservableCollection<Cartridge>(CartridgeModelFilter);
                             break;
                         case "VendorCode":
                             IEnumerable<Cartridge> CartridgeVendorCodeFilter = dataGets.CartridgesList.Where(Cartridge => Cartridge.VendorCode.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = CartridgeVendorCodeFilter;
+                            dataGets.CartridgesList = new ObservableCollection<Cartridge>(CartridgeVendorCodeFilter);
                             break;
                         case "NameDevice":
                             IEnumerable<CashRegister> CashRegisterNameFilter = dataGets.CashRegisterList.Where(Cartridge => Cartridge.NameDevice.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = CashRegisterNameFilter;
+                            dataGets.CashRegisterList = new ObservableCollection<CashRegister>(CashRegisterNameFilter);
                             break;
                         case "FactoryNumber":
                             IEnumerable<CashRegister> CashFactoryNumberFilter = dataGets.CashRegisterList.Where(Cartridge => Cartridge.FactoryNumber.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = CashFactoryNumberFilter;
+                            dataGets.CashRegisterList = new ObservableCollection<CashRegister>(CashFactoryNumberFilter);
                             break;
                         case "SerialNumber":
                             IEnumerable<CashRegister> CashSerialNumberFilter = dataGets.CashRegisterList.Where(Cartridge => Cartridge.SerialNumber.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = CashSerialNumberFilter;
+                            dataGets.CashRegisterList = new ObservableCollection<CashRegister>(CashSerialNumberFilter);
                             break;
                         case "PaymentNumber":
                             IEnumerable<CashRegister> CashPaymentNumberFilter = dataGets.CashRegisterList.Where(Cartridge => Cartridge.PaymentNumber.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = CashPaymentNumberFilter;
+                            dataGets.CashRegisterList = new ObservableCollection<CashRegister>(CashPaymentNumberFilter);
                             break;
                         case "Holder":
                             IEnumerable<CashRegister> CashHolderFilter = dataGets.CashRegisterList.Where(Cartridge => Cartridge.Holder.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = CashHolderFilter;
+                            dataGets.CashRegisterList = new ObservableCollection<CashRegister>(CashHolderFilter);
                             break;
                         case "User":
                             IEnumerable<CashRegister> CashUserFilter = dataGets.CashRegisterList.Where(Cartridge => Cartridge.User.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = CashUserFilter;
+                            dataGets.CashRegisterList = new ObservableCollection<CashRegister>(CashUserFilter);
                             break;
                         case "DateReceptionString":
                             IEnumerable<CashRegister> CashDateFilter = dataGets.CashRegisterList.Where(Cartridge => Cartridge.DateReceptionString.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = CashDateFilter;
+                            dataGets.CashRegisterList = new ObservableCollection<CashRegister>(CashDateFilter);
                             break;
                         case "DateEndFiscalMemoryString":
                             IEnumerable<CashRegister> CashDateEndFiscalMemoryFilter = dataGets.CashRegisterList.Where(Cartridge => Cartridge.DateEndFiscalMemoryString.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = CashDateEndFiscalMemoryFilter;
+                            dataGets.CashRegisterList = new ObservableCollection<CashRegister>(CashDateEndFiscalMemoryFilter);
                             break;
                         case "DateKeyActivationFiscalDataOperatorString":
                             IEnumerable<CashRegister> CashDateActivationFiscalFilter = dataGets.CashRegisterList.Where(Cartridge => Cartridge.DateKeyActivationFiscalDataOperatorString.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = CashDateActivationFiscalFilter;
+                            dataGets.CashRegisterList = new ObservableCollection<CashRegister>(CashDateActivationFiscalFilter);
                             break;
                         case "Location":
                             IEnumerable<CashRegister> CashLocationFilter = dataGets.CashRegisterList.Where(Cartridge => Cartridge.Location.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = CashLocationFilter;
+                            dataGets.CashRegisterList = new ObservableCollection<CashRegister>(CashLocationFilter);
                             break;
                         case "Post":
                             IEnumerable<PhoneBook> PhoneBookPostFilter = dataGets.PhoneBookList.Where(PhoneBook => PhoneBook.Post.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = PhoneBookPostFilter;
+                            dataGets.PhoneBookList = new ObservableCollection<PhoneBook>(PhoneBookPostFilter);
                             break;
                         case "InternalNumber":
                             IEnumerable<PhoneBook> PhoneBookInternalFilter = dataGets.PhoneBookList.Where(PhoneBook => PhoneBook.InternalNumber.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = PhoneBookInternalFilter;
+                            dataGets.PhoneBookList = new ObservableCollection<PhoneBook>(PhoneBookInternalFilter);
                             break;
                         case "MobileNumber":
                             IEnumerable<PhoneBook> PhoneBookMobileFilter = dataGets.PhoneBookList.Where(PhoneBook => PhoneBook.InternalNumber.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = PhoneBookMobileFilter;
+                            dataGets.PhoneBookList = new ObservableCollection<PhoneBook>(PhoneBookMobileFilter);
                             break;
                         case "ModelPrinter":
                             IEnumerable<Printer> PrinterFilter = dataGets.PrinterList.Where(Printer => Printer.ModelPrinter.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = PrinterFilter;
+                            dataGets.PrinterList = new ObservableCollection<Printer>(PrinterFilter);
                             break;
                         case "NamePort":
                             IEnumerable<Printer> PrinterNamePortFilter = dataGets.PrinterList.Where(Printer => Printer.NamePort.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = PrinterNamePortFilter;
+                            dataGets.PrinterList = new ObservableCollection<Printer>(PrinterNamePortFilter);
                             break;
                         case "LocationPrinter":
                             IEnumerable<Printer> PrinterLocationFilter = dataGets.PrinterList.Where(Printer => Printer.LocationPrinter.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = PrinterLocationFilter;
+                            dataGets.PrinterList = new ObservableCollection<Printer>(PrinterLocationFilter);
                             break;
                         case "OC":
                             IEnumerable<Printer> PrinterOCFilter = dataGets.PrinterList.Where(Printer => Printer.OC.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = PrinterOCFilter;
+                            dataGets.PrinterList = new ObservableCollection<Printer>(PrinterOCFilter);
                             break;
                         case "NameTerminal":
                             IEnumerable<SimCard> SimCardNameFilter = dataGets.SimCardList.Where(SimCard => SimCard.NameTerminal.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = SimCardNameFilter;
+                            dataGets.SimCardList = new ObservableCollection<SimCard>(SimCardNameFilter);
                             break;
                         case "Operator":
                             IEnumerable<SimCard> SimCardOperatorFilter = dataGets.SimCardList.Where(SimCard => SimCard.Operator.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = SimCardOperatorFilter;
+                            dataGets.SimCardList = new ObservableCollection<SimCard>(SimCardOperatorFilter);
                             break;
                         case "IdentNumber":
                             IEnumerable<SimCard> SimCardIdentNumberFilter = dataGets.SimCardList.Where(SimCard => SimCard.IdentNumber.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = SimCardIdentNumberFilter;
+                            dataGets.SimCardList = new ObservableCollection<SimCard>(SimCardIdentNumberFilter);
                             break;
                         case "TypeDevice":
                             IEnumerable<SimCard> SimCardTypeDeviceFilter = dataGets.SimCardList.Where(SimCard => SimCard.TypeDevice.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = SimCardTypeDeviceFilter;
+                            dataGets.SimCardList = new ObservableCollection<SimCard>(SimCardTypeDeviceFilter);
                             break;
                         case "TMS":
                             IEnumerable<SimCard> SimCardTMSFilter = dataGets.SimCardList.Where(SimCard => SimCard.TMS.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = SimCardTMSFilter;
+                            dataGets.SimCardList = new ObservableCollection<SimCard>(SimCardTMSFilter);
                             break;
                         case "ICC":
                             IEnumerable<SimCard> SimCardICCFilter = dataGets.SimCardList.Where(SimCard => SimCard.ICC.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = SimCardICCFilter;
+                            dataGets.SimCardList = new ObservableCollection<SimCard>(SimCardICCFilter);
                             break;
                         case "IndividualEntrepreneur":
                             IEnumerable<SimCard> SimCardIndividualEntrepreneurFilter = dataGets.SimCardList.Where(SimCard => SimCard.IndividualEntrepreneur.StartsWith(args.QueryText));
                             MainDataGrid.ItemsSource = SimCardIndividualEntrepreneurFilter;
+                            dataGets.SimCardList = new ObservableCollection<SimCard>(SimCardIndividualEntrepreneurFilter);
                             break;
                         default:
                             break;

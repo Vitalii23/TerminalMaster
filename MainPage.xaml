@@ -96,7 +96,8 @@
                                   Margin="0,42,0,0"
                                   IsReadOnly="True" 
                                   Sorting="MainDataGrid_Sorting"
-                                  LoadingRowGroup="MainDataGrid_LoadingRowGroup">
+                                  LoadingRowGroup="MainDataGrid_LoadingRowGroup"
+                                  >
                     <control:DataGrid.RowGroupHeaderStyles>
                         <Style TargetType="control:DataGridRowGroupHeader">
                             <Setter Property="Background" Value="LightGray"/>
