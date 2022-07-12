@@ -13,7 +13,7 @@
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
-    <Grid x:Name="PrinterContentDialogGrid" Height="Auto">
+    <Grid x:Name="PrinterContentDialogGrid" Height="Auto" Width="Auto">
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -31,7 +31,7 @@
                     <Setter Property="BorderThickness" Value="2,2,2,2"/>
                 </Style>
                 <Style TargetType="CalendarDatePicker">
-                    <Setter Property="Margin" Value="22,0,0,5"/>
+                    <Setter Property="Margin" Value="0,0,0,5"/>
                     <Setter Property="Padding" Value="5,0,0,0"/>
                     <Setter Property="FontSize" Value="14"/>
                     <Setter Property="Height" Value="55"/>
@@ -48,11 +48,16 @@
                     <Setter Property="BorderThickness" Value="2,2,2,2"/>
                 </Style>
             </StackPanel.Resources>
+            <TextBox x:Name="BrandTextBox" Header="Фирма"/>
             <TextBox x:Name="ModelTextBox" Header="Модель принтера"/>
-            <TextBox x:Name="NamePortTextBox" Header="Имена портов"/>
+            <TextBox x:Name="CartridgeTextBox" Header="Картридж"/>
+            <TextBox x:Name="NamePortTextBox" Header="IP-адрес"/>
             <TextBox x:Name="LocationTextBox" Header="Расположение"/>
             <TextBox x:Name="OcTextBox" Header="Среда ОС"/>
             <ComboBox x:Name="StatusComboBox" Header="Статус"/>
+            <TextBox x:Name="VendorCodeTextBox" Header="Артикули"/>
+            <TextBox x:Name="PaperTextBox" Header="Распеч.страниц"/>
+            <CalendarDatePicker x:Name="DatePrinterCalendarDatePicker" Header="Дата"/>
         </StackPanel>
     </Grid>
 </ContentDialog>

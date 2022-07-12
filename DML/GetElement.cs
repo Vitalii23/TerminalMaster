@@ -251,12 +251,18 @@ namespace TerminalMaster.ViewModel
                                     var printer = new Printer()
                                     {
                                         Id = reader.GetInt32(0),
-                                        ModelPrinter = reader.GetString(1),
-                                        NamePort = reader.GetString(2),
-                                        LocationPrinter = reader.GetString(3),
-                                        OC = reader.GetString(4),
-                                        Status = reader.GetString(5)
+                                        BrandPrinter = reader.GetString(1),
+                                        ModelPrinter = reader.GetString(2),
+                                        Cartridge = reader.GetString(3),
+                                        NamePort = reader.GetString(4),
+                                        LocationPrinter = reader.GetString(5),
+                                        OC = reader.GetString(6),
+                                        Status = reader.GetString(7),
+                                        VendorCodePrinter = reader.GetString(8),
+                                        Сounters = reader.GetInt32(9),
+                                        DatePrinter = reader.GetDateTime(10)
                                     };
+                                    printer.DatePrinterString = printer.DatePrinter.ToShortDateString();
                                     printers.Add(printer);
                                 }
                             }

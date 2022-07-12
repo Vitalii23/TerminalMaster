@@ -37,8 +37,7 @@ namespace TerminalMaster.ViewModel
         }
         public ObservableCollection<Cartridge> CartridgesList
         {
-            get
-            {
+            get =>
                 //if(_cartridges != null)
                 //{
                 //    for(int i = 0; i <= 50; i++)
@@ -46,8 +45,7 @@ namespace TerminalMaster.ViewModel
                 //        _cartridges.Add(new Cartridge(i, "Kyocera" + i, "TK-3190" + i, "КВ-00004" + i, "в работе"));
                 //    }
                 //}
-                return _cartridges;
-            }
+                _cartridges;
             set
             {
                 _cartridges = value;
@@ -56,7 +54,7 @@ namespace TerminalMaster.ViewModel
         }
         public ObservableCollection<CashRegister> CashRegisterList
         {
-            get { return _cashRegister; }
+            get => _cashRegister;
             set
             {
                 _cashRegister = value;
@@ -65,7 +63,7 @@ namespace TerminalMaster.ViewModel
         }
         public ObservableCollection<PhoneBook> PhoneBookList
         {
-            get { return _phoneBook; }
+            get => _phoneBook;
             set
             {
                 _phoneBook = value;
@@ -74,7 +72,7 @@ namespace TerminalMaster.ViewModel
         }
         public ObservableCollection<Printer> PrinterList
         {
-            get { return _printer; }
+            get => _printer;
             set
             {
                 _printer = value;
@@ -83,7 +81,7 @@ namespace TerminalMaster.ViewModel
         }
         public ObservableCollection<SimCard> SimCardList
         {
-            get { return _simCard; }
+            get => _simCard;
             set
             {
                 _simCard = value;
@@ -92,7 +90,7 @@ namespace TerminalMaster.ViewModel
         }
         public ObservableCollection<Holder> HolderList
         {
-            get { return _holder; }
+            get => _holder;
             set
             {
                 _holder = value;
@@ -101,16 +99,16 @@ namespace TerminalMaster.ViewModel
         }
         public ObservableCollection<User> UserList
         {
-            get { return _user; }
+            get => _user;
             set
             {
                 _user = value;
-                OnPropertyChanged( "UserList");
+                OnPropertyChanged("UserList");
             }
         }
         public ObservableCollection<IndividualEntrepreneur> IndividualEntrepreneurList
         {
-            get { return _individual; }
+            get => _individual;
             set
             {
                 _individual = value;

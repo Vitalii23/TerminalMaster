@@ -34,15 +34,6 @@ namespace TerminalMaster.ViewModel
                             "', mobile_number = '" + element[5] + 
                             "' WHERE id = " +  id;
                         break;
-                    case "printer":
-                        AddQuery = "UPDATE dbo.Printer SET name_user = '" + element[0] + 
-                            "', name_printer = '" + element[1] + 
-                            "', model = '" + element[2] + 
-                            "', name_port = '" + element[3] + 
-                            "', location = '" + element[4] + 
-                            "', operation_system = '" + element[5] + 
-                            "' WHERE id = " + id;
-                        break;
                     case "holder":
                         AddQuery = "UPDATE dbo.Holder SET last_name = '" + element[0] +
                             "', first_name = '" + element[1] +
@@ -64,6 +55,19 @@ namespace TerminalMaster.ViewModel
                             "', psrnie = '" + element[3] +
                             "', tin = '" + element[4] +
                             "'  WHERE id = " + id;
+                        break;
+                    case "printer":
+                        AddQuery = "UPDATE dbo.Printer SET brand = '" + element[0] +
+                            "', model = '" + element[1] +
+                            "', cartridge = '" + element[2] +
+                            "', name_port = '" + element[3] +
+                            "', location = '" + element[4] +
+                            "', operation_system = '" + element[5] +
+                            "', status = '" + element[6] +
+                           "', vendor_code = '" + element[7] +
+                           "', counters = '" + element[8] +
+                           "', date = '" + element[9] +
+                           "' WHERE id = " + id;
                         break;
                     default:
                         break;

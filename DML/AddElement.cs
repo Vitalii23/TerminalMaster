@@ -6,12 +6,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TerminalMaster.Logging;
 using TerminalMaster.Model;
 
 namespace TerminalMaster.ViewModel
 {
     class AddElement
     {
+        private LogFile logFile = new LogFile();
         public void AddDataElement(string connection, string[] element, string items)
         {
             try
@@ -44,7 +46,7 @@ namespace TerminalMaster.ViewModel
                         AddQuery = "INSERT INTO dbo.PhoneBook (last_name, first_name, middle_name, post, internal_number, mobile_number) VALUES " + values;
                         break;
                     case "printer":
-                        AddQuery = "INSERT INTO dbo.Printer (model, name_port, location, operation_system, status) VALUES " + values;
+                        AddQuery = "INSERT INTO dbo.Printer (brand, model, cartridge, name_port, location, operation_system, status, vendor_code, counters, date) VALUES " + values;
                         break;
                     case "holder":
                         AddQuery = "INSERT INTO dbo.Holder (last_name, first_name, middle_name, status) VALUES " + values;
@@ -71,7 +73,7 @@ namespace TerminalMaster.ViewModel
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "AddDataElement(connection, element, items)");
             }
 
         }
@@ -101,7 +103,6 @@ namespace TerminalMaster.ViewModel
                 if (items.Equals("cashRegister"))
                 {
                     AddQuery = "INSERT INTO dbo.CashRegister (name, brand, factory_number, serial_number, payment_number, date_reception, date_end_fiscal_memory, date_key_activ_fisc_data,  location, id_holder, id_user) VALUES " + values  + id[0] + "," + id[1] + ")";
-                    Debug.WriteLine(AddQuery);
                 }
 
                 if (items.Equals("simCard"))
@@ -121,7 +122,7 @@ namespace TerminalMaster.ViewModel
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "AddDataElement(connection, element, id, items)");
             }
 
         }

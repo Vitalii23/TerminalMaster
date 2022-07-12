@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TerminalMaster.Logging;
 
 namespace TerminalMaster.ViewModel
 {
     class DeleteElement
     {
-
+        LogFile logFile = new LogFile();
         public void DeleteDataElement(string connection, int id, string items)
         {
             try
@@ -59,7 +56,7 @@ namespace TerminalMaster.ViewModel
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "DeleteDataElement");
             }
 
         }

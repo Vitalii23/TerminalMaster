@@ -1,12 +1,7 @@
-﻿using Microsoft.Toolkit.Uwp.UI.Controls;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TerminalMaster.Model;
 using TerminalMaster.Model.People;
 
@@ -343,14 +338,16 @@ namespace TerminalMaster.DML
 
                                 while (reader.Read())
                                 {
-                                    var cashRegister = new CashRegister();
-                                    cashRegister.Id = reader.GetInt32(0);
-                                    cashRegister.NameDevice = reader.GetString(1);
-                                    cashRegister.Brand = reader.GetString(2);
-                                    cashRegister.FactoryNumber = reader.GetString(3);
-                                    cashRegister.SerialNumber = reader.GetString(4);
-                                    cashRegister.PaymentNumber = reader.GetString(5);
-                                    cashRegister.DateReception = reader.GetDateTime(6);
+                                    var cashRegister = new CashRegister
+                                    {
+                                        Id = reader.GetInt32(0),
+                                        NameDevice = reader.GetString(1),
+                                        Brand = reader.GetString(2),
+                                        FactoryNumber = reader.GetString(3),
+                                        SerialNumber = reader.GetString(4),
+                                        PaymentNumber = reader.GetString(5),
+                                        DateReception = reader.GetDateTime(6)
+                                    };
                                     cashRegister.DateReceptionString = cashRegister.DateReception.ToShortDateString();
                                     cashRegister.DateEndFiscalMemory = reader.GetDateTime(7);
                                     cashRegister.DateEndFiscalMemoryString = cashRegister.DateEndFiscalMemory.ToShortDateString();
@@ -455,17 +452,23 @@ namespace TerminalMaster.DML
                             {
                                 while (reader.Read())
                                 {
-                                    var printer = new Printer()
+                                    var printer = new Printer
                                     {
                                         Id = reader.GetInt32(0),
-                                        ModelPrinter = reader.GetString(1),
-                                        NamePort = reader.GetString(2),
-                                        LocationPrinter = reader.GetString(3),
-                                        OC = reader.GetString(4),
-                                        Status = reader.GetString(5)
+                                        BrandPrinter = reader.GetString(1),
+                                        ModelPrinter = reader.GetString(2),
+                                        Cartridge = reader.GetString(3),
+                                        NamePort = reader.GetString(4),
+                                        LocationPrinter = reader.GetString(5),
+                                        OC = reader.GetString(6),
+                                        Status = reader.GetString(7),
+                                        VendorCodePrinter = reader.GetString(8),
+                                        Сounters = reader.GetInt32(9),
+                                        DatePrinter = reader.GetDateTime(10)
                                     };
+                                    printer.DatePrinterString = printer.DatePrinter.ToShortDateString();
                                     printers.Add(printer);
-                                }
+                                }     
                             }
                         }
                     }
