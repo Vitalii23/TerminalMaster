@@ -54,7 +54,7 @@
             <TextBox x:Name="MiddleNameTextBox" Header="Отчество" TextChanging="MiddleNameTextBox_TextChanging"/>
             <TextBox x:Name="PostTextBox" Header="Должность"  TextChanging="PostTextBox_TextChanging"/>
             <TextBox x:Name="LocationTextBox" Header="Внутренний номер" MaxLength="3" BeforeTextChanging="LocationTextBox_BeforeTextChanging"/>
-            <TextBox x:Name="MobileNumberTextBox" Header="Мобильный номер" extensions:TextBoxExtensions.Mask="8-999-999-9999"/>
+            <TextBox x:Name="MobileNumberTextBox" Header="Мобильный номер" extensions:TextBoxExtensions.Mask="8-999-999-99-99"/>
         </StackPanel>
     </Grid>
 </ContentDialog>

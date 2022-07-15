@@ -49,10 +49,10 @@ namespace TerminalMaster.ViewModel
                         AddQuery = "INSERT INTO dbo.Printer (brand, model, cartridge, name_port, location, operation_system, status, vendor_code, counters, date) VALUES " + values;
                         break;
                     case "holder":
-                        AddQuery = "INSERT INTO dbo.Holder (last_name, first_name, middle_name, status) VALUES " + values;
+                        AddQuery = "INSERT INTO dbo.Holder (last_name, first_name, middle_name, number, status) VALUES " + values;
                         break;
                     case "user":
-                        AddQuery = "INSERT INTO dbo.UserDevice (last_name, first_name, middle_name, status) VALUES " + values;
+                        AddQuery = "INSERT INTO dbo.UserDevice (last_name, first_name, middle_name, number, status) VALUES " + values;
                         break;
                     case "ie":
                         AddQuery = "INSERT INTO dbo.IndividualEntrepreneur (last_name, first_name, middle_name, psrnie, tin) VALUES " + values;

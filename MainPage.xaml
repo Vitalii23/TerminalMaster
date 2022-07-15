@@ -88,6 +88,9 @@
                                   AutoGeneratingColumn="MainDataGrid_AutoGeneratingColumn"
                                   CanUserSortColumns="True"
                                   ScrollViewer.CanContentRenderOutsideBounds="True"
+                                  BeginningEdit="MainDataGrid_BeginningEdit"
+                                  CellEditEnding="MainDataGrid_CellEditEnding"
+                                  RowEditEnding="MainDataGrid_RowEditEnding"
                                   ColumnWidth="Auto"
                                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                                   ScrollViewer.HorizontalScrollBarVisibility="Auto" 
@@ -96,7 +99,6 @@
                                   Margin="0,42,0,0"
                                   IsReadOnly="True" 
                                   Sorting="MainDataGrid_Sorting"
-                                  LoadingRowGroup="MainDataGrid_LoadingRowGroup"
                                   >
                     <control:DataGrid.RowGroupHeaderStyles>
                         <Style TargetType="control:DataGridRowGroupHeader">

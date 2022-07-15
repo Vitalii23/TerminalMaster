@@ -38,14 +38,16 @@ namespace TerminalMaster.ViewModel
                         AddQuery = "UPDATE dbo.Holder SET last_name = '" + element[0] +
                             "', first_name = '" + element[1] +
                             "', middle_name = '" + element[2] +
-                            "', status = '" + element[3] +
+                            "', number = '" + element[3] +
+                            "', status = '" + element[4] +
                             "'  WHERE id = " + id;
                         break;
                     case "user":
                         AddQuery = "UPDATE dbo.UserDevice SET last_name = '" + element[0] +
                             "', first_name = '" + element[1] + 
-                            "', middle_name = '" + element[2] + 
-                            "', status = '" + element[3] + 
+                            "', middle_name = '" + element[2] +
+                            "', number = '" + element[3] +
+                            "', status = '" + element[4] +
                             "'  WHERE id = " + id;
                         break;
                     case "ie":

@@ -43,7 +43,8 @@ namespace TerminalMaster.DML
                                         LastName = reader.GetString(1),
                                         FirstName = reader.GetString(2),
                                         MiddleName = reader.GetString(3),
-                                        Status = reader.GetString(4)
+                                        Number = reader.GetString(4),
+                                        Status = reader.GetString(5)
                                     };
                                     holders.Add(holder);
                                 }
@@ -93,7 +94,8 @@ namespace TerminalMaster.DML
                                         LastName = reader.GetString(1),
                                         FirstName = reader.GetString(2),
                                         MiddleName = reader.GetString(3),
-                                        Status = reader.GetString(4)
+                                        Number = reader.GetString(4),
+                                        Status = reader.GetString(5)
                                     };
                                     users.Add(user);
                                 }

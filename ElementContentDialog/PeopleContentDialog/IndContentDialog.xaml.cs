@@ -23,7 +23,9 @@ namespace TerminalMaster.ElementContentDialog.PeopleContentDialog
 
         public string SelectData { get; set; }
         public int SelectIndex { get; set; }
+
         public string People { get; set; }
+        internal ObservableCollection<IndividualEntrepreneur> SelectInd { get; set; }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
@@ -83,12 +85,11 @@ namespace TerminalMaster.ElementContentDialog.PeopleContentDialog
             {
                 if (SelectData.Equals("GET"))
                 {
-                    ObservableCollection<IndividualEntrepreneur> ie = get.GetIndividual((App.Current as App).ConnectionString, "ONE", SelectIndex);
-                    LastNameTextBox.Text = ie[0].LastName;
-                    FirstNameTextBox.Text = ie[0].FirstName;
-                    MiddleNameTextBox.Text = ie[0].MiddleName;
-                    PSRNIETextBox.Text = ie[0].PSRNIE;
-                    TINTextBox.Text = ie[0].TIN;
+                    LastNameTextBox.Text = SelectInd[0].LastName;
+                    FirstNameTextBox.Text = SelectInd[0].FirstName;
+                    MiddleNameTextBox.Text = SelectInd[0].MiddleName;
+                    PSRNIETextBox.Text = SelectInd[0].PSRNIE;
+                    TINTextBox.Text = SelectInd[0].TIN;
                     SelectData = "UPDATE";
                 }
             }

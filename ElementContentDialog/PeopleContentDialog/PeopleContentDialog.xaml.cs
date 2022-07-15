@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 using TerminalMaster.Model;
 using TerminalMaster.ViewModel;
@@ -29,16 +31,19 @@ namespace TerminalMaster.ElementContentDialog.PeopleContentDialog
         }
         public string SelectData { get; set; }
         public int SelectIndex { get; set; }
+        public int SelectId { get; set; }
         public string People { get; set; }
+        internal ObservableCollection<User> SelectUser { get; set; }
+        internal ObservableCollection<Holder> SelectHolder { get; set; }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             string statusValue = (string)StatusComboBox.SelectedValue;
-            string[] peoples = { LastNameTextBox.Text, FirstNameTextBox.Text, MiddleNameTextBox.Text, statusValue};
+            string[] peoples = { LastNameTextBox.Text, FirstNameTextBox.Text, MiddleNameTextBox.Text, MobileNumberTextBox.Text, statusValue};
 
             if (SelectData.Equals("ADD")) { add.AddDataElement((App.Current as App).ConnectionString, peoples, People); }
 
-            if (SelectData.Equals("UPDATE")) { update.UpdateDataElement((App.Current as App).ConnectionString, peoples, SelectIndex, People); }
+            if (SelectData.Equals("UPDATE")) { update.UpdateDataElement((App.Current as App).ConnectionString, peoples, SelectId, People); }
 
             FirstNameTextBox.Text = string.Empty;
             LastNameTextBox.Text = string.Empty;
@@ -70,33 +75,41 @@ namespace TerminalMaster.ElementContentDialog.PeopleContentDialog
 
         private void PeopleContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
-            if (People.Equals("holder")) 
+            try
             {
-                PeopleCD.Title = "Владельцы";
-                if (SelectData.Equals("GET"))
+                if (People.Equals("holder"))
                 {
-                    ObservableCollection<Holder> holders = get.GetHolder((App.Current as App).ConnectionString, "ONE", SelectIndex);
-                    LastNameTextBox.Text = holders[0].LastName;
-                    FirstNameTextBox.Text = holders[0].FirstName;
-                    MiddleNameTextBox.Text = holders[0].MiddleName;
-                    StatusComboBox.SelectedValue = holders[0].Status;
-                    SelectData = "UPDATE";
+                    PeopleCD.Title = "Владельцы";
+                    if (SelectData.Equals("GET"))
+                    {
+                        LastNameTextBox.Text = SelectHolder[SelectIndex].LastName;
+                        FirstNameTextBox.Text = SelectHolder[SelectIndex].FirstName;
+                        MiddleNameTextBox.Text = SelectHolder[SelectIndex].MiddleName;
+                        MobileNumberTextBox.Text = SelectHolder[SelectIndex].Number;
+                        StatusComboBox.SelectedValue = SelectHolder[SelectIndex].Status;
+                        SelectData = "UPDATE";
+                    }
                 }
-            }
 
-            if (People.Equals("user"))
-            {
-                PeopleCD.Title = "Пользователи";
-                if (SelectData.Equals("GET"))
+                if (People.Equals("user"))
                 {
-                    ObservableCollection<User> user = get.GetUser((App.Current as App).ConnectionString, "ONE", SelectIndex);
-                    LastNameTextBox.Text = user[0].LastName;
-                    FirstNameTextBox.Text = user[0].FirstName;
-                    MiddleNameTextBox.Text = user[0].MiddleName;
-                    StatusComboBox.SelectedValue = user[0].Status;
-                    SelectData = "UPDATE";
+                    PeopleCD.Title = "Пользователи";
+                    if (SelectData.Equals("GET"))
+                    {
+                        LastNameTextBox.Text = SelectUser[SelectIndex].LastName;
+                        FirstNameTextBox.Text = SelectUser[SelectIndex].FirstName;
+                        MiddleNameTextBox.Text = SelectUser[SelectIndex].MiddleName;
+                        MobileNumberTextBox.Text = SelectUser[SelectIndex].Number;
+                        StatusComboBox.SelectedValue = SelectUser[SelectIndex].Status;
+                        SelectData = "UPDATE";
+                    }
                 }
             }
+            catch(Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            
         }
     }
 }

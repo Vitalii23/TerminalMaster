@@ -25,6 +25,7 @@ namespace TerminalMaster.ElementContentDialog
         AddElement add = new AddElement();
         UpdateElement update = new UpdateElement();
         GetElement get = new GetElement();
+
         public CartridgeContentDialog()
         {
             this.InitializeComponent();
@@ -41,6 +42,7 @@ namespace TerminalMaster.ElementContentDialog
         }
         public string SelectData { get; set; }
         public int SelectIndex { get; set; }
+        internal ObservableCollection<Cartridge> SelectCartrides { get; set; }
         public void AddComboxItem(string[] text, ComboBox combo)
         {
             for (int i = 0; i < text.Length; i++)
@@ -70,11 +72,10 @@ namespace TerminalMaster.ElementContentDialog
         {
             if (SelectData.Equals("GET"))
             {
-                ObservableCollection<Cartridge> cartridges = get.GetCartridges((App.Current as App).ConnectionString, "ONE", SelectIndex);
-                BrandComboBox.SelectedValue = cartridges[0].Brand;
-                ModelComboBox.SelectedValue = cartridges[0].Model;
-                VendorCodeTextBox.Text = cartridges[0].VendorCode;
-                StatusComboBox.SelectedValue = cartridges[0].Status;
+                BrandComboBox.SelectedValue = SelectCartrides[SelectIndex].Brand;
+                ModelComboBox.SelectedValue = SelectCartrides[SelectIndex].Model;
+                VendorCodeTextBox.Text = SelectCartrides[SelectIndex].VendorCode;
+                StatusComboBox.SelectedValue = SelectCartrides[SelectIndex].Status;
                 SelectData = "UPDATE";
             }
         }

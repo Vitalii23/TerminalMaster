@@ -27,6 +27,7 @@ using System.Collections.ObjectModel;
 using TerminalMaster.DML;
 using TerminalMaster.Model.People;
 using TerminalMaster.Logging;
+using Windows.UI;
 
 namespace TerminalMaster
 {
@@ -58,35 +59,27 @@ namespace TerminalMaster
                 switch (items)
                 {
                     case "printer":
-                        dataGets.PrinterList = Get.GetPrinter((App.Current as App).ConnectionString, "ALL", 0);
                         MainDataGrid.ItemsSource = dataGets.PrinterList;
                         break;
                     case "cartrides":
-                        dataGets.CartridgesList = Get.GetCartridges((App.Current as App).ConnectionString, "ALL", 0);
                         MainDataGrid.ItemsSource = dataGets.CartridgesList;
                         break;
                     case "cashRegister":
-                        dataGets.CashRegisterList = Get.GetCashRegister((App.Current as App).ConnectionString, "ALL", 0);
                         MainDataGrid.ItemsSource = dataGets.CashRegisterList;
                         break;
                     case "simCard":
-                        dataGets.SimCardList = Get.GetSimCard((App.Current as App).ConnectionString, "ALL", 0);
                         MainDataGrid.ItemsSource = dataGets.SimCardList;
                         break;
                     case "phoneBook":
-                        dataGets.PhoneBookList = Get.GetPhoneBook((App.Current as App).ConnectionString, "ALL", 0); ;
                         MainDataGrid.ItemsSource = dataGets.PhoneBookList;
                         break;
                     case "holder":
-                        dataGets.HolderList = Get.GetHolder((App.Current as App).ConnectionString, "ALL", 0);
                         MainDataGrid.ItemsSource = dataGets.HolderList;
                         break;
                     case "user":
-                        dataGets.UserList = Get.GetUser((App.Current as App).ConnectionString, "ALL", 0);
                         MainDataGrid.ItemsSource = dataGets.UserList;
                         break;
                     case "ie":
-                        dataGets.IndividualEntrepreneurList = Get.GetIndividual((App.Current as App).ConnectionString, "ALL", 0);
                         MainDataGrid.ItemsSource = dataGets.IndividualEntrepreneurList;
                         break;
                     default:
@@ -117,11 +110,15 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             triggerPropertyNameList = true;
             triggerHeader = true;
+
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
             PropertyNameDictionary.Clear();
             NameNavigationItem = "printer";
             triggerSort = true;
+
+            dataGets.PrinterList = Get.GetPrinter((App.Current as App).ConnectionString, "ALL", 0);
+
             UpdateTable(NameNavigationItem);
         }
         private void CartridesNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
@@ -130,10 +127,15 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             triggerPropertyNameList = true;
             triggerHeader = true;
+
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
+            PropertyNameDictionary.Clear();
             NameNavigationItem = "cartrides";
             triggerSort = true;
+
+            dataGets.CartridgesList = Get.GetCartridges((App.Current as App).ConnectionString, "ALL", 0);
+
             UpdateTable(NameNavigationItem);
         }
         private void CashRegystriNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
@@ -142,11 +144,15 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             triggerPropertyNameList = true;
             triggerHeader = true;
+
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
             PropertyNameDictionary.Clear();
             NameNavigationItem = "cashRegister";
             triggerSort = true;
+
+            dataGets.CashRegisterList = Get.GetCashRegister((App.Current as App).ConnectionString, "ALL", 0);
+
             UpdateTable(NameNavigationItem);
         }
         private void SimCardRegystriNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
@@ -155,9 +161,13 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             triggerPropertyNameList = true;
             triggerHeader = true;
+
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
             PropertyNameDictionary.Clear();
+
+            dataGets.SimCardList = Get.GetSimCard((App.Current as App).ConnectionString, "ALL", 0);
+
             NameNavigationItem = "simCard";
             triggerSort = true;
             UpdateTable(NameNavigationItem);
@@ -168,11 +178,15 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             triggerPropertyNameList = true;
             triggerHeader = true;
+
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
             PropertyNameDictionary.Clear();
             NameNavigationItem = "phoneBook";
             triggerSort = true;
+
+            dataGets.PhoneBookList = Get.GetPhoneBook((App.Current as App).ConnectionString, "ALL", 0); ;
+
             UpdateTable(NameNavigationItem);
         }
         private void HolderNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
@@ -181,11 +195,15 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             triggerPropertyNameList = true;
             triggerHeader = true;
+
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
             PropertyNameDictionary.Clear();
             NameNavigationItem = "holder";
             triggerSort = true;
+
+            dataGets.HolderList = Get.GetHolder((App.Current as App).ConnectionString, "ALL", 0);
+
             UpdateTable(NameNavigationItem);
         }
         private void UserNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
@@ -194,11 +212,15 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             triggerPropertyNameList = true;
             triggerHeader = true;
+
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
             PropertyNameDictionary.Clear();
             NameNavigationItem = "user";
             triggerSort = true;
+
+            dataGets.UserList = Get.GetUser((App.Current as App).ConnectionString, "ALL", 0);
+
             UpdateTable(NameNavigationItem);
         }
         private void IndividualEntrepreneurNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
@@ -207,11 +229,16 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             triggerPropertyNameList = true;
             triggerHeader = true;
+
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
             PropertyNameDictionary.Clear();
+
             NameNavigationItem = "ie";
             triggerSort = true;
+
+            dataGets.IndividualEntrepreneurList = Get.GetIndividual((App.Current as App).ConnectionString, "ALL", 0);
+
             UpdateTable(NameNavigationItem);
         }
 
@@ -315,7 +342,7 @@ namespace TerminalMaster
         }
         private async void AppBarButtonEdit_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            try 
+            try
             {
                 triggerPropertyNameList = false;
                 triggerHeader = false;
@@ -327,7 +354,8 @@ namespace TerminalMaster
                             PrinterContentDialog printer = new PrinterContentDialog
                             {
                                 SelectData = "GET",
-                                SelectIndex = dataGets.PrinterList[MainDataGrid.SelectedIndex].Id
+                                SelectIndex = dataGets.PrinterList[MainDataGrid.SelectedIndex].Id,
+                                SelectPrinter = dataGets.PrinterList
                             };
                             await printer.ShowAsync();
                             UpdateTable(NameNavigationItem);
@@ -344,7 +372,8 @@ namespace TerminalMaster
                             CartridgeContentDialog cartridge = new CartridgeContentDialog
                             {
                                 SelectData = "GET",
-                                SelectIndex = dataGets.CartridgesList[MainDataGrid.SelectedIndex].Id
+                                SelectIndex = dataGets.CartridgesList[MainDataGrid.SelectedIndex].Id,
+                                SelectCartrides = dataGets.CartridgesList
                             };
                             await cartridge.ShowAsync();
                             UpdateTable(NameNavigationItem);
@@ -361,7 +390,8 @@ namespace TerminalMaster
                             CashRegisterContentDialog cashRegister = new CashRegisterContentDialog
                             {
                                 SelectData = "GET",
-                                SelectIndex = dataGets.CashRegisterList[MainDataGrid.SelectedIndex].Id
+                                SelectIndex = dataGets.CashRegisterList[MainDataGrid.SelectedIndex].Id,
+                                SelectCashRegister = dataGets.CashRegisterList
                             };
                             await cashRegister.ShowAsync();
                             UpdateTable(NameNavigationItem);
@@ -378,7 +408,8 @@ namespace TerminalMaster
                             SimCardContentDialog simCard = new SimCardContentDialog
                             {
                                 SelectData = "GET",
-                                SelectIndex = dataGets.SimCardList[MainDataGrid.SelectedIndex].Id
+                                SelectIndex = dataGets.SimCardList[MainDataGrid.SelectedIndex].Id,
+                                SelectSimCard = dataGets.SimCardList
                             };
                             await simCard.ShowAsync();
                             UpdateTable(NameNavigationItem);
@@ -396,7 +427,8 @@ namespace TerminalMaster
                             PhoneBookContentDialog phoneBook = new PhoneBookContentDialog
                             {
                                 SelectData = "GET",
-                                SelectIndex = dataGets.PhoneBookList[MainDataGrid.SelectedIndex].Id
+                                SelectIndex = dataGets.PhoneBookList[MainDataGrid.SelectedIndex].Id,
+                                SelectPhoneBook = dataGets.PhoneBookList
                             };
                             await phoneBook.ShowAsync();
                             UpdateTable(NameNavigationItem);
@@ -413,7 +445,9 @@ namespace TerminalMaster
                             PeopleContentDialog holder = new PeopleContentDialog
                             {
                                 SelectData = "GET",
-                                SelectIndex = dataGets.HolderList[MainDataGrid.SelectedIndex].Id,
+                                SelectIndex = MainDataGrid.SelectedIndex,
+                                SelectId = dataGets.HolderList[MainDataGrid.SelectedIndex].Id,
+                                SelectHolder = dataGets.HolderList,
                                 People = NameNavigationItem
                             };
                             await holder.ShowAsync();
@@ -431,7 +465,9 @@ namespace TerminalMaster
                             PeopleContentDialog user = new PeopleContentDialog
                             {
                                 SelectData = "GET",
-                                SelectIndex = dataGets.UserList[MainDataGrid.SelectedIndex].Id,
+                                SelectIndex = MainDataGrid.SelectedIndex,
+                                SelectId = dataGets.UserList[MainDataGrid.SelectedIndex].Id,
+                                SelectUser = dataGets.UserList,
                                 People = NameNavigationItem
                             };
                             await user.ShowAsync();
@@ -450,6 +486,7 @@ namespace TerminalMaster
                             {
                                 SelectData = "GET",
                                 SelectIndex = dataGets.IndividualEntrepreneurList[MainDataGrid.SelectedIndex].Id,
+                                SelectInd = dataGets.IndividualEntrepreneurList,
                                 People = NameNavigationItem
                             };
                             await individual.ShowAsync();
@@ -464,13 +501,11 @@ namespace TerminalMaster
                     default:
                         break;
                 }
-            } 
+            }
             catch (Exception ex) 
             {
                 logFile.WriteLogAsync(ex.Message, "AppBarButtonEdit_Tapped");
             }
-           
-
         }
         private async void AppBarButtonDelete_Tapped(object sender, TappedRoutedEventArgs e)
         {
@@ -667,7 +702,9 @@ namespace TerminalMaster
                         if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
                         {
                             CheckSort = DataGridSortDirection.Ascending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByHolder((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            dataGets.HolderList.Clear();
+                            dataGets.HolderList = Order.GetOrderByHolder((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            MainDataGrid.ItemsSource = dataGets.HolderList;
                         }
                         else
                         {
@@ -708,6 +745,18 @@ namespace TerminalMaster
                 logFile.WriteLogAsync(ex.Message, "MainDataGrid_Sorting");
             }
             
+        }
+        private void MainDataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+
+        }
+        private void MainDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+
+        }
+        private void MainDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+
         }
         private void MainDataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
@@ -953,10 +1002,6 @@ namespace TerminalMaster
                 logFile.WriteLogAsync(ex.Message, "MainDataGrid_AutoGeneratingColumn");
             }
             
-        }
-        private void MainDataGrid_LoadingRowGroup(object sender, DataGridRowGroupHeaderEventArgs e)
-        {
-
         }
         private void SearcherTextBox_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
         {

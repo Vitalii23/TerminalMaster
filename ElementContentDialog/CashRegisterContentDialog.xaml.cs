@@ -16,6 +16,8 @@ namespace TerminalMaster.ElementContentDialog
         private GetElement get = new GetElement();
         private ObservableCollection<Holder> holders;
         private ObservableCollection<User> users;
+        
+
         public CashRegisterContentDialog()
         {
             InitializeComponent();
@@ -39,6 +41,7 @@ namespace TerminalMaster.ElementContentDialog
 
         public string SelectData { get; set; }
         public int SelectIndex { get; set; }
+        internal ObservableCollection<CashRegister> SelectCashRegister;
         public void AddComboxItem(string[] text, ComboBox combo)
         {
             for (int i = 0; i < text.Length; i++)
@@ -96,18 +99,17 @@ namespace TerminalMaster.ElementContentDialog
         {
             if (SelectData.Equals("GET"))
             {
-                ObservableCollection<CashRegister> cashRegisters = get.GetCashRegister((App.Current as App).ConnectionString, "ONE", SelectIndex);
-                NameTextBox.Text = cashRegisters[0].NameDevice;
-                BrendComboBox.SelectedValue = cashRegisters[0].Brand;
-                FactoryNumberTextBox.Text = cashRegisters[0].FactoryNumber;
-                SerialNumberTextBox.Text = cashRegisters[0].SerialNumber;
-                PaymentNumberTextBox.Text = cashRegisters[0].PaymentNumber;
-                HolderComboBox.SelectedValue = cashRegisters[0].Holder;
-                UserComboBox.SelectedValue = cashRegisters[0].User;
-                DateReceptionCalendarDatePicker.Date = cashRegisters[0].DateReception;
-                DateEndFiscalMemoryCalendarDatePicker.Date = cashRegisters[0].DateEndFiscalMemory;
-                DateKeyActivationFiscalDataOperatorCalendarDatePicker.Date = cashRegisters[0].DateKeyActivationFiscalDataOperator;
-                LocationTextBox.Text = cashRegisters[0].Location;
+                NameTextBox.Text = SelectCashRegister[0].NameDevice;
+                BrendComboBox.SelectedValue = SelectCashRegister[0].Brand;
+                FactoryNumberTextBox.Text = SelectCashRegister[0].FactoryNumber;
+                SerialNumberTextBox.Text = SelectCashRegister[0].SerialNumber;
+                PaymentNumberTextBox.Text = SelectCashRegister[0].PaymentNumber;
+                HolderComboBox.SelectedValue = SelectCashRegister[0].Holder;
+                UserComboBox.SelectedValue = SelectCashRegister[0].User;
+                DateReceptionCalendarDatePicker.Date = SelectCashRegister[0].DateReception;
+                DateEndFiscalMemoryCalendarDatePicker.Date = SelectCashRegister[0].DateEndFiscalMemory;
+                DateKeyActivationFiscalDataOperatorCalendarDatePicker.Date = SelectCashRegister[0].DateKeyActivationFiscalDataOperator;
+                LocationTextBox.Text = SelectCashRegister[0].Location;
                 SelectData = "UPDATE";
             }
         }

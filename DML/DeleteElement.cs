@@ -56,7 +56,8 @@ namespace TerminalMaster.ViewModel
             }
             catch (Exception eSql)
             {
-                logFile.WriteLogAsync(eSql.Message, "DeleteDataElement");
+               // logFile.WriteLogAsync(eSql.Message, "DeleteDataElement");
+                Debug.WriteLine(eSql);
             }
 
         }

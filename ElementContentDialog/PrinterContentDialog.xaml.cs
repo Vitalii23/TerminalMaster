@@ -19,6 +19,8 @@ namespace TerminalMaster.ElementContentDialog
         private UpdateElement update = new UpdateElement();
         private GetElement get = new GetElement();
         private LogFile logFile = new LogFile();
+        
+
         public PrinterContentDialog()
         {
             InitializeComponent();
@@ -29,6 +31,7 @@ namespace TerminalMaster.ElementContentDialog
         }
         public string SelectData { get; set; }
         public int SelectIndex { get; set; }
+        internal ObservableCollection<Printer> SelectPrinter { get; set; }
         public void NextGoTextBox(TextBox previousBox, TextBox nextBox, object sender, KeyRoutedEventArgs e, bool trigger)
         {
             TextBox textbox = sender as TextBox;
@@ -103,18 +106,16 @@ namespace TerminalMaster.ElementContentDialog
             {
                 if (SelectData.Equals("GET"))
                 {
-
-                    ObservableCollection<Printer> printers = get.GetPrinter((App.Current as App).ConnectionString, "ONE", SelectIndex);
-                    BrandTextBox.Text = printers[0].BrandPrinter;
-                    ModelTextBox.Text = printers[0].ModelPrinter;
-                    CartridgeTextBox.Text = printers[0].Cartridge;
-                    NamePortTextBox.Text = printers[0].NamePort;
-                    LocationTextBox.Text = printers[0].LocationPrinter;
-                    OcTextBox.Text = printers[0].OC;
-                    StatusComboBox.SelectedValue = printers[0].Status;
-                    VendorCodeTextBox.Text = printers[0].VendorCodePrinter;
-                    PaperTextBox.Text = Convert.ToString(printers[0].Сounters);
-                    DatePrinterCalendarDatePicker.Date = printers[0].DatePrinter;
+                    BrandTextBox.Text = SelectPrinter[0].BrandPrinter;
+                    ModelTextBox.Text = SelectPrinter[0].ModelPrinter;
+                    CartridgeTextBox.Text = SelectPrinter[0].Cartridge;
+                    NamePortTextBox.Text = SelectPrinter[0].NamePort;
+                    LocationTextBox.Text = SelectPrinter[0].LocationPrinter;
+                    OcTextBox.Text = SelectPrinter[0].OC;
+                    StatusComboBox.SelectedValue = SelectPrinter[0].Status;
+                    VendorCodeTextBox.Text = SelectPrinter[0].VendorCodePrinter;
+                    PaperTextBox.Text = Convert.ToString(SelectPrinter[0].Сounters);
+                    DatePrinterCalendarDatePicker.Date = SelectPrinter[0].DatePrinter;
                     SelectData = "UPDATE";
                 }
             }
