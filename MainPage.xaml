@@ -4,8 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:TerminalMaster"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:telerikGrid="using:Telerik.UI.Xaml.Controls.Grid"
     xmlns:control="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:vm="using:TerminalMaster.ViewModel"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="auto" Width="auto">
@@ -84,7 +85,24 @@
                 <NavigationViewItem Icon="MapDrive">Подключение</NavigationViewItem>
             </NavigationView.PaneFooter>-->
             <NavigationView.Content>
-                <control:DataGrid x:Name="MainDataGrid" 
+                <RelativePanel>
+                    <telerikGrid:RadDataGrid
+                            x:Name="MainDataGrid"
+                                  AutoGenerateColumns="true"
+                                  ScrollViewer.CanContentRenderOutsideBounds="True"
+                                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                  SelectionUnit="Cell"
+                                  UserGroupMode="Disabled"
+                                  UserFilterMode="Disabled"
+                                  UserEditMode="None"
+                                  SelectionChanged="MainDataGrid_SelectionChanged"
+                                  Height="auto"
+                                  Width="auto"
+                                  Margin="0,42,0,0">
+                    </telerikGrid:RadDataGrid>
+                </RelativePanel>
+                <!--<control:DataGrid x:Name="MainDataGrid" 
                                   AutoGeneratingColumn="MainDataGrid_AutoGeneratingColumn"
                                   CanUserSortColumns="True"
                                   ScrollViewer.CanContentRenderOutsideBounds="True"
@@ -97,13 +115,13 @@
                                   IsReadOnly="True" 
                                   Sorting="MainDataGrid_Sorting"
                                   LoadingRowGroup="MainDataGrid_LoadingRowGroup"
-                                  >
+                                  BeginningEdit="MainDataGrid_BeginningEdit">
                     <control:DataGrid.RowGroupHeaderStyles>
                         <Style TargetType="control:DataGridRowGroupHeader">
                             <Setter Property="Background" Value="LightGray"/>
                         </Style>
                     </control:DataGrid.RowGroupHeaderStyles>
-                </control:DataGrid>
+                </control:DataGrid> -->
             </NavigationView.Content>
         </NavigationView>
     </Grid>

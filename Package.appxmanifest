@@ -9,7 +9,7 @@
   <Identity
     Name="f40111d6-210e-4b09-b1b7-accb40dbee16"
     Publisher="CN=admin-teh"
-    Version="1.0.0.0" />
+    Version="1.2.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="f40111d6-210e-4b09-b1b7-accb40dbee16" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -32,11 +32,10 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="TerminalMaster.App">
       <uap:VisualElements
-        DisplayName="Terminal Master"
+        DisplayName="Терминал Мастер"
         Square150x150Logo="Assets\Square150x150Logo.png"
-        Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="TerminalMaster"
-        BackgroundColor="transparent">
+        Description="Приложения для работы и анализа базы данных терминала"
+        BackgroundColor="transparent" Square44x44Logo="Assets\paymentAppIcon64x64.png">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>

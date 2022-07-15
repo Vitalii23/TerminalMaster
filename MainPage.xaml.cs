@@ -1,32 +1,23 @@
-﻿using Microsoft.Toolkit.Uwp.UI.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using TerminalMaster.ViewModel;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using System.Diagnostics;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using Windows.Foundation;
 using Windows.UI.ViewManagement;
-using TerminalMaster;
 using TerminalMaster.ElementContentDialog;
 using TerminalMaster.ElementContentDialog.PeopleContentDialog;
 using TerminalMaster.Model;
-using Windows.UI.Popups;
-using System.ComponentModel;
-using Microsoft.Toolkit.Uwp.UI;
-using System.Collections.ObjectModel;
 using TerminalMaster.DML;
 using TerminalMaster.Model.People;
 using TerminalMaster.Logging;
+using TerminalMaster.ViewModel;
+using Telerik.UI.Xaml.Controls.Grid;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Popups;
 
 namespace TerminalMaster
 {
@@ -37,7 +28,7 @@ namespace TerminalMaster
         private GetElement Get = new GetElement();
         private DeleteElement Delete = new DeleteElement();
         private OrderByElement Order = new OrderByElement();
-        private DataGridSortDirection? CheckSort;
+        //private DataGridSortDirection? CheckSort;
         private bool triggerSort = true, triggerHeader, triggerPropertyNameList;
         private Dictionary<string, string> PropertyNameDictionary;
         private LogFile logFile = new LogFile();
@@ -60,6 +51,7 @@ namespace TerminalMaster
                     case "printer":
                         dataGets.PrinterList = Get.GetPrinter((App.Current as App).ConnectionString, "ALL", 0);
                         MainDataGrid.ItemsSource = dataGets.PrinterList;
+                        MainDataGrid.Columns.CollectionChanged += Columns_CollectionChanged;
                         break;
                     case "cartrides":
                         dataGets.CartridgesList = Get.GetCartridges((App.Current as App).ConnectionString, "ALL", 0);
@@ -99,6 +91,37 @@ namespace TerminalMaster
             }
             
         }
+
+        private void Columns_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (object eNewItem in e.NewItems)
+                {
+                    if (eNewItem is DataGridTemplateColumn templateColumn)
+                    {
+                       // templateColumn.Header = "ID";
+                    }
+                }
+            }
+
+            if (e.Action == NotifyCollectionChangedAction.Reset)
+            {
+                ReadOnlyObservableCollection<object> col = sender as ReadOnlyObservableCollection<object>;
+                MainDataGrid.Columns.Clear();
+                if (col != null)
+                {
+                    foreach (object eNewItem in col)
+                    {
+                        if (eNewItem is DataGridTemplateColumn templateColumn)
+                        {
+                            // templateColumn.Header = "ID";
+                        }
+                    }
+                }
+            }
+        }
+
         public void AddComboxItem(List<string> text, ComboBox combo)
         {
             for (int i = 0; i < text.Count; i++)
@@ -114,12 +137,15 @@ namespace TerminalMaster
         private void PrintNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             PropertyNameDictionary = new Dictionary<string, string>();
+
             MainCommandBar.IsEnabled = true;
             triggerPropertyNameList = true;
             triggerHeader = true;
+
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
             PropertyNameDictionary.Clear();
+
             NameNavigationItem = "printer";
             triggerSort = true;
             UpdateTable(NameNavigationItem);
@@ -319,151 +345,151 @@ namespace TerminalMaster
             {
                 triggerPropertyNameList = false;
                 triggerHeader = false;
-                switch (NameNavigationItem)
-                {
-                    case "printer":
-                        if (MainDataGrid.SelectedIndex >= 0)
-                        {
-                            PrinterContentDialog printer = new PrinterContentDialog
-                            {
-                                SelectData = "GET",
-                                SelectIndex = dataGets.PrinterList[MainDataGrid.SelectedIndex].Id
-                            };
-                            await printer.ShowAsync();
-                            UpdateTable(NameNavigationItem);
-                        }
-                        else
-                        {
-                            MessageDialog message = new MessageDialog("Выберите строку для изменения");
-                            await message.ShowAsync();
-                        }
-                        break;
-                    case "cartrides":
-                        if (MainDataGrid.SelectedIndex >= 0)
-                        {
-                            CartridgeContentDialog cartridge = new CartridgeContentDialog
-                            {
-                                SelectData = "GET",
-                                SelectIndex = dataGets.CartridgesList[MainDataGrid.SelectedIndex].Id
-                            };
-                            await cartridge.ShowAsync();
-                            UpdateTable(NameNavigationItem);
-                        }
-                        else
-                        {
-                            MessageDialog edit = new MessageDialog("Выберите строку для изменения");
-                            await edit.ShowAsync();
-                        }
-                        break;
-                    case "cashRegister":
-                        if (MainDataGrid.SelectedIndex >= 0)
-                        {
-                            CashRegisterContentDialog cashRegister = new CashRegisterContentDialog
-                            {
-                                SelectData = "GET",
-                                SelectIndex = dataGets.CashRegisterList[MainDataGrid.SelectedIndex].Id
-                            };
-                            await cashRegister.ShowAsync();
-                            UpdateTable(NameNavigationItem);
-                        }
-                        else
-                        {
-                            MessageDialog message = new MessageDialog("Выберите строку для изменения");
-                            await message.ShowAsync();
-                        }
-                        break;
-                    case "simCard":
-                        if (MainDataGrid.SelectedIndex >= 0)
-                        {
-                            SimCardContentDialog simCard = new SimCardContentDialog
-                            {
-                                SelectData = "GET",
-                                SelectIndex = dataGets.SimCardList[MainDataGrid.SelectedIndex].Id
-                            };
-                            await simCard.ShowAsync();
-                            UpdateTable(NameNavigationItem);
-                        }
-                        else
-                        {
-                            MessageDialog message = new MessageDialog("Выберите строку для изменения");
-                            await message.ShowAsync();
-                        }
-                        break;
-                    case "phoneBook":
+                //switch (NameNavigationItem)
+                //{
+                //    case "printer":
+                //        if (MainDataGrid.SelectedIndex >= 0)
+                //        {
+                //            PrinterContentDialog printer = new PrinterContentDialog
+                //            {
+                //                SelectData = "GET",
+                //                SelectIndex = dataGets.PrinterList[MainDataGrid.SelectedIndex].Id
+                //            };
+                //            await printer.ShowAsync();
+                //            UpdateTable(NameNavigationItem);
+                //        }
+                //        else
+                //        {
+                //            MessageDialog message = new MessageDialog("Выберите строку для изменения");
+                //            await message.ShowAsync();
+                //        }
+                //        break;
+                //    case "cartrides":
+                //        if (MainDataGrid.SelectedIndex >= 0)
+                //        {
+                //            CartridgeContentDialog cartridge = new CartridgeContentDialog
+                //            {
+                //                SelectData = "GET",
+                //                SelectIndex = dataGets.CartridgesList[MainDataGrid.SelectedIndex].Id
+                //            };
+                //            await cartridge.ShowAsync();
+                //            UpdateTable(NameNavigationItem);
+                //        }
+                //        else
+                //        {
+                //            MessageDialog edit = new MessageDialog("Выберите строку для изменения");
+                //            await edit.ShowAsync();
+                //        }
+                //        break;
+                //    case "cashRegister":
+                //        if (MainDataGrid.SelectedIndex >= 0)
+                //        {
+                //            CashRegisterContentDialog cashRegister = new CashRegisterContentDialog
+                //            {
+                //                SelectData = "GET",
+                //                SelectIndex = dataGets.CashRegisterList[MainDataGrid.SelectedIndex].Id
+                //            };
+                //            await cashRegister.ShowAsync();
+                //            UpdateTable(NameNavigationItem);
+                //        }
+                //        else
+                //        {
+                //            MessageDialog message = new MessageDialog("Выберите строку для изменения");
+                //            await message.ShowAsync();
+                //        }
+                //        break;
+                //    case "simCard":
+                //        if (MainDataGrid.SelectedIndex >= 0)
+                //        {
+                //            SimCardContentDialog simCard = new SimCardContentDialog
+                //            {
+                //                SelectData = "GET",
+                //                SelectIndex = dataGets.SimCardList[MainDataGrid.SelectedIndex].Id
+                //            };
+                //            await simCard.ShowAsync();
+                //            UpdateTable(NameNavigationItem);
+                //        }
+                //        else
+                //        {
+                //            MessageDialog message = new MessageDialog("Выберите строку для изменения");
+                //            await message.ShowAsync();
+                //        }
+                //        break;
+                //    case "phoneBook":
 
-                        if (MainDataGrid.SelectedIndex >= 0)
-                        {
-                            PhoneBookContentDialog phoneBook = new PhoneBookContentDialog
-                            {
-                                SelectData = "GET",
-                                SelectIndex = dataGets.PhoneBookList[MainDataGrid.SelectedIndex].Id
-                            };
-                            await phoneBook.ShowAsync();
-                            UpdateTable(NameNavigationItem);
-                        }
-                        else
-                        {
-                            MessageDialog message = new MessageDialog("Выберите строку для изменения");
-                            await message.ShowAsync();
-                        }
-                        break;
-                    case "holder":
-                        if (MainDataGrid.SelectedIndex >= 0)
-                        {
-                            PeopleContentDialog holder = new PeopleContentDialog
-                            {
-                                SelectData = "GET",
-                                SelectIndex = dataGets.HolderList[MainDataGrid.SelectedIndex].Id,
-                                People = NameNavigationItem
-                            };
-                            await holder.ShowAsync();
-                            UpdateTable(NameNavigationItem);
-                        }
-                        else
-                        {
-                            MessageDialog message = new MessageDialog("Выберите строку для изменения");
-                            await message.ShowAsync();
-                        }
-                        break;
-                    case "user":
-                        if (MainDataGrid.SelectedIndex >= 0)
-                        {
-                            PeopleContentDialog user = new PeopleContentDialog
-                            {
-                                SelectData = "GET",
-                                SelectIndex = dataGets.UserList[MainDataGrid.SelectedIndex].Id,
-                                People = NameNavigationItem
-                            };
-                            await user.ShowAsync();
-                            UpdateTable(NameNavigationItem);
-                        }
-                        else
-                        {
-                            MessageDialog message = new MessageDialog("Выберите строку для изменения");
-                            await message.ShowAsync();
-                        }
-                        break;
-                    case "ie":
-                        if (MainDataGrid.SelectedIndex >= 0)
-                        {
-                            indContentDialog individual = new indContentDialog
-                            {
-                                SelectData = "GET",
-                                SelectIndex = dataGets.IndividualEntrepreneurList[MainDataGrid.SelectedIndex].Id,
-                                People = NameNavigationItem
-                            };
-                            await individual.ShowAsync();
-                            UpdateTable(NameNavigationItem);
-                        }
-                        else
-                        {
-                            MessageDialog message = new MessageDialog("Выберите строку для изменения");
-                            await message.ShowAsync();
-                        }
-                        break;
-                    default:
-                        break;
-                }
+                //        if (MainDataGrid.SelectedIndex >= 0)
+                //        {
+                //            PhoneBookContentDialog phoneBook = new PhoneBookContentDialog
+                //            {
+                //                SelectData = "GET",
+                //                SelectIndex = dataGets.PhoneBookList[MainDataGrid.SelectedIndex].Id
+                //            };
+                //            await phoneBook.ShowAsync();
+                //            UpdateTable(NameNavigationItem);
+                //        }
+                //        else
+                //        {
+                //            MessageDialog message = new MessageDialog("Выберите строку для изменения");
+                //            await message.ShowAsync();
+                //        }
+                //        break;
+                //    case "holder":
+                //        if (MainDataGrid.SelectedIndex >= 0)
+                //        {
+                //            PeopleContentDialog holder = new PeopleContentDialog
+                //            {
+                //                SelectData = "GET",
+                //                SelectIndex = dataGets.HolderList[MainDataGrid.SelectedIndex].Id,
+                //                People = NameNavigationItem
+                //            };
+                //            await holder.ShowAsync();
+                //            UpdateTable(NameNavigationItem);
+                //        }
+                //        else
+                //        {
+                //            MessageDialog message = new MessageDialog("Выберите строку для изменения");
+                //            await message.ShowAsync();
+                //        }
+                //        break;
+                //    case "user":
+                //        if (MainDataGrid.SelectedIndex >= 0)
+                //        {
+                //            PeopleContentDialog user = new PeopleContentDialog
+                //            {
+                //                SelectData = "GET",
+                //                SelectIndex = dataGets.UserList[MainDataGrid.SelectedIndex].Id,
+                //                People = NameNavigationItem
+                //            };
+                //            await user.ShowAsync();
+                //            UpdateTable(NameNavigationItem);
+                //        }
+                //        else
+                //        {
+                //            MessageDialog message = new MessageDialog("Выберите строку для изменения");
+                //            await message.ShowAsync();
+                //        }
+                //        break;
+                //    case "ie":
+                //        if (MainDataGrid.SelectedIndex >= 0)
+                //        {
+                //            indContentDialog individual = new indContentDialog
+                //            {
+                //                SelectData = "GET",
+                //                SelectIndex = dataGets.IndividualEntrepreneurList[MainDataGrid.SelectedIndex].Id,
+                //                People = NameNavigationItem
+                //            };
+                //            await individual.ShowAsync();
+                //            UpdateTable(NameNavigationItem);
+                //        }
+                //        else
+                //        {
+                //            MessageDialog message = new MessageDialog("Выберите строку для изменения");
+                //            await message.ShowAsync();
+                //        }
+                //        break;
+                //    default:
+                //        break;
+                //}
             } 
             catch (Exception ex) 
             {
@@ -480,60 +506,60 @@ namespace TerminalMaster
 
                 triggerPropertyNameList = false;
                 triggerHeader = false;
-                if (MainDataGrid.SelectedIndex >= 0)
-                {
-                    message = new MessageDialog("Вы точно хотите удалить этот элемент.");
-                    message.Commands.Add(new UICommand("Да", null));
-                    message.Commands.Add(new UICommand("Нет", null));
-                    message.DefaultCommandIndex = 0;
-                    message.CancelCommandIndex = 1;
-                }
-                else
-                {
-                    message = new MessageDialog("Выберите строку для удаления");
-                }
+                //if (MainDataGrid.SelectedIndex >= 0)
+                //{
+                //    message = new MessageDialog("Вы точно хотите удалить этот элемент.");
+                //    message.Commands.Add(new UICommand("Да", null));
+                //    message.Commands.Add(new UICommand("Нет", null));
+                //    message.DefaultCommandIndex = 0;
+                //    message.CancelCommandIndex = 1;
+                //}
+                //else
+                //{
+                //    message = new MessageDialog("Выберите строку для удаления");
+                //}
 
-                IUICommand cmd = await message.ShowAsync();
-                switch (NameNavigationItem)
-                {
-                    case "printer":
-                        if (cmd.Label == "Да")
-                        {
-                            Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.PrinterList[MainDataGrid.SelectedIndex].Id, NameNavigationItem);
-                        }
-                        UpdateTable(NameNavigationItem);
-                        break;
-                    case "cartrides":
-                        if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.CartridgesList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
-                        UpdateTable(NameNavigationItem);
-                        break;
-                    case "cashRegister":
-                        if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.CashRegisterList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
-                        UpdateTable(NameNavigationItem);
-                        break;
-                    case "simCard":
-                        if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.SimCardList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
-                        UpdateTable(NameNavigationItem);
-                        break;
-                    case "phoneBook":
-                        if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.PhoneBookList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
-                        UpdateTable(NameNavigationItem);
-                        break;
-                    case "holder":
-                        if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.HolderList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
-                        UpdateTable(NameNavigationItem);
-                        break;
-                    case "user":
-                        if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.UserList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
-                        UpdateTable(NameNavigationItem);
-                        break;
-                    case "ie":
-                        if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.IndividualEntrepreneurList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
-                        UpdateTable(NameNavigationItem);
-                        break;
-                    default:
-                        break;
-                }
+                //IUICommand cmd = await message.ShowAsync();
+                //switch (NameNavigationItem)
+                //{
+                //    case "printer":
+                //        if (cmd.Label == "Да")
+                //        {
+                //            Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.PrinterList[MainDataGrid.SelectedIndex].Id, NameNavigationItem);
+                //        }
+                //        UpdateTable(NameNavigationItem);
+                //        break;
+                //    case "cartrides":
+                //        if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.CartridgesList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
+                //        UpdateTable(NameNavigationItem);
+                //        break;
+                //    case "cashRegister":
+                //        if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.CashRegisterList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
+                //        UpdateTable(NameNavigationItem);
+                //        break;
+                //    case "simCard":
+                //        if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.SimCardList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
+                //        UpdateTable(NameNavigationItem);
+                //        break;
+                //    case "phoneBook":
+                //        if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.PhoneBookList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
+                //        UpdateTable(NameNavigationItem);
+                //        break;
+                //    case "holder":
+                //        if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.HolderList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
+                //        UpdateTable(NameNavigationItem);
+                //        break;
+                //    case "user":
+                //        if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.UserList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
+                //        UpdateTable(NameNavigationItem);
+                //        break;
+                //    case "ie":
+                //        if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.IndividualEntrepreneurList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
+                //        UpdateTable(NameNavigationItem);
+                //        break;
+                //    default:
+                //        break;
+                //}
             }
             catch (Exception ex)
             {
@@ -588,376 +614,383 @@ namespace TerminalMaster
                 logFile.WriteLogAsync(ex.Message, "AppBarButtonUpdate_Tapped");
             }    
         }
-        private void MainDataGrid_Sorting(object sender, DataGridColumnEventArgs e)
-        {
-            try
-            {
-                if (triggerSort)
-                {
-                    CheckSort = e.Column.SortDirection;
-                    triggerSort = false;
-                }
+        //private void MainDataGrid_Sorting(object sender, DataGridColumnEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (triggerSort)
+        //        {
+        //            CheckSort = e.Column.SortDirection;
+        //            triggerSort = false;
+        //        }
 
-                triggerPropertyNameList = false;
-                triggerHeader = false;
+        //        triggerPropertyNameList = false;
+        //        triggerHeader = false;
 
-                switch (NameNavigationItem)
-                {
-                    case "printer":
-                        if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
-                        {
-                            CheckSort = DataGridSortDirection.Ascending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByPrinter((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
-                        }
-                        else
-                        {
-                            CheckSort = DataGridSortDirection.Descending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByPrinter((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
-                        }
-                        break;
-                    case "cartrides":
-                        if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
-                        {
-                            CheckSort = DataGridSortDirection.Ascending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByCartridges((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
-                        }
-                        else
-                        {
-                            CheckSort = DataGridSortDirection.Descending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByCartridges((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
-                        }
-                        break;
-                    case "cashRegister":
-                        if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
-                        {
-                            CheckSort = DataGridSortDirection.Ascending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByCashRegister((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
-                        }
-                        else
-                        {
-                            CheckSort = DataGridSortDirection.Descending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByCashRegister((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
-                        }
-                        break;
-                    case "simCard":
-                        if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
-                        {
-                            CheckSort = DataGridSortDirection.Ascending;
-                            MainDataGrid.ItemsSource = Order.GetOrderBySimCard((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
-                        }
-                        else
-                        {
-                            CheckSort = DataGridSortDirection.Descending;
-                            MainDataGrid.ItemsSource = Order.GetOrderBySimCard((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
-                        }
-                        break;
-                    case "phoneBook":
-                        if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
-                        {
-                            CheckSort = DataGridSortDirection.Ascending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByPhoneBook((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
-                        }
-                        else
-                        {
-                            CheckSort = DataGridSortDirection.Descending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByPhoneBook((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
-                        }
-                        break;
-                    case "holder":
-                        if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
-                        {
-                            CheckSort = DataGridSortDirection.Ascending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByHolder((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
-                        }
-                        else
-                        {
-                            CheckSort = DataGridSortDirection.Descending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByHolder((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
-                        }
-                        break;
-                    case "user":
-                        if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
-                        {
-                            CheckSort = DataGridSortDirection.Ascending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByUser((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
-                        }
-                        else
-                        {
-                            CheckSort = DataGridSortDirection.Descending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByUser((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
-                        }
-                        break;
-                    case "ie":
-                        if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
-                        {
-                            CheckSort = DataGridSortDirection.Ascending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByIndividual((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
-                        }
-                        else
-                        {
-                            CheckSort = DataGridSortDirection.Descending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByIndividual((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                logFile.WriteLogAsync(ex.Message, "MainDataGrid_Sorting");
-            }
+        //        switch (NameNavigationItem)
+        //        {
+        //            case "printer":
+        //                if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
+        //                {
+        //                    CheckSort = DataGridSortDirection.Ascending;
+        //                    MainDataGrid.ItemsSource = Order.GetOrderByPrinter((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+        //                }
+        //                else
+        //                {
+        //                    CheckSort = DataGridSortDirection.Descending;
+        //                    MainDataGrid.ItemsSource = Order.GetOrderByPrinter((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+        //                }
+        //                break;
+        //            case "cartrides":
+        //                if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
+        //                {
+        //                    CheckSort = DataGridSortDirection.Ascending;
+        //                    MainDataGrid.ItemsSource = Order.GetOrderByCartridges((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+        //                }
+        //                else
+        //                {
+        //                    CheckSort = DataGridSortDirection.Descending;
+        //                    MainDataGrid.ItemsSource = Order.GetOrderByCartridges((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+        //                }
+        //                break;
+        //            case "cashRegister":
+        //                if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
+        //                {
+        //                    CheckSort = DataGridSortDirection.Ascending;
+        //                    MainDataGrid.ItemsSource = Order.GetOrderByCashRegister((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+        //                }
+        //                else
+        //                {
+        //                    CheckSort = DataGridSortDirection.Descending;
+        //                    MainDataGrid.ItemsSource = Order.GetOrderByCashRegister((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+        //                }
+        //                break;
+        //            case "simCard":
+        //                if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
+        //                {
+        //                    CheckSort = DataGridSortDirection.Ascending;
+        //                    MainDataGrid.ItemsSource = Order.GetOrderBySimCard((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+        //                }
+        //                else
+        //                {
+        //                    CheckSort = DataGridSortDirection.Descending;
+        //                    MainDataGrid.ItemsSource = Order.GetOrderBySimCard((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+        //                }
+        //                break;
+        //            case "phoneBook":
+        //                if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
+        //                {
+        //                    CheckSort = DataGridSortDirection.Ascending;
+        //                    MainDataGrid.ItemsSource = Order.GetOrderByPhoneBook((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+        //                }
+        //                else
+        //                {
+        //                    CheckSort = DataGridSortDirection.Descending;
+        //                    MainDataGrid.ItemsSource = Order.GetOrderByPhoneBook((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+        //                }
+        //                break;
+        //            case "holder":
+        //                if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
+        //                {
+        //                    CheckSort = DataGridSortDirection.Ascending;
+        //                    MainDataGrid.ItemsSource = Order.GetOrderByHolder((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+        //                }
+        //                else
+        //                {
+        //                    CheckSort = DataGridSortDirection.Descending;
+        //                    MainDataGrid.ItemsSource = Order.GetOrderByHolder((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+        //                }
+        //                break;
+        //            case "user":
+        //                if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
+        //                {
+        //                    CheckSort = DataGridSortDirection.Ascending;
+        //                    MainDataGrid.ItemsSource = Order.GetOrderByUser((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+        //                }
+        //                else
+        //                {
+        //                    CheckSort = DataGridSortDirection.Descending;
+        //                    MainDataGrid.ItemsSource = Order.GetOrderByUser((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+        //                }
+        //                break;
+        //            case "ie":
+        //                if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
+        //                {
+        //                    CheckSort = DataGridSortDirection.Ascending;
+        //                    MainDataGrid.ItemsSource = Order.GetOrderByIndividual((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+        //                }
+        //                else
+        //                {
+        //                    CheckSort = DataGridSortDirection.Descending;
+        //                    MainDataGrid.ItemsSource = Order.GetOrderByIndividual((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+        //                }
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        logFile.WriteLogAsync(ex.Message, "MainDataGrid_Sorting");
+        //    }
             
-        }
-        private void MainDataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
-        {
-            try
-            {
-                switch (e.PropertyName)
-                {
-                    case "Id":
-                        e.Column.Header = "ID";
-                        e.Column.Tag = "id";
-                        break;
-                    case "LastName":
-                        e.Column.Header = "Фамилия";
-                        e.Column.Tag = "last_name";
-                        break;
-                    case "FirstName":
-                        e.Column.Header = "Имя";
-                        e.Column.Tag = "first_name";
-                        break;
-                    case "MiddleName":
-                        e.Column.Header = "Отчество";
-                        e.Column.Tag = "middle_name";
-                        break;
-                    case "Status":
-                        e.Column.Header = "Статус";
-                        e.Column.Tag = "status";
-                        break;
-                    case "PSRNIE":
-                        e.Column.Header = "ОГРНИП";
-                        e.Column.Tag = "psrnie";
-                        break;
-                    case "TIN":
-                        e.Column.Header = "ИНН";
-                        e.Column.Tag = "tin";
-                        break;
-                    case "Brand":
-                        e.Column.Header = "Бренд";
-                        e.Column.Tag = "brand";
-                        break;
-                    case "Model":
-                        e.Column.Header = "Модель";
-                        e.Column.Tag = "model";
-                        break;
-                    case "VendorCode":
-                        e.Column.Header = "Артикуль";
-                        e.Column.Tag = "vendor_code";
-                        break;
-                    case "NameDevice":
-                        e.Column.Header = "ККМ";
-                        e.Column.Tag = "name";
-                        break;
-                    case "FactoryNumber":
-                        e.Column.Header = "Заводской номер";
-                        e.Column.Tag = "factory_number";
-                        break;
-                    case "SerialNumber":
-                        e.Column.Header = "Серийный номер";
-                        e.Column.Tag = "serial_number";
-                        break;
-                    case "PaymentNumber":
-                        e.Column.Header = "Номер счета";
-                        e.Column.Tag = "payment_number";
-                        break;
-                    case "Holder":
-                        e.Column.Header = "Владелец";
-                        e.Column.Tag = "holder";
-                        break;
-                    case "User":
-                        e.Column.Header = "Пользователь";
-                        e.Column.Tag = "user";
-                        break;
-                    case "DateReception":
-                        e.Column.CanUserSort = false;
-                        e.Column.Header = "Дата получения";
-                        e.Column.Tag = "date_reception";
-                        e.Column.Visibility = Visibility.Collapsed;
-                        triggerPropertyNameList = false;
-                        triggerHeader = false;
-                        break;
-                    case "DateReceptionString":
-                        e.Column.Header = "Дата получения";
-                        e.Column.Tag = "date_reception";
-                        break;
-                    case "DateEndFiscalMemory":
-                        e.Column.CanUserSort = false;
-                        e.Column.Header = "Дата окончания ФН";
-                        e.Column.Tag = "date_end_fiscal_memory";
-                        e.Column.Visibility = Visibility.Collapsed;
-                        triggerPropertyNameList = false;
-                        triggerHeader = false;
-                        break;
-                    case "DateEndFiscalMemoryString":
-                        e.Column.Header = "Дата окончания ФН";
-                        e.Column.Tag = "date_end_fiscal_memory";
-                        break;
-                    case "DateKeyActivationFiscalDataOperator":
-                        e.Column.CanUserSort = false;
-                        e.Column.Header = "Дата активации ОФД";
-                        e.Column.Tag = "date_key_activ_fisc_data";
-                        e.Column.Visibility = Visibility.Collapsed;
-                        triggerPropertyNameList = false;
-                        triggerHeader = false;
-                        break;
-                    case "DateKeyActivationFiscalDataOperatorString":
-                        e.Column.Header = "Дата активации ОФД";
-                        e.Column.Tag = "date_key_activ_fisc_data";
-                        break;
-                    case "Location":
-                        e.Column.Header = "Место нахождения";
-                        e.Column.Tag = "location";
-                        break;
-                    case "Post":
-                        e.Column.Header = "Должность";
-                        e.Column.Tag = "post";
-                        break;
-                    case "InternalNumber":
-                        e.Column.Header = "Внутренный номер";
-                        e.Column.Tag = "internal_number";
-                        break;
-                    case "MobileNumber":
-                        e.Column.Header = "Мобильный номер";
-                        e.Column.Tag = "mobile_number";
-                        break;
-                    case "ModelPrinter":
-                        e.Column.Header = "Модель";
-                        e.Column.Tag = "model";
-                        break;
-                    case "NamePort":
-                        e.Column.Header = "IP-Адрес";
-                        e.Column.Tag = "name_port";
-                        break;
-                    case "LocationPrinter":
-                        e.Column.Header = "Расположение принтера";
-                        e.Column.Tag = "location";
-                        break;
-                    case "OC":
-                        e.Column.Header = "Среда ОС";
-                        e.Column.Tag = "operation_system";
-                        break;
-                    case "NameTerminal":
-                        e.Column.Header = "Имя терминала";
-                        e.Column.Tag = "name_terminal";
-                        break;
-                    case "Operator":
-                        e.Column.Header = "Оператор связи";
-                        e.Column.Tag = "operator";
-                        break;
-                    case "IdentNumber":
-                        e.Column.Header = "Идентификационный номер (ИН)";
-                        e.Column.Tag = "identifaction_number";
-                        break;
-                    case "TypeDevice":
-                        e.Column.Header = "Тип устройства";
-                        e.Column.Tag = "type_device";
-                        break;
-                    case "TMS":
-                        e.Column.Header = "Номер телефона (TMS)";
-                        e.Column.Tag = "tms";
-                        break;
-                    case "ICC":
-                        e.Column.Header = "Уникальный серийный номер (ICC)";
-                        e.Column.Tag = "icc";
-                        break;
-                    case "IndividualEntrepreneur":
-                        e.Column.Header = "Индивидуальный предприниматель (ИП)";
-                        e.Column.Tag = "individual_entrepreneur";
-                        break;
-                    case "IdHolder":
-                        e.Column.CanUserSort = false;
-                        e.Column.Header = "IdHolder";
-                        e.Column.Tag = "IdHolder";
-                        e.Column.Visibility = Visibility.Collapsed;
-                        triggerPropertyNameList = false;
-                        triggerHeader = false;
-                        break;
-                    case "IdUser":
-                        e.Column.CanUserSort = false;
-                        e.Column.Header = "IdUser";
-                        e.Column.Tag = "IdUser";
-                        e.Column.Visibility = Visibility.Collapsed;
-                        triggerPropertyNameList = false;
-                        triggerHeader = false;
-                        break;
-                    case "IdIndividual":
-                        e.Column.CanUserSort = false;
-                        e.Column.Header = "IdIndividual";
-                        e.Column.Tag = "IdIndividual";
-                        e.Column.Visibility = Visibility.Collapsed;
-                        triggerPropertyNameList = false;
-                        triggerHeader = false;
-                        break;
-                    case "IdCashRegister":
-                        e.Column.CanUserSort = false;
-                        e.Column.Header = "IdCashRegister";
-                        e.Column.Tag = "IdCashRegister";
-                        e.Column.Visibility = Visibility.Collapsed;
-                        triggerPropertyNameList = false;
-                        triggerHeader = false;
-                        break;
-                    case "VendorCodePrinter":
-                        e.Column.Header = "Артикули";
-                        e.Column.Tag = "vendor_code";
-                        break;
-                    case "Сounters":
-                        e.Column.Header = "Распечатанных страниц";
-                        e.Column.Tag = "counters";
-                        break;
-                    case "BrandPrinter":
-                        e.Column.Header = "Фирма";
-                        e.Column.Tag = "brand";
-                        break;
-                    case "Cartridge":
-                        e.Column.Header = "Картридж";
-                        e.Column.Tag = "cartridge";
-                        break;
-                    case "DatePrinter":
-                        e.Column.CanUserSort = false;
-                        e.Column.Header = "Дата состояния";
-                        e.Column.Tag = "date";
-                        e.Column.Visibility = Visibility.Collapsed;
-                        triggerPropertyNameList = false;
-                        triggerHeader = false;
-                        break;
-                    case "DatePrinterString":
-                        e.Column.Header = "Дата состояния";
-                        e.Column.Tag = "date";
-                        break;
-                    default:
-                        break;
-                }
-                if (triggerPropertyNameList)
-                {
-                    PropertyNameDictionary.Add(e.Column.Header.ToString(), e.PropertyName);
-                }
+        //}
 
-                if (triggerHeader)
-                {
-                    SelectionItemComboBox.Items.Add(e.Column.Header);
-                }
-            }
-            catch (Exception ex)
-            {
-                logFile.WriteLogAsync(ex.Message, "MainDataGrid_AutoGeneratingColumn");
-            }
+        private void MainDataGrid_SelectionChanged(object sender, DataGridSelectionChangedEventArgs e)
+        {
+           // var firstItem = ((ObservableCollection<Printer>)MainDataGrid.ItemsSource).First(p => p.BrandPrinter == "Kyocera");
+           // MainDataGrid.SelectItem(firstItem);
+           //// var firstMarketingCell = ((ObservableCollection<Printer>)MainDataGrid.ItemsSource).;
+           // Debug.WriteLine(firstMarketingCell.BrandPrinter);
+           // MainDataGrid.SelectCell(new DataGridCellInfo(firstMarketingCell, MainDataGrid.Columns[1]));
+           // MainDataGrid.SelectAll();
+        }
+
+        //private void MainDataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        //{
+        //    try
+        //    {
+        //        switch (e.PropertyName)
+        //        {
+        //            case "Id":
+        //                e.Column.Header = "ID";
+        //                e.Column.Tag = "id";
+        //                break;
+        //            case "LastName":
+        //                e.Column.Header = "Фамилия";
+        //                e.Column.Tag = "last_name";
+        //                break;
+        //            case "FirstName":
+        //                e.Column.Header = "Имя";
+        //                e.Column.Tag = "first_name";
+        //                break;
+        //            case "MiddleName":
+        //                e.Column.Header = "Отчество";
+        //                e.Column.Tag = "middle_name";
+        //                break;
+        //            case "Status":
+        //                e.Column.Header = "Статус";
+        //                e.Column.Tag = "status";
+        //                break;
+        //            case "PSRNIE":
+        //                e.Column.Header = "ОГРНИП";
+        //                e.Column.Tag = "psrnie";
+        //                break;
+        //            case "TIN":
+        //                e.Column.Header = "ИНН";
+        //                e.Column.Tag = "tin";
+        //                break;
+        //            case "Brand":
+        //                e.Column.Header = "Бренд";
+        //                e.Column.Tag = "brand";
+        //                break;
+        //            case "Model":
+        //                e.Column.Header = "Модель";
+        //                e.Column.Tag = "model";
+        //                break;
+        //            case "VendorCode":
+        //                e.Column.Header = "Артикуль";
+        //                e.Column.Tag = "vendor_code";
+        //                break;
+        //            case "NameDevice":
+        //                e.Column.Header = "ККМ";
+        //                e.Column.Tag = "name";
+        //                break;
+        //            case "FactoryNumber":
+        //                e.Column.Header = "Заводской номер";
+        //                e.Column.Tag = "factory_number";
+        //                break;
+        //            case "SerialNumber":
+        //                e.Column.Header = "Серийный номер";
+        //                e.Column.Tag = "serial_number";
+        //                break;
+        //            case "PaymentNumber":
+        //                e.Column.Header = "Номер счета";
+        //                e.Column.Tag = "payment_number";
+        //                break;
+        //            case "Holder":
+        //                e.Column.Header = "Владелец";
+        //                e.Column.Tag = "holder";
+        //                break;
+        //            case "User":
+        //                e.Column.Header = "Пользователь";
+        //                e.Column.Tag = "user";
+        //                break;
+        //            case "DateReception":
+        //                e.Column.CanUserSort = false;
+        //                e.Column.Header = "Дата получения";
+        //                e.Column.Tag = "date_reception";
+        //                e.Column.Visibility = Visibility.Collapsed;
+        //                triggerPropertyNameList = false;
+        //                triggerHeader = false;
+        //                break;
+        //            case "DateReceptionString":
+        //                e.Column.Header = "Дата получения";
+        //                e.Column.Tag = "date_reception";
+        //                break;
+        //            case "DateEndFiscalMemory":
+        //                e.Column.CanUserSort = false;
+        //                e.Column.Header = "Дата окончания ФН";
+        //                e.Column.Tag = "date_end_fiscal_memory";
+        //                e.Column.Visibility = Visibility.Collapsed;
+        //                triggerPropertyNameList = false;
+        //                triggerHeader = false;
+        //                break;
+        //            case "DateEndFiscalMemoryString":
+        //                e.Column.Header = "Дата окончания ФН";
+        //                e.Column.Tag = "date_end_fiscal_memory";
+        //                break;
+        //            case "DateKeyActivationFiscalDataOperator":
+        //                e.Column.CanUserSort = false;
+        //                e.Column.Header = "Дата активации ОФД";
+        //                e.Column.Tag = "date_key_activ_fisc_data";
+        //                e.Column.Visibility = Visibility.Collapsed;
+        //                triggerPropertyNameList = false;
+        //                triggerHeader = false;
+        //                break;
+        //            case "DateKeyActivationFiscalDataOperatorString":
+        //                e.Column.Header = "Дата активации ОФД";
+        //                e.Column.Tag = "date_key_activ_fisc_data";
+        //                break;
+        //            case "Location":
+        //                e.Column.Header = "Место нахождения";
+        //                e.Column.Tag = "location";
+        //                break;
+        //            case "Post":
+        //                e.Column.Header = "Должность";
+        //                e.Column.Tag = "post";
+        //                break;
+        //            case "InternalNumber":
+        //                e.Column.Header = "Внутренный номер";
+        //                e.Column.Tag = "internal_number";
+        //                break;
+        //            case "MobileNumber":
+        //                e.Column.Header = "Мобильный номер";
+        //                e.Column.Tag = "mobile_number";
+        //                break;
+        //            case "ModelPrinter":
+        //                e.Column.Header = "Модель";
+        //                e.Column.Tag = "model";
+        //                break;
+        //            case "NamePort":
+        //                e.Column.Header = "IP-Адрес";
+        //                e.Column.Tag = "name_port";
+        //                break;
+        //            case "LocationPrinter":
+        //                e.Column.Header = "Расположение принтера";
+        //                e.Column.Tag = "location";
+        //                break;
+        //            case "OC":
+        //                e.Column.Header = "Среда ОС";
+        //                e.Column.Tag = "operation_system";
+        //                break;
+        //            case "NameTerminal":
+        //                e.Column.Header = "Имя терминала";
+        //                e.Column.Tag = "name_terminal";
+        //                break;
+        //            case "Operator":
+        //                e.Column.Header = "Оператор связи";
+        //                e.Column.Tag = "operator";
+        //                break;
+        //            case "IdentNumber":
+        //                e.Column.Header = "Идентификационный номер (ИН)";
+        //                e.Column.Tag = "identifaction_number";
+        //                break;
+        //            case "TypeDevice":
+        //                e.Column.Header = "Тип устройства";
+        //                e.Column.Tag = "type_device";
+        //                break;
+        //            case "TMS":
+        //                e.Column.Header = "Номер телефона (TMS)";
+        //                e.Column.Tag = "tms";
+        //                break;
+        //            case "ICC":
+        //                e.Column.Header = "Уникальный серийный номер (ICC)";
+        //                e.Column.Tag = "icc";
+        //                break;
+        //            case "IndividualEntrepreneur":
+        //                e.Column.Header = "Индивидуальный предприниматель (ИП)";
+        //                e.Column.Tag = "individual_entrepreneur";
+        //                break;
+        //            case "IdHolder":
+        //                e.Column.CanUserSort = false;
+        //                e.Column.Header = "IdHolder";
+        //                e.Column.Tag = "IdHolder";
+        //                e.Column.Visibility = Visibility.Collapsed;
+        //                triggerPropertyNameList = false;
+        //                triggerHeader = false;
+        //                break;
+        //            case "IdUser":
+        //                e.Column.CanUserSort = false;
+        //                e.Column.Header = "IdUser";
+        //                e.Column.Tag = "IdUser";
+        //                e.Column.Visibility = Visibility.Collapsed;
+        //                triggerPropertyNameList = false;
+        //                triggerHeader = false;
+        //                break;
+        //            case "IdIndividual":
+        //                e.Column.CanUserSort = false;
+        //                e.Column.Header = "IdIndividual";
+        //                e.Column.Tag = "IdIndividual";
+        //                e.Column.Visibility = Visibility.Collapsed;
+        //                triggerPropertyNameList = false;
+        //                triggerHeader = false;
+        //                break;
+        //            case "IdCashRegister":
+        //                e.Column.CanUserSort = false;
+        //                e.Column.Header = "IdCashRegister";
+        //                e.Column.Tag = "IdCashRegister";
+        //                e.Column.Visibility = Visibility.Collapsed;
+        //                triggerPropertyNameList = false;
+        //                triggerHeader = false;
+        //                break;
+        //            case "VendorCodePrinter":
+        //                e.Column.Header = "Артикули";
+        //                e.Column.Tag = "vendor_code";
+        //                break;
+        //            case "Сounters":
+        //                e.Column.Header = "Распечатанных страниц";
+        //                e.Column.Tag = "counters";
+        //                break;
+        //            case "BrandPrinter":
+        //                e.Column.Header = "Фирма";
+        //                e.Column.Tag = "brand";
+        //                break;
+        //            case "Cartridge":
+        //                e.Column.Header = "Картридж";
+        //                e.Column.Tag = "cartridge";
+        //                break;
+        //            case "DatePrinter":
+        //                e.Column.CanUserSort = false;
+        //                e.Column.Header = "Дата состояния";
+        //                e.Column.Tag = "date";
+        //                e.Column.Visibility = Visibility.Collapsed;
+        //                triggerPropertyNameList = false;
+        //                triggerHeader = false;
+        //                break;
+        //            case "DatePrinterString":
+        //                e.Column.Header = "Дата состояния";
+        //                e.Column.Tag = "date";
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        //        if (triggerPropertyNameList)
+        //        {
+        //            PropertyNameDictionary.Add(e.Column.Header.ToString(), e.PropertyName);
+        //        }
+
+        //        if (triggerHeader)
+        //        {
+        //            SelectionItemComboBox.Items.Add(e.Column.Header);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        logFile.WriteLogAsync(ex.Message, "MainDataGrid_AutoGeneratingColumn");
+        //    }
             
-        }
-        private void MainDataGrid_LoadingRowGroup(object sender, DataGridRowGroupHeaderEventArgs e)
-        {
-
-        }
+        //}
         private void SearcherTextBox_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
         {
             try 

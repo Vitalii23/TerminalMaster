@@ -5,7 +5,10 @@ namespace TerminalMaster.Model
 {
     class Printer
     {
+        [Editable(false)]
+        [Display(Name = "Принтера Id")]
         public int Id { get; set; }
+        [Display(Name = "Бренд")]
         public string BrandPrinter { get; set; } // Фирма
         public string ModelPrinter { get; set; } // Модель принтера
         public string Cartridge { get; set; } // Катридж

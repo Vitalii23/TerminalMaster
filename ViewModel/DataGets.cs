@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using TerminalMaster.Model;
@@ -27,25 +28,22 @@ namespace TerminalMaster.ViewModel
         public ObservableCollection<IndividualEntrepreneur> _individual = new ObservableCollection<IndividualEntrepreneur>();
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged(string propertyName)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            if (PropertyChanged != null)
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected void UpdateValue<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
+        {
+            if(!Equals(field, newValue))
             {
-                PropertyChangedEventArgs e = new PropertyChangedEventArgs(propertyName);
-                PropertyChanged(this, e);
+                field = newValue;
+                OnPropertyChanged(propertyName);
             }
         }
         public ObservableCollection<Cartridge> CartridgesList
         {
-            get =>
-                //if(_cartridges != null)
-                //{
-                //    for(int i = 0; i <= 50; i++)
-                //    {
-                //        _cartridges.Add(new Cartridge(i, "Kyocera" + i, "TK-3190" + i, "КВ-00004" + i, "в работе"));
-                //    }
-                //}
-                _cartridges;
+            get =>_cartridges;
             set
             {
                 _cartridges = value;
