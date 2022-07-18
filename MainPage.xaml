@@ -73,6 +73,7 @@
                 <NavigationViewItem Content="Владельцы" Icon="Contact" Tapped="HolderNavigationViewItem_Tapped"/>
                 <NavigationViewItem Content="Пользователи" Icon="People" Tapped="UserNavigationViewItem_Tapped"/>
                 <NavigationViewItem Content="Индивидуальные предприниматели" Icon="Contact2" Tapped="IndividualEntrepreneurNavigationViewItem_Tapped"/>
+                <NavigationViewItem Content="Накладные" Icon="Page2" Tapped="WaybillNavigationViewItem_Tapped"/>
                 <!-- <NavigationViewItemSeparator/>
                 <NavigationViewItemHeader Content="Конфигурации"/>
                 <NavigationViewItem Content="Подключение" Icon="DisconnectDrive" Tapped="ConnectNavigationItem_Tapped"/>

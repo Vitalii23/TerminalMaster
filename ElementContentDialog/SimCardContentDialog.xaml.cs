@@ -84,14 +84,14 @@ namespace TerminalMaster.ElementContentDialog
         {
             if (SelectData.Equals("GET"))
             {
-                NameCashRegisterComboBox.SelectedValue = SelectSimCard[0].NameTerminal;
-                OperatorComboBox.SelectedValue = SelectSimCard[0].Operator;
-                IdentNumberTextBox.Text = SelectSimCard[0].IdentNumber;
-                TypeDeviceComboBox.SelectedValue = SelectSimCard[0].TypeDevice;
-                TmsTextBox.Text = SelectSimCard[0].TMS;
-                IccTextBox.Text = SelectSimCard[0].ICC;
-                IndividualEntrepreneurComboBox.SelectedValue = SelectSimCard[0].IndividualEntrepreneur;
-                StatusComboBox.SelectedValue = SelectSimCard[0].Status;
+                NameCashRegisterComboBox.SelectedValue = SelectSimCard[SelectIndex].NameTerminal;
+                OperatorComboBox.SelectedValue = SelectSimCard[SelectIndex].Operator;
+                IdentNumberTextBox.Text = SelectSimCard[SelectIndex].IdentNumber;
+                TypeDeviceComboBox.SelectedValue = SelectSimCard[SelectIndex].TypeDevice;
+                TmsTextBox.Text = SelectSimCard[SelectIndex].TMS;
+                IccTextBox.Text = SelectSimCard[SelectIndex].ICC;
+                IndividualEntrepreneurComboBox.SelectedValue = SelectSimCard[SelectIndex].IndividualEntrepreneur;
+                StatusComboBox.SelectedValue = SelectSimCard[SelectIndex].Status;
                 SelectData = "UPDATE";
             }
         }

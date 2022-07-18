@@ -141,6 +141,9 @@
     <Compile Include="ElementContentDialog\CashRegisterContentDialog.xaml.cs">
       <DependentUpon>CashRegisterContentDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ElementContentDialog\WaybillContentDialog.xaml.cs">
+      <DependentUpon>WaybillContentDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ElementContentDialog\PeopleContentDialog\IndContentDialog.xaml.cs">
       <DependentUpon>IndContentDialog.xaml</DependentUpon>
     </Compile>
@@ -168,6 +171,7 @@
     <Compile Include="Model\PhoneBook.cs" />
     <Compile Include="Model\Printer.cs" />
     <Compile Include="Model\SimCard.cs" />
+    <Compile Include="Model\Waybill.cs" />
     <Compile Include="SaveFile\JsonFile.cs" />
     <Compile Include="SaveFile\XmlFile.cs" />
     <Compile Include="ViewModel\DataGets.cs" />
@@ -199,6 +203,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ElementContentDialog\CashRegisterContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ElementContentDialog\WaybillContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

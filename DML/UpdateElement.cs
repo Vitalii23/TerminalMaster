@@ -130,6 +130,18 @@ namespace TerminalMaster.ViewModel
                         "' WHERE Id = " + id;
                 }
 
+                if (items.Equals("waybill"))
+                {
+                    AddQuery = "UPDATE dbo.Waybill SET name = '" + element[0] +
+                        "', name_document = '" + element[1] +
+                        "', number_document =  '" + element[2] +
+                        "', number_suppliers =  '" + element[3] +
+                        "', date_document =  '" + element[4] +
+                        "', file_pdf =  '" + element[5] +
+                        "', id_holder =  '" + ids[0] +
+                        "' WHERE Id = " + id;
+                }
+
 
                 var connect = new SqlConnection(connection);
                 connect.Open();

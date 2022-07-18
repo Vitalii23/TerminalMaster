@@ -42,6 +42,7 @@ namespace TerminalMaster
         private bool triggerSort = true, triggerHeader, triggerPropertyNameList;
         private Dictionary<string, string> PropertyNameDictionary;
         private LogFile logFile = new LogFile();
+        private MessageDialog errorMessage;
         public MainPage()
         {
             InitializeComponent();
@@ -81,6 +82,9 @@ namespace TerminalMaster
                         break;
                     case "ie":
                         MainDataGrid.ItemsSource = dataGets.IndividualEntrepreneurList;
+                        break;
+                    case "waybill":
+                        MainDataGrid.ItemsSource = dataGets.WaybillList;
                         break;
                     default:
                         break;
@@ -242,18 +246,24 @@ namespace TerminalMaster
             UpdateTable(NameNavigationItem);
         }
 
-        //private void SettingNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
-        //{
+        private void WaybillNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            PropertyNameDictionary = new Dictionary<string, string>();
+            MainCommandBar.IsEnabled = true;
+            triggerPropertyNameList = true;
+            triggerHeader = true;
 
-        //}
-        //private void InstructionNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
-        //{
+            MainDataGrid.Columns.Clear();
+            SelectionItemComboBox.Items.Clear();
+            PropertyNameDictionary.Clear();
 
-        //}
-        //private void AboutNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
-        //{
+            NameNavigationItem = "waybill";
+            triggerSort = true;
 
-        //}
+            dataGets.WaybillList = Get.GetWaybill((App.Current as App).ConnectionString, "ALL", 0);
+
+            UpdateTable(NameNavigationItem);
+        }
 
         private async void AppBarButtonAdd_Tapped(object sender, TappedRoutedEventArgs e)
         {
@@ -328,6 +338,14 @@ namespace TerminalMaster
                             People = NameNavigationItem
                         };
                         await individual.ShowAsync();
+                        UpdateTable(NameNavigationItem);
+                        break;
+                    case "waybill":
+                        WaybillContentDialog waybill = new WaybillContentDialog
+                        {
+                            SelectData = "ADD"
+                        };
+                        await waybill.ShowAsync();
                         UpdateTable(NameNavigationItem);
                         break;
                     default:
@@ -498,11 +516,29 @@ namespace TerminalMaster
                             await message.ShowAsync();
                         }
                         break;
+                    case "waybill":
+                        if (MainDataGrid.SelectedIndex >= 0)
+                        {
+                            WaybillContentDialog waybill = new WaybillContentDialog
+                            {
+                                SelectData = "GET",
+                                SelectIndex = dataGets.WaybillList[MainDataGrid.SelectedIndex].ID,
+                                SelectWaybill = dataGets.WaybillList
+                            };
+                            await waybill.ShowAsync();
+                            UpdateTable(NameNavigationItem);
+                        }
+                        else
+                        {
+                            MessageDialog message = new MessageDialog("Выберите строку для изменения");
+                            await message.ShowAsync();
+                        }
+                        break;
                     default:
                         break;
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 logFile.WriteLogAsync(ex.Message, "AppBarButtonEdit_Tapped");
             }
@@ -566,6 +602,10 @@ namespace TerminalMaster
                         if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.IndividualEntrepreneurList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
                         UpdateTable(NameNavigationItem);
                         break;
+                    case "waybill":
+                        if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.WaybillList[MainDataGrid.SelectedIndex].ID, NameNavigationItem); }
+                        UpdateTable(NameNavigationItem);
+                        break;
                     default:
                         break;
                 }
@@ -576,12 +616,6 @@ namespace TerminalMaster
             }
             
         }
-
-        //private void AppBarButtonSave_Tapped(object sender, TappedRoutedEventArgs e)
-        //{
-
-        //}
-
         private void AppBarButtonUpdate_Tapped(object sender, TappedRoutedEventArgs e)
         {
             try
@@ -1285,11 +1319,6 @@ namespace TerminalMaster
                                     MainDataGrid.ItemsSource = PrinterLocationFilter;
                                     dataGets.PrinterList = new ObservableCollection<Printer>(PrinterLocationFilter);
                                     break;
-                                case "OC":
-                                    IEnumerable<Printer> PrinterOCFilter = dataGets.PrinterList.Where(Printer => Printer.OC.StartsWith(args.QueryText));
-                                    MainDataGrid.ItemsSource = PrinterOCFilter;
-                                    dataGets.PrinterList = new ObservableCollection<Printer>(PrinterOCFilter);
-                                    break;
                                 case "VendorCodePrinter":
                                     IEnumerable<Printer> PrinterVendorCodeFilter = dataGets.PrinterList.Where(Printer => Printer.VendorCodePrinter.StartsWith(args.QueryText));
                                     MainDataGrid.ItemsSource = PrinterVendorCodeFilter;
@@ -1359,7 +1388,23 @@ namespace TerminalMaster
 
         }
 
+        //private void AppBarButtonSave_Tapped(object sender, TappedRoutedEventArgs e)
+        //{
+
+        //}
         //private void ConnectNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
+        //{
+
+        //}
+        //private void SettingNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
+        //{
+
+        //}
+        //private void InstructionNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
+        //{
+
+        //}
+        //private void AboutNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         //{
 
         //}

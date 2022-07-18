@@ -25,6 +25,7 @@ namespace TerminalMaster.ViewModel
         public ObservableCollection<Holder> _holder = new ObservableCollection<Holder>();
         public ObservableCollection<User> _user = new ObservableCollection<User>();
         public ObservableCollection<IndividualEntrepreneur> _individual = new ObservableCollection<IndividualEntrepreneur>();
+        public ObservableCollection<Waybill> _waybill = new ObservableCollection<Waybill>();
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -37,15 +38,7 @@ namespace TerminalMaster.ViewModel
         }
         public ObservableCollection<Cartridge> CartridgesList
         {
-            get =>
-                //if(_cartridges != null)
-                //{
-                //    for(int i = 0; i <= 50; i++)
-                //    {
-                //        _cartridges.Add(new Cartridge(i, "Kyocera" + i, "TK-3190" + i, "КВ-00004" + i, "в работе"));
-                //    }
-                //}
-                _cartridges;
+            get =>_cartridges;
             set
             {
                 _cartridges = value;
@@ -115,5 +108,15 @@ namespace TerminalMaster.ViewModel
                 OnPropertyChanged("IndividualEntrepreneurList");
             }
         }
+        public ObservableCollection<Waybill> WaybillList
+        {
+            get => _waybill;
+            set
+            {
+                _waybill = value;
+                OnPropertyChanged("WaybillList");
+            }
+        }
+
     }
 }

@@ -40,6 +40,9 @@ namespace TerminalMaster.ViewModel
                     case "ie":
                         AddQuery = "DELETE FROM dbo.IndividualEntrepreneur WHERE id = " + id;
                         break;
+                    case "waybill":
+                        AddQuery = "DELETE FROM dbo.Waybill WHERE id = " + id;
+                        break;
                     default:
                         break;
                 }

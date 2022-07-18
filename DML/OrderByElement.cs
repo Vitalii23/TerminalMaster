@@ -192,7 +192,8 @@ namespace TerminalMaster.DML
                                        "INNER JOIN dbo.Holder ON dbo.Holder.id = dbo.CashRegister.id_holder " +
                                        "INNER JOIN dbo.UserDevice ON dbo.UserDevice.id = dbo.CashRegister.id_user " +
                                        "ORDER BY dbo.Holder.last_name;";
-                } else if (element.Equals("user"))
+                }
+                else if (element.Equals("user"))
                 {
                     GetCashRegister = "SELECT dbo.CashRegister.id, " +
                                        "dbo.CashRegister.name, " +
@@ -242,7 +243,7 @@ namespace TerminalMaster.DML
                                        "INNER JOIN dbo.UserDevice ON dbo.UserDevice.id = dbo.CashRegister.id_user " +
                                        "ORDER BY " + element + ";";
                 }
-               
+
             }
 
             if (sort.Equals("Descending"))
@@ -462,15 +463,14 @@ namespace TerminalMaster.DML
                                         Cartridge = reader.GetString(3),
                                         NamePort = reader.GetString(4),
                                         LocationPrinter = reader.GetString(5),
-                                        OC = reader.GetString(6),
-                                        Status = reader.GetString(7),
-                                        VendorCodePrinter = reader.GetString(8),
-                                        Сounters = reader.GetInt32(9),
-                                        DatePrinter = reader.GetDateTime(10)
+                                        Status = reader.GetString(6),
+                                        VendorCodePrinter = reader.GetString(7),
+                                        Сounters = reader.GetInt32(8),
+                                        DatePrinter = reader.GetDateTime(9)
                                     };
                                     printer.DatePrinterString = printer.DatePrinter.ToShortDateString();
                                     printers.Add(printer);
-                                }     
+                                }
                             }
                         }
                     }
@@ -614,6 +614,84 @@ namespace TerminalMaster.DML
                     }
                 }
                 return individuals;
+            }
+            catch (Exception eSql)
+            {
+                Debug.WriteLine("Exception: " + eSql);
+            }
+            return null;
+        }
+        public ObservableCollection<Waybill> GetWaybill(string connection, string sort, string element)
+        {
+            string GetWaybill = null;
+
+
+            if (sort.Equals("Ascending"))
+            {
+                if (element.Equals("holder"))
+                {
+                    GetWaybill = "SELECT id, name_document, number_document, number_suppliers, date_document, file_pdf, id_holder, id_userDevice FROM Waybill " +
+                     "INNER JOIN dbo.Holder ON dbo.Holder.id = dbo.Waybill.id_holder " +
+                     "ORDER BY dbo.Holder.last_name;";
+                }
+                else
+                {
+                    GetWaybill = "SELECT id, name_document, number_document, number_suppliers, date_document, file_pdf, id_holder, id_userDevice FROM Waybill " +
+                     "INNER JOIN dbo.Holder ON dbo.Holder.id = dbo.Waybill.id_holder " +
+                     "ORDER BY " + element + ";";
+                }
+
+            }
+
+            if (sort.Equals("Descending"))
+            {
+                if (element.Equals("holder"))
+                {
+                    GetWaybill = "SELECT id, name_document, number_document, number_suppliers, date_document, file_pdf, id_holder, id_userDevice " +
+                     "INNER JOIN dbo.Holder ON dbo.Holder.id = dbo.Waybill.id_holder " +
+                     "ORDER BY dbo.Holder.last_name DESC;";
+
+                }
+                else
+                {
+                    GetWaybill = "SELECT id, name_document, number_document, number_suppliers, date_document, file_pdf, id_holder, id_userDevice " +
+                     "INNER JOIN dbo.Holder ON dbo.Holder.id = dbo.Waybill.id_holder " +
+                     "ORDER BY " + element + " DESC;";
+                }
+            }
+
+            var waybills = new ObservableCollection<Waybill>();
+            try
+            {
+                using (var connect = new SqlConnection(connection))
+                {
+                    connect.Open();
+                    if (connect.State == System.Data.ConnectionState.Open)
+                    {
+                        using (SqlCommand cmd = connect.CreateCommand())
+                        {
+                            cmd.CommandText = GetWaybill;
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    var waybill = new Waybill();
+                                    waybill.ID = reader.GetInt32(0);
+                                    waybill.NameDocument = reader.GetString(1);
+                                    waybill.NumberDocument = reader.GetInt32(2);
+                                    waybill.NumberSuppliers = reader.GetString(3);
+                                    waybill.DateDocument = reader.GetDateTime(4);
+                                    waybill.DateDocumentString = waybill.DateDocument.ToShortDateString();
+                                    waybill.FilePDF = reader.GetString(5);
+                                    waybill.IdHolder = reader.GetInt32(6);
+                                    waybill.Holder = reader.GetString(7) + " " + reader.GetString(8) + " " + reader.GetString(9);
+                                    waybills.Add(waybill);
+                                }
+                            }
+                        }
+                    }
+                }
+                return waybills;
             }
             catch (Exception eSql)
             {

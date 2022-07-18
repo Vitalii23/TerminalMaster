@@ -1,26 +1,26 @@
 ﻿<ContentDialog
-    x:Class="TerminalMaster.ElementContentDialog.PrinterContentDialog"
+    x:Class="TerminalMaster.ElementContentDialog.WaybillContentDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:TerminalMaster.ElementContentDialog"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="Принтеры"
-    PrimaryButtonText="OK"
+    Title="Документы"
+    PrimaryButtonText="Ок"
     SecondaryButtonText="Отмена"
     Opened="ContentDialog_Opened"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
-    <Grid x:Name="PrinterContentDialogGrid" Height="Auto" Width="Auto">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel x:Name="WriteTextBoxStackPanel" Grid.Row="0" Grid.Column="0">
+        <StackPanel x:Name="WriteTextBoxStackPanel" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0">
             <StackPanel.Resources>
                 <Style TargetType="TextBox">
                     <Setter Property="Margin" Value="0,0,0,5"/>
@@ -47,16 +47,21 @@
                     <Setter Property="MaxDropDownHeight" Value="200"/>
                     <Setter Property="BorderThickness" Value="2,2,2,2"/>
                 </Style>
+                <Style TargetType="Button">
+                    <Setter Property="Margin" Value="0,10,0,5"/>
+                    <Setter Property="Padding" Value="5,0,0,0"/>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="Height" Value="30"/>
+                    <Setter Property="Width" Value="150"/>
+                    <Setter Property="BorderThickness" Value="2,2,2,2"/>
+                </Style>
             </StackPanel.Resources>
-            <TextBox x:Name="BrandTextBox" Header="Фирма"/>
-            <TextBox x:Name="ModelTextBox" Header="Модель принтера"/>
-            <TextBox x:Name="CartridgeTextBox" Header="Картридж"/>
-            <TextBox x:Name="NamePortTextBox" Header="IP-адрес"/>
-            <TextBox x:Name="LocationTextBox" Header="Расположение"/>
-            <ComboBox x:Name="StatusComboBox" Header="Статус"/>
-            <TextBox x:Name="VendorCodeTextBox" Header="Артикули"/>
-            <TextBox x:Name="PaperTextBox" Header="Распеч.страниц"/>
-            <CalendarDatePicker x:Name="DatePrinterCalendarDatePicker" Header="Дата"/>
+            <TextBox x:Name="NameDocumentTextBox" Header="Имя документа"/>
+            <TextBox x:Name="NumberDocumentTextBox" Header="Номер документа"/>
+            <TextBox x:Name="NumberSuppliersTextBox" Header="Номер поставщика"/>
+            <CalendarDatePicker x:Name="DateDocumentCalendarDatePicker" Header="Дата"/>
+            <Button x:Name="FilePDF" Click="FilePDF_Click">Изображение</Button>
+            <ComboBox x:Name="HolderComboBox" Header="Владелец" IsTextSearchEnabled="False" IsEditable="True"/>
         </StackPanel>
     </Grid>
 </ContentDialog>

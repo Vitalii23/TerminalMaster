@@ -16,7 +16,6 @@ namespace TerminalMaster.ElementContentDialog
         private GetElement get = new GetElement();
         private ObservableCollection<Holder> holders;
         private ObservableCollection<User> users;
-        
 
         public CashRegisterContentDialog()
         {
@@ -38,7 +37,6 @@ namespace TerminalMaster.ElementContentDialog
             string[] brend = { "AZUR", "MSPOS", "Атол FPrint-22ПТК", "Атол 55Ф" };
             AddComboxItem(brend, BrendComboBox);
         }
-
         public string SelectData { get; set; }
         public int SelectIndex { get; set; }
         internal ObservableCollection<CashRegister> SelectCashRegister;
@@ -49,7 +47,6 @@ namespace TerminalMaster.ElementContentDialog
                 combo.Items.Add(text[i]);
             }
         }
-
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             
@@ -85,7 +82,6 @@ namespace TerminalMaster.ElementContentDialog
             PaymentNumberTextBox.Text = string.Empty;
             LocationTextBox.Text = string.Empty;
         }
-
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             NameTextBox.Text = string.Empty;
@@ -94,22 +90,21 @@ namespace TerminalMaster.ElementContentDialog
             PaymentNumberTextBox.Text = string.Empty;
             LocationTextBox.Text = string.Empty;
         }
-
         private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
             if (SelectData.Equals("GET"))
             {
-                NameTextBox.Text = SelectCashRegister[0].NameDevice;
-                BrendComboBox.SelectedValue = SelectCashRegister[0].Brand;
-                FactoryNumberTextBox.Text = SelectCashRegister[0].FactoryNumber;
-                SerialNumberTextBox.Text = SelectCashRegister[0].SerialNumber;
-                PaymentNumberTextBox.Text = SelectCashRegister[0].PaymentNumber;
-                HolderComboBox.SelectedValue = SelectCashRegister[0].Holder;
-                UserComboBox.SelectedValue = SelectCashRegister[0].User;
-                DateReceptionCalendarDatePicker.Date = SelectCashRegister[0].DateReception;
-                DateEndFiscalMemoryCalendarDatePicker.Date = SelectCashRegister[0].DateEndFiscalMemory;
-                DateKeyActivationFiscalDataOperatorCalendarDatePicker.Date = SelectCashRegister[0].DateKeyActivationFiscalDataOperator;
-                LocationTextBox.Text = SelectCashRegister[0].Location;
+                NameTextBox.Text = SelectCashRegister[SelectIndex].NameDevice;
+                BrendComboBox.SelectedValue = SelectCashRegister[SelectIndex].Brand;
+                FactoryNumberTextBox.Text = SelectCashRegister[SelectIndex].FactoryNumber;
+                SerialNumberTextBox.Text = SelectCashRegister[SelectIndex].SerialNumber;
+                PaymentNumberTextBox.Text = SelectCashRegister[SelectIndex].PaymentNumber;
+                HolderComboBox.SelectedValue = SelectCashRegister[SelectIndex].Holder;
+                UserComboBox.SelectedValue = SelectCashRegister[SelectIndex].User;
+                DateReceptionCalendarDatePicker.Date = SelectCashRegister[SelectIndex].DateReception;
+                DateEndFiscalMemoryCalendarDatePicker.Date = SelectCashRegister[SelectIndex].DateEndFiscalMemory;
+                DateKeyActivationFiscalDataOperatorCalendarDatePicker.Date = SelectCashRegister[SelectIndex].DateKeyActivationFiscalDataOperator;
+                LocationTextBox.Text = SelectCashRegister[SelectIndex].Location;
                 SelectData = "UPDATE";
             }
         }

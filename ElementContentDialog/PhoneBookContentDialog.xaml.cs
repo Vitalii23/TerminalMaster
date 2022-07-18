@@ -56,12 +56,12 @@ namespace TerminalMaster.ElementContentDialog
         {
             if (SelectData.Equals("GET"))
             {
-                FirstNameTextBox.Text = SelectPhoneBook[0].FirstName;
-                LastNameTextBox.Text = SelectPhoneBook[0].LastName;
-                MiddleNameTextBox.Text = SelectPhoneBook[0].MiddleName;
-                PostTextBox.Text = SelectPhoneBook[0].Post;
-                LocationTextBox.Text = SelectPhoneBook[0].InternalNumber;
-                MobileNumberTextBox.Text = SelectPhoneBook[0].MobileNumber;
+                FirstNameTextBox.Text = SelectPhoneBook[SelectIndex].FirstName;
+                LastNameTextBox.Text = SelectPhoneBook[SelectIndex].LastName;
+                MiddleNameTextBox.Text = SelectPhoneBook[SelectIndex].MiddleName;
+                PostTextBox.Text = SelectPhoneBook[SelectIndex].Post;
+                LocationTextBox.Text = SelectPhoneBook[SelectIndex].InternalNumber;
+                MobileNumberTextBox.Text = SelectPhoneBook[SelectIndex].MobileNumber;
                 SelectData = "UPDATE";
             }
 

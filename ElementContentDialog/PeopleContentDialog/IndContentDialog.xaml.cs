@@ -85,11 +85,11 @@ namespace TerminalMaster.ElementContentDialog.PeopleContentDialog
             {
                 if (SelectData.Equals("GET"))
                 {
-                    LastNameTextBox.Text = SelectInd[0].LastName;
-                    FirstNameTextBox.Text = SelectInd[0].FirstName;
-                    MiddleNameTextBox.Text = SelectInd[0].MiddleName;
-                    PSRNIETextBox.Text = SelectInd[0].PSRNIE;
-                    TINTextBox.Text = SelectInd[0].TIN;
+                    LastNameTextBox.Text = SelectInd[SelectIndex].LastName;
+                    FirstNameTextBox.Text = SelectInd[SelectIndex].FirstName;
+                    MiddleNameTextBox.Text = SelectInd[SelectIndex].MiddleName;
+                    PSRNIETextBox.Text = SelectInd[SelectIndex].PSRNIE;
+                    TINTextBox.Text = SelectInd[SelectIndex].TIN;
                     SelectData = "UPDATE";
                 }
             }

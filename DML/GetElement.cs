@@ -19,12 +19,12 @@ namespace TerminalMaster.ViewModel
             string GetCartridgeQuery = null;
             if (selection.Equals("ALL"))
             {
-                GetCartridgeQuery = "SELECT * FROM Cartrides;";
+                GetCartridgeQuery = "SELECT id, brand, model, vendor_code, status FROM Cartrides;";
             }
 
             if (selection.Equals("ONE"))
             {
-                GetCartridgeQuery = "SELECT * FROM Cartrides WHERE id = " + id;
+                GetCartridgeQuery = "SELECT id, brand, model, vendor_code, status FROM Cartrides WHERE id = " + id;
             }
 
 
@@ -173,12 +173,12 @@ namespace TerminalMaster.ViewModel
             string GetPhoneBook = null;
             if (selection.Equals("ALL"))
             {
-                GetPhoneBook = "SELECT * FROM PhoneBook;";
+                GetPhoneBook = "SELECT id, first_name, last_name, middle_name, post, internal_number, mobile_number FROM PhoneBook;";
             }
 
             if (selection.Equals("ONE"))
             {
-                GetPhoneBook = "SELECT * FROM PhoneBook WHERE id = " + id;
+                GetPhoneBook = "SELECT id, first_name, last_name, middle_name, post, internal_number, mobile_number FROM PhoneBook WHERE id = " + id;
             }
 
             var phoneBooks = new ObservableCollection<PhoneBook>();
@@ -225,12 +225,12 @@ namespace TerminalMaster.ViewModel
             string GetPrinter = null;
             if (selection.Equals("ALL"))
             {
-                GetPrinter = "SELECT * FROM Printer;";
+                GetPrinter = "SELECT id, brand, model, cartridge, name_port, location, status, vendor_code, counters, date FROM Printer;";
             }
 
             if (selection.Equals("ONE"))
             {
-                GetPrinter = "SELECT * FROM Printer WHERE id = " + id;
+                GetPrinter = "SELECT id, brand, model, cartridge, name_port, location, status, vendor_code, counters, date FROM Printer WHERE id = " + id;
             }
 
             var printers = new ObservableCollection<Printer>();
@@ -256,11 +256,10 @@ namespace TerminalMaster.ViewModel
                                         Cartridge = reader.GetString(3),
                                         NamePort = reader.GetString(4),
                                         LocationPrinter = reader.GetString(5),
-                                        OC = reader.GetString(6),
-                                        Status = reader.GetString(7),
-                                        VendorCodePrinter = reader.GetString(8),
-                                        Сounters = reader.GetInt32(9),
-                                        DatePrinter = reader.GetDateTime(10)
+                                        Status = reader.GetString(6),
+                                        VendorCodePrinter = reader.GetString(7),
+                                        Сounters = reader.GetInt32(8),
+                                        DatePrinter = reader.GetDateTime(9)
                                     };
                                     printer.DatePrinterString = printer.DatePrinter.ToShortDateString();
                                     printers.Add(printer);
@@ -370,12 +369,12 @@ namespace TerminalMaster.ViewModel
             string GetIndividual = null;
             if (selection.Equals("ALL"))
             {
-                GetIndividual = "SELECT * FROM IndividualEntrepreneur;";
+                GetIndividual = "SELECT id, last_name, first_name, middle_name, psrnie, tin FROM IndividualEntrepreneur;";
             }
 
             if (selection.Equals("ONE"))
             {
-                GetIndividual = "SELECT * FROM IndividualEntrepreneur WHERE id = " + id;
+                GetIndividual = "SELECT id, last_name, first_name, middle_name, psrnie, tin FROM IndividualEntrepreneur WHERE id = " + id;
             }
 
             var individuals = new ObservableCollection<IndividualEntrepreneur>();
@@ -421,12 +420,12 @@ namespace TerminalMaster.ViewModel
             string GetHolder = null;
             if (selection.Equals("ALL"))
             {
-                GetHolder = "SELECT * FROM Holder;";
+                GetHolder = "SELECT id, last_name, first_name, middle_name, number, status FROM Holder ;";
             }
 
             if (selection.Equals("ONE"))
             {
-                GetHolder = "SELECT * FROM Holder WHERE id = " + id;
+                GetHolder = "SELECT id, last_name, first_name, middle_name, number, status FROM Holder WHERE id = " + id;
             }
 
             var holders = new ObservableCollection<Holder>();
@@ -472,12 +471,12 @@ namespace TerminalMaster.ViewModel
             string GetUser = null;
             if (selection.Equals("ALL"))
             {
-                GetUser = "SELECT * FROM UserDevice;";
+                GetUser = "SELECT id, last_name, first_name, middle_name, number, status FROM UserDevice;";
             }
 
             if (selection.Equals("ONE"))
             {
-                GetUser = "SELECT * FROM UserDevice WHERE id = " + id;
+                GetUser = "SELECT id, last_name, first_name, middle_name, number, status FROM UserDevice WHERE id = " + id;
             }
 
             var users = new ObservableCollection<User>();
@@ -511,6 +510,61 @@ namespace TerminalMaster.ViewModel
                     }
                 }
                 return users;
+            }
+            catch (Exception eSql)
+            {
+                Debug.WriteLine("Exception: " + eSql);
+            }
+            return null;
+        }
+        public ObservableCollection<Waybill> GetWaybill(string connection, string selection, int id)
+        {
+            string GetWaybill = null;
+            if (selection.Equals("ALL"))
+            {
+                GetWaybill = "SELECT id, name_document, number_document, number_suppliers, date_document, file_pdf, id_holder, id_userDevice FROM Waybill " +
+                    "INNER JOIN dbo.Holder ON dbo.Holder.id = dbo.Waybill.id_holder ";
+            }
+
+            if (selection.Equals("ONE"))
+            {
+                GetWaybill = "SELECT id, name_document, number_document, number_suppliers, date_document, file_pdf, id_holder, id_userDevice " +
+                    "INNER JOIN dbo.Holder ON dbo.Holder.id = dbo.Waybill.id_holder " +
+                    " FROM Waybill WHERE id = " + id;
+            }
+
+            var waybills = new ObservableCollection<Waybill>();
+            try
+            {
+                using (var connect = new SqlConnection(connection))
+                {
+                    connect.Open();
+                    if (connect.State == System.Data.ConnectionState.Open)
+                    {
+                        using (SqlCommand cmd = connect.CreateCommand())
+                        {
+                            cmd.CommandText = GetWaybill;
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    var waybill = new Waybill();
+                                    waybill.ID = reader.GetInt32(0);
+                                    waybill.NameDocument = reader.GetString(1);
+                                    waybill.NumberDocument = reader.GetInt32(2);
+                                    waybill.NumberSuppliers = reader.GetString(3);
+                                    waybill.DateDocument = reader.GetDateTime(4);
+                                    waybill.DateDocumentString = waybill.DateDocument.ToShortDateString();
+                                    waybill.FilePDF = reader.GetString(5);
+                                    waybill.IdHolder = reader.GetInt32(6);
+                                    waybill.Holder = reader.GetString(7) + " " + reader.GetString(8) + " " + reader.GetString(9);
+                                    waybills.Add(waybill);
+                                }
+                            }
+                        }
+                    }
+                }
+                return waybills;
             }
             catch (Exception eSql)
             {
