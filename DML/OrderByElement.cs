@@ -678,13 +678,14 @@ namespace TerminalMaster.DML
                                     var waybill = new Waybill();
                                     waybill.ID = reader.GetInt32(0);
                                     waybill.NameDocument = reader.GetString(1);
-                                    waybill.NumberDocument = reader.GetInt32(2);
+                                    waybill.NumberDocument = reader.GetString(2);
                                     waybill.NumberSuppliers = reader.GetString(3);
                                     waybill.DateDocument = reader.GetDateTime(4);
                                     waybill.DateDocumentString = waybill.DateDocument.ToShortDateString();
-                                    waybill.FilePDF = reader.GetString(5);
-                                    waybill.IdHolder = reader.GetInt32(6);
-                                    waybill.Holder = reader.GetString(7) + " " + reader.GetString(8) + " " + reader.GetString(9);
+                                    waybill.FileName = reader.GetString(5);
+                                   // waybill.FilePDF = reader.GetByte(6);
+                                    waybill.IdHolder = reader.GetInt32(7);
+                                    waybill.Holder = reader.GetString(8) + " " + reader.GetString(9) + " " + reader.GetString(10);
                                     waybills.Add(waybill);
                                 }
                             }

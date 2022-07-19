@@ -27,7 +27,7 @@ namespace TerminalMaster.ElementContentDialog
         UpdateElement update = new UpdateElement();
         GetElement get = new GetElement();
         private ObservableCollection<Holder> holders;
-        private string imageFile;
+        private string pdfFile;
         public WaybillContentDialog()
         {
             InitializeComponent();
@@ -57,18 +57,18 @@ namespace TerminalMaster.ElementContentDialog
             DateTimeOffset? dateTime = DateDocumentCalendarDatePicker.Date;
             string dateDocument = dateTime.Value.Year.ToString() + "-" + dateTime.Value.Month.ToString() + "-" + dateTime.Value.Day.ToString();
 
-            string[] waybills = { NameDocumentTextBox.Text, NumberDocumentTextBox.Text, NumberSuppliersTextBox.Text, dateDocument, };
+            string[] waybills = { NameDocumentTextBox.Text, NumberDocumentTextBox.Text, NumberSuppliersTextBox.Text, dateDocument, FileNameTextblock.Text };
             int[] Ids = new int[] { holders[HolderComboBox.SelectedIndex].Id };
 
             if (SelectData.Equals("ADD"))
             {
 
-                add.AddDataElement((App.Current as App).ConnectionString, waybills, Ids, imageFile, "waybill");
+                add.AddDataElement((App.Current as App).ConnectionString, waybills, Ids, pdfFile, "waybill");
             }
 
             if (SelectData.Equals("UPDATE"))
             {
-                update.UpdateDataElement((App.Current as App).ConnectionString, waybills, Ids, SelectIndex, "waybill");
+                update.UpdateDataElement((App.Current as App).ConnectionString, waybills, Ids, SelectIndex, pdfFile, "waybill");
             }
 
             NameDocumentTextBox.Text = string.Empty;
@@ -85,9 +85,10 @@ namespace TerminalMaster.ElementContentDialog
             if (SelectData.Equals("GET"))
             {
                 NameDocumentTextBox.Text = SelectWaybill[SelectIndex].NameDocument;
-                NumberDocumentTextBox.Text = Convert.ToString(SelectWaybill[SelectIndex].NumberDocument);
+                NumberDocumentTextBox.Text = SelectWaybill[SelectIndex].NumberDocument;
                 NumberSuppliersTextBox.Text = SelectWaybill[SelectIndex].NumberSuppliers;
                 DateDocumentCalendarDatePicker.Date = SelectWaybill[SelectIndex].DateDocument;
+                FileNameTextblock.Text = SelectWaybill[SelectIndex].FileName;
                 HolderComboBox.SelectedValue = SelectWaybill[SelectIndex].Holder;
                 SelectData = "UPDATE";
             }
@@ -108,7 +109,8 @@ namespace TerminalMaster.ElementContentDialog
             Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
             if (file != null)
             {
-                imageFile = "(SELECT * FROM  OPENROWSET(BULK '" + file.Path + "', SINGLE_BLOB) AS file_pdf)";
+                pdfFile = "(SELECT * FROM  OPENROWSET(BULK '" + file.Path + "', SINGLE_BLOB) AS file_pdf)";
+                FileNameTextblock.Text = file.Name;
             }
         }
     }

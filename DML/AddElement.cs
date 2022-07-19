@@ -110,11 +110,6 @@ namespace TerminalMaster.ViewModel
                     AddQuery = "INSERT INTO dbo.SimCard (operator, identifaction_number, type_device, tms, icc, status, id_individual_entrepreneur, id_cashRegister) VALUES " + values + id[0] + "," + id[1] + ")";
                 }
 
-                if (items.Equals("waybill"))
-                {
-                    AddQuery = "INSERT INTO dbo.Waybill (name_document, number_document, number_suppliers, date_document, file_pdf, id_holder VALUES " + values + id[0] + ")";
-                }
-
                 var connect = new SqlConnection(connection);
                 connect.Open();
                 if (connect.State == System.Data.ConnectionState.Open)
@@ -160,10 +155,10 @@ namespace TerminalMaster.ViewModel
 
                 if (items.Equals("waybill"))
                 {
-                    AddQuery = "INSERT INTO dbo.Waybill (name_document, number_document, number_suppliers, date_document, file_pdf, id_holder VALUES " + values + ") " + path + ", " + id[0] + ")";
+                    AddQuery = "INSERT INTO dbo.Waybill (name_document, number_document, number_suppliers, date_document, file_name file_pdf, id_holder) VALUES " + values + ") " + path + ", " + id[0] + ")";
                 }
 
-                var connect = new SqlConnection(connection);
+                SqlConnection connect = new SqlConnection(connection);
                 connect.Open();
                 if (connect.State == System.Data.ConnectionState.Open)
                 {

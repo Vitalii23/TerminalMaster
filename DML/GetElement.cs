@@ -522,21 +522,41 @@ namespace TerminalMaster.ViewModel
             string GetWaybill = null;
             if (selection.Equals("ALL"))
             {
-                GetWaybill = "SELECT id, name_document, number_document, number_suppliers, date_document, file_pdf, id_holder, id_userDevice FROM Waybill " +
+                GetWaybill = "SELECT dbo.Waybill.id, " +
+                    "dbo.Waybill.name_document, " +
+                    "dbo.Waybill.number_document, " +
+                    "dbo.Waybill. number_suppliers, " +
+                    "dbo.Waybill.date_document, " +
+                    "dbo.Waybill.file_name, " +
+                    "dbo.Waybill.id_holder, " +
+                    "dbo.Holder.last_name, " +
+                    "dbo.Holder.first_name, " +
+                    "dbo.Holder.middle_name " +
+                    "FROM dbo.Waybill " +
                     "INNER JOIN dbo.Holder ON dbo.Holder.id = dbo.Waybill.id_holder ";
             }
 
             if (selection.Equals("ONE"))
             {
-                GetWaybill = "SELECT id, name_document, number_document, number_suppliers, date_document, file_pdf, id_holder, id_userDevice " +
+                GetWaybill = "SELECT dbo.Waybill.id, " +
+                    "dbo.Waybill.name_document, " +
+                    "dbo.Waybill.number_document, " +
+                    "dbo.Waybill.number_suppliers, " +
+                    "dbo.Waybill.date_document, " +
+                    "dbo.Waybill.file_name, " +
+                    "dbo.Waybill.id_holder, " +
+                    "dbo.Holder.last_name, " +
+                    "dbo.Holder.first_name, " +
+                    "dbo.Holder.middle_name " +
+                    "FROM dbo.Waybill " +
                     "INNER JOIN dbo.Holder ON dbo.Holder.id = dbo.Waybill.id_holder " +
-                    " FROM Waybill WHERE id = " + id;
+                    "FROM dbo.Waybill WHERE id = " + id;
             }
 
             var waybills = new ObservableCollection<Waybill>();
             try
             {
-                using (var connect = new SqlConnection(connection))
+                using (SqlConnection connect = new SqlConnection(connection))
                 {
                     connect.Open();
                     if (connect.State == System.Data.ConnectionState.Open)
@@ -548,14 +568,15 @@ namespace TerminalMaster.ViewModel
                             {
                                 while (reader.Read())
                                 {
-                                    var waybill = new Waybill();
+                                    Waybill waybill = new Waybill();
                                     waybill.ID = reader.GetInt32(0);
                                     waybill.NameDocument = reader.GetString(1);
-                                    waybill.NumberDocument = reader.GetInt32(2);
+                                    waybill.NumberDocument = reader.GetString(2);
                                     waybill.NumberSuppliers = reader.GetString(3);
                                     waybill.DateDocument = reader.GetDateTime(4);
                                     waybill.DateDocumentString = waybill.DateDocument.ToShortDateString();
-                                    waybill.FilePDF = reader.GetString(5);
+                                    waybill.FileName = reader.GetString(5);
+                                    waybill.FilePDF = GetDocument(waybill.ID, connection);
                                     waybill.IdHolder = reader.GetInt32(6);
                                     waybill.Holder = reader.GetString(7) + " " + reader.GetString(8) + " " + reader.GetString(9);
                                     waybills.Add(waybill);
@@ -571,6 +592,20 @@ namespace TerminalMaster.ViewModel
                 Debug.WriteLine("Exception: " + eSql);
             }
             return null;
+        }
+
+        private static byte[] GetDocument(int documentId, string connection)
+        {
+            using (SqlConnection connect = new SqlConnection(connection))
+            {
+                using (SqlCommand cmd = connect.CreateCommand())
+                {
+                    cmd.CommandText = @" SELECT dbo.Waybill.file_pdf FROM dbo.Waybill WHERE  dbo.Waybill.id = @Id";
+                    cmd.Parameters.AddWithValue("@Id", documentId);
+                    connect.Open();
+                    return cmd.ExecuteScalar() as byte[];
+                }
+            }
         }
     }
 }

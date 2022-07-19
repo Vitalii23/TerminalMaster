@@ -52,15 +52,25 @@
                     <Setter Property="Padding" Value="5,0,0,0"/>
                     <Setter Property="FontSize" Value="14"/>
                     <Setter Property="Height" Value="30"/>
-                    <Setter Property="Width" Value="150"/>
+                    <Setter Property="Width" Value="110"/>
                     <Setter Property="BorderThickness" Value="2,2,2,2"/>
+                </Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin" Value="0,10,0,5"/>
+                    <Setter Property="Padding" Value="5,0,0,0"/>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="Height" Value="30"/>
+                    <Setter Property="Width" Value="160"/>
                 </Style>
             </StackPanel.Resources>
             <TextBox x:Name="NameDocumentTextBox" Header="Имя документа"/>
             <TextBox x:Name="NumberDocumentTextBox" Header="Номер документа"/>
             <TextBox x:Name="NumberSuppliersTextBox" Header="Номер поставщика"/>
             <CalendarDatePicker x:Name="DateDocumentCalendarDatePicker" Header="Дата"/>
-            <Button x:Name="FilePDF" Click="FilePDF_Click">Изображение</Button>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="FilePDFButton" Click="FilePDF_Click">Выберите файл</Button>
+                <TextBlock x:Name="FileNameTextblock"/>
+            </StackPanel>
             <ComboBox x:Name="HolderComboBox" Header="Владелец" IsTextSearchEnabled="False" IsEditable="True"/>
         </StackPanel>
     </Grid>

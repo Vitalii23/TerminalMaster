@@ -23,7 +23,8 @@
             <AppBarButton x:Name="AppBarButtonAdd" Icon="Add" Label="Добавить" Tapped="AppBarButtonAdd_Tapped"/>
             <AppBarButton x:Name="AppBarButtonEdit" Icon="Edit" Label="Изменить" Tapped="AppBarButtonEdit_Tapped"/>
             <AppBarButton x:Name="AppBarButtonDelete" Icon="Delete" Label="Удалить" Tapped="AppBarButtonDelete_Tapped"/>
-          <!--  <AppBarButton x:Name="AppBarButtonSave" Icon="Save" Label="Сохранить" Tapped="AppBarButtonSave_Tapped"/> -->
+            <AppBarButton x:Name="AppBarButtonDowloand" Icon="Download" Label="Скачать" Tapped="AppBarButtonDowloand_Tapped"/>
+            <!--  <AppBarButton x:Name="AppBarButtonSave" Icon="Save" Label="Сохранить" Tapped="AppBarButtonSave_Tapped"/> -->
             <AppBarButton x:Name="AppBarButtonUpdate" Icon="RepeatAll" Label="Обновление" Tapped="AppBarButtonUpdate_Tapped"/>
             <CommandBar.Content>
                 <StackPanel x:Name="AppBarContentStackPanel" Orientation="Horizontal">
@@ -99,8 +100,16 @@
                                   CanUserResizeColumns="True"
                                   Margin="0,42,0,0"
                                   IsReadOnly="True" 
-                                  Sorting="MainDataGrid_Sorting"
-                                  >
+                                  Sorting="MainDataGrid_Sorting">
+                    <control:DataGrid.Columns>
+                        <control:DataGridTemplateColumn>
+                            <control:DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="DowloandFile" Content="Скачать" Height="Auto" Width="75" Margin="10" Click="DowloandFile_Click"/>
+                                </DataTemplate>
+                            </control:DataGridTemplateColumn.CellTemplate>
+                        </control:DataGridTemplateColumn>
+                    </control:DataGrid.Columns>
                     <control:DataGrid.RowGroupHeaderStyles>
                         <Style TargetType="control:DataGridRowGroupHeader">
                             <Setter Property="Background" Value="LightGray"/>

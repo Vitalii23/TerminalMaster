@@ -3,31 +3,24 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using TerminalMaster.ViewModel;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using System.Diagnostics;
 using Windows.UI.ViewManagement;
-using TerminalMaster;
 using TerminalMaster.ElementContentDialog;
 using TerminalMaster.ElementContentDialog.PeopleContentDialog;
 using TerminalMaster.Model;
 using Windows.UI.Popups;
-using System.ComponentModel;
-using Microsoft.Toolkit.Uwp.UI;
 using System.Collections.ObjectModel;
 using TerminalMaster.DML;
 using TerminalMaster.Model.People;
 using TerminalMaster.Logging;
-using Windows.UI;
+using System.Runtime.Serialization.Formatters.Binary;
+using Windows.Storage;
+using System.Threading.Tasks;
 
 namespace TerminalMaster
 {
@@ -42,7 +35,6 @@ namespace TerminalMaster
         private bool triggerSort = true, triggerHeader, triggerPropertyNameList;
         private Dictionary<string, string> PropertyNameDictionary;
         private LogFile logFile = new LogFile();
-        private MessageDialog errorMessage;
         public MainPage()
         {
             InitializeComponent();
@@ -50,7 +42,7 @@ namespace TerminalMaster
         }
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            var result = ApplicationView.GetForCurrentView().TryResizeView(new Size(1080, 1920));
+            bool result = ApplicationView.GetForCurrentView().TryResizeView(new Size(1080, 1920));
             Debug.WriteLine("OnLoaded TryResizeView: " + result);
         }
         private void UpdateTable(string items)
@@ -114,6 +106,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             triggerPropertyNameList = true;
             triggerHeader = true;
+            AppBarButtonDowloand.IsEnabled = false;
 
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
@@ -131,6 +124,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             triggerPropertyNameList = true;
             triggerHeader = true;
+            AppBarButtonDowloand.IsEnabled = false;
 
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
@@ -148,6 +142,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             triggerPropertyNameList = true;
             triggerHeader = true;
+            AppBarButtonDowloand.IsEnabled = false;
 
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
@@ -165,6 +160,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             triggerPropertyNameList = true;
             triggerHeader = true;
+            AppBarButtonDowloand.IsEnabled = false;
 
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
@@ -182,6 +178,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             triggerPropertyNameList = true;
             triggerHeader = true;
+            AppBarButtonDowloand.IsEnabled = false;
 
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
@@ -199,6 +196,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             triggerPropertyNameList = true;
             triggerHeader = true;
+            AppBarButtonDowloand.IsEnabled = false;
 
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
@@ -216,6 +214,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             triggerPropertyNameList = true;
             triggerHeader = true;
+            AppBarButtonDowloand.IsEnabled = false;
 
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
@@ -233,6 +232,7 @@ namespace TerminalMaster
             MainCommandBar.IsEnabled = true;
             triggerPropertyNameList = true;
             triggerHeader = true;
+            AppBarButtonDowloand.IsEnabled = false;
 
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
@@ -245,13 +245,13 @@ namespace TerminalMaster
 
             UpdateTable(NameNavigationItem);
         }
-
         private void WaybillNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             PropertyNameDictionary = new Dictionary<string, string>();
             MainCommandBar.IsEnabled = true;
             triggerPropertyNameList = true;
             triggerHeader = true;
+            AppBarButtonDowloand.IsEnabled = true;
 
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
@@ -264,7 +264,6 @@ namespace TerminalMaster
 
             UpdateTable(NameNavigationItem);
         }
-
         private async void AppBarButtonAdd_Tapped(object sender, TappedRoutedEventArgs e)
         {
             try 
@@ -657,6 +656,42 @@ namespace TerminalMaster
                 logFile.WriteLogAsync(ex.Message, "AppBarButtonUpdate_Tapped");
             }    
         }
+        private async void AppBarButtonDowloand_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            try
+            {
+                triggerPropertyNameList = false;
+                triggerHeader = false;
+
+                if (MainDataGrid.SelectedIndex >= 0)
+                {
+                    BinaryFormatter binaryformatter = new BinaryFormatter();
+                    MemoryStream memorystream = new MemoryStream();
+                    binaryformatter.Serialize(memorystream, dataGets.WaybillList[0].FilePDF);
+                    byte[] data = memorystream.ToArray();
+                    await AsStorageFile(data, dataGets.WaybillList[0].FileName);
+                    
+                }
+                else
+                {
+                    MessageDialog message = new MessageDialog("Выберите строку для скачивания");
+                    await message.ShowAsync();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        private static async Task<StorageFile> AsStorageFile(byte[] data, string fileName)
+        {
+            StorageFolder storageFolder = KnownFolders.DocumentsLibrary;
+            StorageFile sampleFile = await storageFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+            await FileIO.WriteBytesAsync(sampleFile, data);
+            return sampleFile;
+        }
         private void MainDataGrid_Sorting(object sender, DataGridColumnEventArgs e)
         {
             try
@@ -792,6 +827,13 @@ namespace TerminalMaster
         {
 
         }
+
+        private void DowloandFile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
         private void MainDataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             try
@@ -1017,6 +1059,11 @@ namespace TerminalMaster
                     case "DatePrinterString":
                         e.Column.Header = "Дата состояния";
                         e.Column.Tag = "date";
+                        break;
+                    case "FilePDF":
+                        e.Column.CanUserSort = false;
+                        e.Column.Header = "Файлы";
+                        e.Column.Tag = "file_pdf";
                         break;
                     default:
                         break;

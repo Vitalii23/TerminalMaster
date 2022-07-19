@@ -102,31 +102,31 @@ namespace TerminalMaster.ViewModel
 
                 if (items.Equals("simCard")) 
                 {
-                    AddQuery = "UPDATE dbo.SimCard SET operator = '" + element[0] + 
-                        "', identifaction_number =  '" + element[1] + 
+                    AddQuery = "UPDATE dbo.SimCard SET operator = '" + element[0] +
+                        "', identifaction_number =  '" + element[1] +
                         "', type_device =  '" + element[2] +
-                        "', tms =  '" + element[3] + 
-                        "', icc =  '" + element[4] + 
-                        "', status =  '" + element[5] + 
-                        "', id_individual_entrepreneur = " + ids[0] + 
-                        ", id_cashRegister = " + ids[1] + 
+                        "', tms =  '" + element[3] +
+                        "', icc =  '" + element[4] +
+                        "', status =  '" + element[5] +
+                        "', id_individual_entrepreneur = " + ids[0] +
+                        ", id_cashRegister = " + ids[1] +
                         " WHERE id = " + id;
                 }
 
 
                 if (items.Equals("cashRegister"))
                 {
-                    AddQuery = "UPDATE dbo.CashRegister SET name = '" + element[0] + 
-                        "', brand = '" + element[1] + 
-                        "', factory_number =  '" + element[2] + 
-                        "', serial_number =  '" + element[3] + 
-                        "', payment_number =  '" + element[4] + 
+                    AddQuery = "UPDATE dbo.CashRegister SET name = '" + element[0] +
+                        "', brand = '" + element[1] +
+                        "', factory_number =  '" + element[2] +
+                        "', serial_number =  '" + element[3] +
+                        "', payment_number =  '" + element[4] +
                         "', date_reception =  '" + element[5] +
                         "', date_end_fiscal_memory =  '" + element[6] +
                         "', date_key_activ_fisc_data =  '" + element[7] +
-                        "', location =  '" + element[8] + 
-                        "', id_holder =  '" + ids[0] + 
-                        "', id_user = '" + ids[1] + 
+                        "', location =  '" + element[8] +
+                        "', id_holder =  '" + ids[0] +
+                        "', id_user = '" + ids[1] +
                         "' WHERE Id = " + id;
                 }
 
@@ -137,7 +137,45 @@ namespace TerminalMaster.ViewModel
                         "', number_document =  '" + element[2] +
                         "', number_suppliers =  '" + element[3] +
                         "', date_document =  '" + element[4] +
-                        "', file_pdf =  '" + element[5] +
+                        "', file_name =  '" + element[5] +
+                        "', file_pdf =  '" + element[6] +
+                        "', id_holder =  '" + ids[0] +
+                        "' WHERE Id = " + id;
+                }
+
+
+                var connect = new SqlConnection(connection);
+                connect.Open();
+                if (connect.State == System.Data.ConnectionState.Open)
+                {
+                    SqlCommand cmd = connect.CreateCommand();
+                    cmd.CommandText = AddQuery;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    reader.Read();
+                }
+            }
+            catch (Exception eSql)
+            {
+                Debug.WriteLine("Exception: " + eSql);
+            }
+
+        }
+
+        public void UpdateDataElement(string connection, string[] element, int[] ids, int id, string path, string items)
+        {
+            try
+            {
+                string AddQuery = null;
+
+                if (items.Equals("waybill"))
+                {
+                    AddQuery = "UPDATE dbo.Waybill SET name = '" + element[0] +
+                        "', name_document = '" + element[1] +
+                        "', number_document =  '" + element[2] +
+                        "', number_suppliers =  '" + element[3] +
+                        "', date_document =  '" + element[4] +
+                        "', file_name =  '" + element[5] +
+                        "', file_pdf =  '" + path +
                         "', id_holder =  '" + ids[0] +
                         "' WHERE Id = " + id;
                 }
