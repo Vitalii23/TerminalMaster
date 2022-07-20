@@ -18,6 +18,7 @@ using TerminalMaster.Logging;
 using System.Runtime.Serialization.Formatters.Binary;
 using Windows.Storage;
 using System.Threading.Tasks;
+using TerminalMaster.Settings;
 
 namespace TerminalMaster
 {
@@ -28,6 +29,7 @@ namespace TerminalMaster
         private GetElement Get = new GetElement();
         private DeleteElement Delete = new DeleteElement();
         private OrderByElement Order = new OrderByElement();
+        private ConnectSQL connect = new ConnectSQL();
         private DataGridSortDirection? CheckSort;
         private bool triggerSort = true, triggerHeader, triggerPropertyNameList;
         private Dictionary<string, string> PropertyNameDictionary;
@@ -35,6 +37,7 @@ namespace TerminalMaster
         public MainPage()
         {
             InitializeComponent();
+            connect.ConnectRead();
         }
         private async void UpdateTable(string items)
         {

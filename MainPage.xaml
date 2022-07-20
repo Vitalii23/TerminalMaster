@@ -82,9 +82,9 @@
                 <NavigationViewItem Content="Инструкция" Icon="Library" Tapped="InstructionNavigationItem_Tapped"/>
                 <NavigationViewItem Content="О программе" Icon="ContactInfo" Tapped="AboutNavigationItem_Tapped"/>-->
             </NavigationView.MenuItems>
-            <!--<NavigationView.PaneFooter>
+            <NavigationView.PaneFooter>
                 <NavigationViewItem Icon="MapDrive">Подключение</NavigationViewItem>
-            </NavigationView.PaneFooter>-->
+            </NavigationView.PaneFooter>
             <NavigationView.Content>
                 <control:DataGrid x:Name="MainDataGrid" 
                                   AutoGeneratingColumn="MainDataGrid_AutoGeneratingColumn"

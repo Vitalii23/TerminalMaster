@@ -17,7 +17,6 @@ namespace TerminalMaster.Logging
         {
             try
             {
-
                 StorageFolder storageFolder = KnownFolders.DocumentsLibrary;
                 StorageFile storageFile;
                 string errorText = "\r\nDate: " +
@@ -35,9 +34,6 @@ namespace TerminalMaster.Logging
                     storageFile = await storageFolder.CreateFileAsync("log.txt", CreationCollisionOption.ReplaceExisting);
                     await FileIO.WriteTextAsync(storageFile, errorText);
                 }
-
-                
-
                 await new MessageDialog("Ошибка программы: " + errorText).ShowAsync();
             }
             catch (Exception e)
