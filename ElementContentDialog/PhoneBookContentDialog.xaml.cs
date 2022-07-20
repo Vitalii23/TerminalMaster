@@ -2,9 +2,9 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
+using TerminalMaster.Logging;
 using TerminalMaster.Model;
 using TerminalMaster.ViewModel;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 // Документацию по шаблону элемента "Диалоговое окно содержимого" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
@@ -15,33 +15,40 @@ namespace TerminalMaster.ElementContentDialog
     {
         private AddElement add = new AddElement();
         private UpdateElement update = new UpdateElement();
-        private GetElement get = new GetElement();
         private Regex regex = new Regex(@"([A-Za-z0-9-\])}[{(,=\/~`@!#+№;%$:^&?*_|><\\\s]+)");
+        private LogFile logFile = new LogFile();
         public PhoneBookContentDialog()
         {
             InitializeComponent();
         }
         public string SelectData { get; set; }
         public int SelectIndex { get; set; }
+        public int SelectId { get; set; }
         internal ObservableCollection<PhoneBook> SelectPhoneBook { get; set; }
-
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            string[] phoneBooks = { FirstNameTextBox.Text, LastNameTextBox.Text, MiddleNameTextBox.Text,
+            try
+            {
+                string[] phoneBooks = { FirstNameTextBox.Text, LastNameTextBox.Text, MiddleNameTextBox.Text,
                 PostTextBox.Text, LocationTextBox.Text, MobileNumberTextBox.Text};
 
-            if (SelectData.Equals("ADD")) { add.AddDataElement((App.Current as App).ConnectionString, phoneBooks, "phoneBook"); }
+                if (SelectData.Equals("ADD")) { add.AddDataElement((App.Current as App).ConnectionString, phoneBooks, "phoneBook"); }
 
-            if (SelectData.Equals("UPDATE")) { update.UpdateDataElement((App.Current as App).ConnectionString, phoneBooks, SelectIndex, "phoneBook"); }
+                if (SelectData.Equals("UPDATE")) { update.UpdateDataElement((App.Current as App).ConnectionString, phoneBooks, SelectId, "phoneBook"); }
 
-            FirstNameTextBox.Text = string.Empty;
-            LastNameTextBox.Text = string.Empty;
-            MiddleNameTextBox.Text = string.Empty;
-            PostTextBox.Text = string.Empty;
-            LocationTextBox.Text = string.Empty;
-            MobileNumberTextBox.Text = string.Empty;
+                FirstNameTextBox.Text = string.Empty;
+                LastNameTextBox.Text = string.Empty;
+                MiddleNameTextBox.Text = string.Empty;
+                PostTextBox.Text = string.Empty;
+                LocationTextBox.Text = string.Empty;
+                MobileNumberTextBox.Text = string.Empty;
+
+            }
+            catch (Exception ex)
+            {
+                await logFile.WriteLogAsync(ex.Message, "PhoneBookContentDialog_ContentDialog_PrimaryButtonClick");
+            }
         }
-
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             FirstNameTextBox.Text = string.Empty;
@@ -51,18 +58,25 @@ namespace TerminalMaster.ElementContentDialog
             LocationTextBox.Text = string.Empty;
             MobileNumberTextBox.Text = string.Empty;
         }
-
-        private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
+        private async void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
-            if (SelectData.Equals("GET"))
+            try
             {
-                FirstNameTextBox.Text = SelectPhoneBook[SelectIndex].FirstName;
-                LastNameTextBox.Text = SelectPhoneBook[SelectIndex].LastName;
-                MiddleNameTextBox.Text = SelectPhoneBook[SelectIndex].MiddleName;
-                PostTextBox.Text = SelectPhoneBook[SelectIndex].Post;
-                LocationTextBox.Text = SelectPhoneBook[SelectIndex].InternalNumber;
-                MobileNumberTextBox.Text = SelectPhoneBook[SelectIndex].MobileNumber;
-                SelectData = "UPDATE";
+                if (SelectData.Equals("GET"))
+                {
+                    FirstNameTextBox.Text = SelectPhoneBook[SelectIndex].FirstName;
+                    LastNameTextBox.Text = SelectPhoneBook[SelectIndex].LastName;
+                    MiddleNameTextBox.Text = SelectPhoneBook[SelectIndex].MiddleName;
+                    PostTextBox.Text = SelectPhoneBook[SelectIndex].Post;
+                    LocationTextBox.Text = SelectPhoneBook[SelectIndex].InternalNumber;
+                    MobileNumberTextBox.Text = SelectPhoneBook[SelectIndex].MobileNumber;
+                    SelectData = "UPDATE";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                await logFile.WriteLogAsync(ex.Message, "PhoneBookContentDialog_ContentDialog_Opened");
             }
 
         }

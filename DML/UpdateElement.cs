@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TerminalMaster.Logging;
 
 namespace TerminalMaster.ViewModel
 {
     class UpdateElement
     {
-        public void UpdateDataElement(string connection, string[] element, int id, string items)
+        private LogFile logFile = new LogFile();
+        public async void UpdateDataElement(string connection, string[] element, int id, string items)
         {
             try
             {
@@ -88,12 +85,12 @@ namespace TerminalMaster.ViewModel
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                await logFile.WriteLogAsync(eSql.Message, items + "_UpdateDataElement");
             }
 
         }
 
-        public void UpdateDataElement(string connection, string[] element, int[] ids, int id, string items)
+        public async void UpdateDataElement(string connection, string[] element, int[] ids, int id, string items)
         {
             try
             {
@@ -132,13 +129,11 @@ namespace TerminalMaster.ViewModel
 
                 if (items.Equals("waybill"))
                 {
-                    AddQuery = "UPDATE dbo.Waybill SET name = '" + element[0] +
-                        "', name_document = '" + element[1] +
-                        "', number_document =  '" + element[2] +
-                        "', number_suppliers =  '" + element[3] +
-                        "', date_document =  '" + element[4] +
-                        "', file_name =  '" + element[5] +
-                        "', file_pdf =  '" + element[6] +
+                    AddQuery = "UPDATE dbo.Waybill SET name_document = '" + element[0] +
+                        "', number_document =  '" + element[1] +
+                        "', number_suppliers =  '" + element[2] +
+                        "', date_document =  '" + element[3] +
+                        "', file_name =  '" + element[4] +
                         "', id_holder =  '" + ids[0] +
                         "' WHERE Id = " + id;
                 }
@@ -156,44 +151,7 @@ namespace TerminalMaster.ViewModel
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
-            }
-
-        }
-
-        public void UpdateDataElement(string connection, string[] element, int[] ids, int id, string path, string items)
-        {
-            try
-            {
-                string AddQuery = null;
-
-                if (items.Equals("waybill"))
-                {
-                    AddQuery = "UPDATE dbo.Waybill SET name = '" + element[0] +
-                        "', name_document = '" + element[1] +
-                        "', number_document =  '" + element[2] +
-                        "', number_suppliers =  '" + element[3] +
-                        "', date_document =  '" + element[4] +
-                        "', file_name =  '" + element[5] +
-                        "', file_pdf =  '" + path +
-                        "', id_holder =  '" + ids[0] +
-                        "' WHERE Id = " + id;
-                }
-
-
-                var connect = new SqlConnection(connection);
-                connect.Open();
-                if (connect.State == System.Data.ConnectionState.Open)
-                {
-                    SqlCommand cmd = connect.CreateCommand();
-                    cmd.CommandText = AddQuery;
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    reader.Read();
-                }
-            }
-            catch (Exception eSql)
-            {
-                Debug.WriteLine("Exception: " + eSql);
+                await logFile.WriteLogAsync(eSql.Message, items + "_UpdateDataElement");
             }
 
         }

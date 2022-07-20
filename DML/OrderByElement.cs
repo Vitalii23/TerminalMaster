@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
-using System.Diagnostics;
+using TerminalMaster.Logging;
 using TerminalMaster.Model;
 using TerminalMaster.Model.People;
 
@@ -9,6 +9,7 @@ namespace TerminalMaster.DML
 {
     class OrderByElement
     {
+        LogFile logFile = new LogFile();
         public ObservableCollection<Holder> GetOrderByHolder(string connection, string sort, string element)
         {
             string GetHolder = null;
@@ -56,7 +57,7 @@ namespace TerminalMaster.DML
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "GetOrderByHolder");
             }
             return null;
         }
@@ -107,7 +108,7 @@ namespace TerminalMaster.DML
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "GetOrderByUser");
             }
             return null;
         }
@@ -158,7 +159,7 @@ namespace TerminalMaster.DML
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "GetOrderByCartridges");
             }
             return null;
         }
@@ -371,7 +372,7 @@ namespace TerminalMaster.DML
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "GetOrderByCashRegister");
             }
             return null;
         }
@@ -423,7 +424,7 @@ namespace TerminalMaster.DML
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "GetOrderByPhoneBook");
             }
             return null;
         }
@@ -479,7 +480,7 @@ namespace TerminalMaster.DML
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "GetOrderByPrinter");
             }
             return null;
         }
@@ -566,7 +567,7 @@ namespace TerminalMaster.DML
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "GetOrderBySimCard");
             }
             return null;
         }
@@ -617,11 +618,11 @@ namespace TerminalMaster.DML
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "GetOrderByIndividual");
             }
             return null;
         }
-        public ObservableCollection<Waybill> GetWaybill(string connection, string sort, string element)
+        public ObservableCollection<Waybill> GetOrderByWaybill(string connection, string sort, string element)
         {
             string GetWaybill = null;
 
@@ -675,17 +676,17 @@ namespace TerminalMaster.DML
                             {
                                 while (reader.Read())
                                 {
-                                    var waybill = new Waybill();
-                                    waybill.ID = reader.GetInt32(0);
+                                    Waybill waybill = new Waybill();
+                                    waybill.Id = reader.GetInt32(0);
                                     waybill.NameDocument = reader.GetString(1);
                                     waybill.NumberDocument = reader.GetString(2);
                                     waybill.NumberSuppliers = reader.GetString(3);
                                     waybill.DateDocument = reader.GetDateTime(4);
                                     waybill.DateDocumentString = waybill.DateDocument.ToShortDateString();
                                     waybill.FileName = reader.GetString(5);
-                                   // waybill.FilePDF = reader.GetByte(6);
-                                    waybill.IdHolder = reader.GetInt32(7);
-                                    waybill.Holder = reader.GetString(8) + " " + reader.GetString(9) + " " + reader.GetString(10);
+                                    waybill.FilePDF = GetDocument(waybill.Id, connection);
+                                    waybill.IdHolder = reader.GetInt32(6);
+                                    waybill.Holder = reader.GetString(7) + " " + reader.GetString(8) + " " + reader.GetString(9);
                                     waybills.Add(waybill);
                                 }
                             }
@@ -696,9 +697,22 @@ namespace TerminalMaster.DML
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "GetOrderByWaybill");
             }
             return null;
+        }
+        private static byte[] GetDocument(int documentId, string connection)
+        {
+            using (SqlConnection connect = new SqlConnection(connection))
+            {
+                using (SqlCommand cmd = connect.CreateCommand())
+                {
+                    cmd.CommandText = @" SELECT dbo.Waybill.file_pdf FROM dbo.Waybill WHERE  dbo.Waybill.id = @Id";
+                    cmd.Parameters.AddWithValue("@Id", documentId);
+                    connect.Open();
+                    return cmd.ExecuteScalar() as byte[];
+                }
+            }
         }
     }
 }

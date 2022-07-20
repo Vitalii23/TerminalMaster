@@ -101,15 +101,6 @@
                                   Margin="0,42,0,0"
                                   IsReadOnly="True" 
                                   Sorting="MainDataGrid_Sorting">
-                    <control:DataGrid.Columns>
-                        <control:DataGridTemplateColumn>
-                            <control:DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button x:Name="DowloandFile" Content="Скачать" Height="Auto" Width="75" Margin="10" Click="DowloandFile_Click"/>
-                                </DataTemplate>
-                            </control:DataGridTemplateColumn.CellTemplate>
-                        </control:DataGridTemplateColumn>
-                    </control:DataGrid.Columns>
                     <control:DataGrid.RowGroupHeaderStyles>
                         <Style TargetType="control:DataGridRowGroupHeader">
                             <Setter Property="Background" Value="LightGray"/>

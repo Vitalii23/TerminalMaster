@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 using Windows.Storage;
+using Windows.ApplicationModel;
 
 namespace TerminalMaster.Logging
 {
@@ -17,23 +18,27 @@ namespace TerminalMaster.Logging
             try
             {
 
-                StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-                StorageFile storageFile = await storageFolder.GetFileAsync("log.txt");
-                await FileIO.WriteTextAsync(storageFile, "Swift as a shadow");
-                if (!File.Exists("./log.txt"))
+                StorageFolder storageFolder = KnownFolders.DocumentsLibrary;
+                StorageFile storageFile;
+                string errorText = "\r\nDate: " +
+                    $"{DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}\n" +
+                    "Void: " + $"{functionExp}\n " +
+                    "Error: " + $"{message}";
+
+                if (await storageFolder.TryGetItemAsync("log.txt") != null)
                 {
-                    
-                    //using (StreamWriter writer = File.AppendText(storageFile.get))
-                    //{
-                    //    writer.Write("\r\nDate: ");
-                    //    writer.WriteLine($"{DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}");
-                    //    writer.Write("Void: ");
-                    //    writer.WriteLine($"{functionExp}");
-                    //    writer.WriteLine($"{message}");
-                    //    writer.Write("------------------");
-                    //    MessageDialog dialog = new MessageDialog("Ошибка программы: " + message);
-                    //}
+                    storageFile = await storageFolder.GetFileAsync("log.txt");
+                    await FileIO.AppendTextAsync(storageFile, errorText);
                 }
+                else
+                {
+                    storageFile = await storageFolder.CreateFileAsync("log.txt", CreationCollisionOption.ReplaceExisting);
+                    await FileIO.WriteTextAsync(storageFile, errorText);
+                }
+
+                
+
+                await new MessageDialog("Ошибка программы: " + errorText).ShowAsync();
             }
             catch (Exception e)
             {
@@ -44,10 +49,7 @@ namespace TerminalMaster.Logging
 
         public void ReaderLog(StreamReader reader)
         {
-            while ((_ = reader.ReadLine()) != null)
-            {
-
-            }
+           
         }
     }
 }

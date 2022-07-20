@@ -4,12 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TerminalMaster.ViewModel;
-using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using System.Diagnostics;
-using Windows.UI.ViewManagement;
 using TerminalMaster.ElementContentDialog;
 using TerminalMaster.ElementContentDialog.PeopleContentDialog;
 using TerminalMaster.Model;
@@ -38,14 +35,8 @@ namespace TerminalMaster
         public MainPage()
         {
             InitializeComponent();
-            Loaded += MainPage_Loaded;
         }
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            bool result = ApplicationView.GetForCurrentView().TryResizeView(new Size(1080, 1920));
-            Debug.WriteLine("OnLoaded TryResizeView: " + result);
-        }
-        private void UpdateTable(string items)
+        private async void UpdateTable(string items)
         {
             try
             {
@@ -84,9 +75,8 @@ namespace TerminalMaster
             }
             catch (Exception ex)
             {
-                logFile.WriteLogAsync(ex.Message, "UpdateTable");
+                await logFile.WriteLogAsync(ex.Message, "UpdateTable");
             }
-            
         }
         public void AddComboxItem(List<string> text, ComboBox combo)
         {
@@ -94,6 +84,14 @@ namespace TerminalMaster
             {
                 combo.Items.Add(text[i]);
             }
+        }
+        private static async Task<StorageFile> AsStorageFile(byte[] data, string fileName)
+        {
+            StorageFolder storageFolder = KnownFolders.DocumentsLibrary;
+            StorageFile sampleFile = await storageFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+            await FileIO.WriteBytesAsync(sampleFile, data);
+            await new MessageDialog("Файл успешно скачан").ShowAsync();
+            return sampleFile;
         }
         /// <summary>
         /// Taped
@@ -266,7 +264,7 @@ namespace TerminalMaster
         }
         private async void AppBarButtonAdd_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            try 
+            try
             {
                 triggerPropertyNameList = false;
                 triggerHeader = false;
@@ -353,7 +351,7 @@ namespace TerminalMaster
             }
             catch (Exception ex)
             {
-                logFile.WriteLogAsync(ex.Message, "AppBarButtonAdd_Tapped");
+                await logFile.WriteLogAsync(ex.Message, "AppBarButtonAdd_Tapped");
             }
 
         }
@@ -371,7 +369,8 @@ namespace TerminalMaster
                             PrinterContentDialog printer = new PrinterContentDialog
                             {
                                 SelectData = "GET",
-                                SelectIndex = dataGets.PrinterList[MainDataGrid.SelectedIndex].Id,
+                                SelectIndex = MainDataGrid.SelectedIndex,
+                                SelectId = dataGets.PrinterList[MainDataGrid.SelectedIndex].Id,
                                 SelectPrinter = dataGets.PrinterList
                             };
                             await printer.ShowAsync();
@@ -379,8 +378,7 @@ namespace TerminalMaster
                         }
                         else
                         {
-                            MessageDialog message = new MessageDialog("Выберите строку для изменения");
-                            await message.ShowAsync();
+                            await new MessageDialog("Выберите строку для изменения").ShowAsync();
                         }
                         break;
                     case "cartrides":
@@ -389,7 +387,8 @@ namespace TerminalMaster
                             CartridgeContentDialog cartridge = new CartridgeContentDialog
                             {
                                 SelectData = "GET",
-                                SelectIndex = dataGets.CartridgesList[MainDataGrid.SelectedIndex].Id,
+                                SelectIndex = MainDataGrid.SelectedIndex,
+                                SelectId = dataGets.CartridgesList[MainDataGrid.SelectedIndex].Id,
                                 SelectCartrides = dataGets.CartridgesList
                             };
                             await cartridge.ShowAsync();
@@ -397,8 +396,7 @@ namespace TerminalMaster
                         }
                         else
                         {
-                            MessageDialog edit = new MessageDialog("Выберите строку для изменения");
-                            await edit.ShowAsync();
+                            await new MessageDialog("Выберите строку для изменения").ShowAsync();
                         }
                         break;
                     case "cashRegister":
@@ -407,7 +405,8 @@ namespace TerminalMaster
                             CashRegisterContentDialog cashRegister = new CashRegisterContentDialog
                             {
                                 SelectData = "GET",
-                                SelectIndex = dataGets.CashRegisterList[MainDataGrid.SelectedIndex].Id,
+                                SelectIndex = MainDataGrid.SelectedIndex,
+                                SelectId = dataGets.CashRegisterList[MainDataGrid.SelectedIndex].Id,
                                 SelectCashRegister = dataGets.CashRegisterList
                             };
                             await cashRegister.ShowAsync();
@@ -415,8 +414,7 @@ namespace TerminalMaster
                         }
                         else
                         {
-                            MessageDialog message = new MessageDialog("Выберите строку для изменения");
-                            await message.ShowAsync();
+                            await new MessageDialog("Выберите строку для изменения").ShowAsync();
                         }
                         break;
                     case "simCard":
@@ -425,7 +423,8 @@ namespace TerminalMaster
                             SimCardContentDialog simCard = new SimCardContentDialog
                             {
                                 SelectData = "GET",
-                                SelectIndex = dataGets.SimCardList[MainDataGrid.SelectedIndex].Id,
+                                SelectIndex = MainDataGrid.SelectedIndex,
+                                SelectId = dataGets.SimCardList[MainDataGrid.SelectedIndex].Id,
                                 SelectSimCard = dataGets.SimCardList
                             };
                             await simCard.ShowAsync();
@@ -433,8 +432,7 @@ namespace TerminalMaster
                         }
                         else
                         {
-                            MessageDialog message = new MessageDialog("Выберите строку для изменения");
-                            await message.ShowAsync();
+                            await new MessageDialog("Выберите строку для изменения").ShowAsync();
                         }
                         break;
                     case "phoneBook":
@@ -444,7 +442,8 @@ namespace TerminalMaster
                             PhoneBookContentDialog phoneBook = new PhoneBookContentDialog
                             {
                                 SelectData = "GET",
-                                SelectIndex = dataGets.PhoneBookList[MainDataGrid.SelectedIndex].Id,
+                                SelectIndex = MainDataGrid.SelectedIndex,
+                                SelectId = dataGets.PhoneBookList[MainDataGrid.SelectedIndex].Id,
                                 SelectPhoneBook = dataGets.PhoneBookList
                             };
                             await phoneBook.ShowAsync();
@@ -452,8 +451,7 @@ namespace TerminalMaster
                         }
                         else
                         {
-                            MessageDialog message = new MessageDialog("Выберите строку для изменения");
-                            await message.ShowAsync();
+                            await new MessageDialog("Выберите строку для изменения").ShowAsync();
                         }
                         break;
                     case "holder":
@@ -472,8 +470,7 @@ namespace TerminalMaster
                         }
                         else
                         {
-                            MessageDialog message = new MessageDialog("Выберите строку для изменения");
-                            await message.ShowAsync();
+                            await new MessageDialog("Выберите строку для изменения").ShowAsync();
                         }
                         break;
                     case "user":
@@ -492,8 +489,7 @@ namespace TerminalMaster
                         }
                         else
                         {
-                            MessageDialog message = new MessageDialog("Выберите строку для изменения");
-                            await message.ShowAsync();
+                            await new MessageDialog("Выберите строку для изменения").ShowAsync();
                         }
                         break;
                     case "ie":
@@ -502,7 +498,8 @@ namespace TerminalMaster
                             indContentDialog individual = new indContentDialog
                             {
                                 SelectData = "GET",
-                                SelectIndex = dataGets.IndividualEntrepreneurList[MainDataGrid.SelectedIndex].Id,
+                                SelectIndex = MainDataGrid.SelectedIndex,
+                                SelectId = dataGets.IndividualEntrepreneurList[MainDataGrid.SelectedIndex].Id,
                                 SelectInd = dataGets.IndividualEntrepreneurList,
                                 People = NameNavigationItem
                             };
@@ -511,8 +508,7 @@ namespace TerminalMaster
                         }
                         else
                         {
-                            MessageDialog message = new MessageDialog("Выберите строку для изменения");
-                            await message.ShowAsync();
+                            await new MessageDialog("Выберите строку для изменения").ShowAsync();
                         }
                         break;
                     case "waybill":
@@ -521,7 +517,8 @@ namespace TerminalMaster
                             WaybillContentDialog waybill = new WaybillContentDialog
                             {
                                 SelectData = "GET",
-                                SelectIndex = dataGets.WaybillList[MainDataGrid.SelectedIndex].ID,
+                                SelectIndex = MainDataGrid.SelectedIndex,
+                                SelectId = dataGets.WaybillList[MainDataGrid.SelectedIndex].Id,
                                 SelectWaybill = dataGets.WaybillList
                             };
                             await waybill.ShowAsync();
@@ -529,8 +526,7 @@ namespace TerminalMaster
                         }
                         else
                         {
-                            MessageDialog message = new MessageDialog("Выберите строку для изменения");
-                            await message.ShowAsync();
+                            await new MessageDialog("Выберите строку для изменения").ShowAsync();
                         }
                         break;
                     default:
@@ -539,7 +535,7 @@ namespace TerminalMaster
             }
             catch (Exception ex)
             {
-                logFile.WriteLogAsync(ex.Message, "AppBarButtonEdit_Tapped");
+                await logFile.WriteLogAsync(ex.Message, "AppBarButtonEdit_Tapped");
             }
         }
         private async void AppBarButtonDelete_Tapped(object sender, TappedRoutedEventArgs e)
@@ -602,7 +598,7 @@ namespace TerminalMaster
                         UpdateTable(NameNavigationItem);
                         break;
                     case "waybill":
-                        if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.WaybillList[MainDataGrid.SelectedIndex].ID, NameNavigationItem); }
+                        if (cmd.Label == "Да") { Delete.DeleteDataElement((App.Current as App).ConnectionString, dataGets.WaybillList[MainDataGrid.SelectedIndex].Id, NameNavigationItem); }
                         UpdateTable(NameNavigationItem);
                         break;
                     default:
@@ -611,11 +607,11 @@ namespace TerminalMaster
             }
             catch (Exception ex)
             {
-                logFile.WriteLogAsync(ex.Message, "AppBarButtonDelete_Tapped");
+                await logFile.WriteLogAsync(ex.Message, "AppBarButtonDelete_Tapped");
             }
-            
+
         }
-        private void AppBarButtonUpdate_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void AppBarButtonUpdate_Tapped(object sender, TappedRoutedEventArgs e)
         {
             try
             {
@@ -647,14 +643,17 @@ namespace TerminalMaster
                     case "ie":
                         MainDataGrid.ItemsSource = Get.GetIndividual((App.Current as App).ConnectionString, "ALL", 0);
                         break;
+                    case "waybill":
+                        MainDataGrid.ItemsSource = Get.GetWaybill((App.Current as App).ConnectionString, "ALL", 0);
+                        break;
                     default:
                         break;
                 }
             }
             catch (Exception ex)
             {
-                logFile.WriteLogAsync(ex.Message, "AppBarButtonUpdate_Tapped");
-            }    
+                await logFile.WriteLogAsync(ex.Message, "AppBarButtonUpdate_Tapped");
+            }
         }
         private async void AppBarButtonDowloand_Tapped(object sender, TappedRoutedEventArgs e)
         {
@@ -667,32 +666,23 @@ namespace TerminalMaster
                 {
                     BinaryFormatter binaryformatter = new BinaryFormatter();
                     MemoryStream memorystream = new MemoryStream();
-                    binaryformatter.Serialize(memorystream, dataGets.WaybillList[0].FilePDF);
+                    binaryformatter.Serialize(memorystream, dataGets.WaybillList[MainDataGrid.SelectedIndex].FilePDF);
                     byte[] data = memorystream.ToArray();
-                    await AsStorageFile(data, dataGets.WaybillList[0].FileName);
-                    
+                    await AsStorageFile(data, dataGets.WaybillList[MainDataGrid.SelectedIndex].FileName);
+
                 }
                 else
                 {
-                    MessageDialog message = new MessageDialog("Выберите строку для скачивания");
-                    await message.ShowAsync();
+                    await new MessageDialog("Выберите строку для скачивания").ShowAsync();
                 }
 
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                await logFile.WriteLogAsync(ex.Message, "AppBarButtonDowloand_Tapped");
             }
         }
-
-        private static async Task<StorageFile> AsStorageFile(byte[] data, string fileName)
-        {
-            StorageFolder storageFolder = KnownFolders.DocumentsLibrary;
-            StorageFile sampleFile = await storageFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
-            await FileIO.WriteBytesAsync(sampleFile, data);
-            return sampleFile;
-        }
-        private void MainDataGrid_Sorting(object sender, DataGridColumnEventArgs e)
+        private async void MainDataGrid_Sorting(object sender, DataGridColumnEventArgs e)
         {
             try
             {
@@ -711,60 +701,80 @@ namespace TerminalMaster
                         if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
                         {
                             CheckSort = DataGridSortDirection.Ascending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByPrinter((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            dataGets.PrinterList.Clear();
+                            dataGets.PrinterList = Order.GetOrderByPrinter((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            MainDataGrid.ItemsSource = dataGets.PrinterList;
                         }
                         else
                         {
                             CheckSort = DataGridSortDirection.Descending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByPrinter((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            dataGets.PrinterList.Clear();
+                            dataGets.PrinterList = Order.GetOrderByPrinter((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            MainDataGrid.ItemsSource = dataGets.PrinterList;
                         }
                         break;
                     case "cartrides":
                         if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
                         {
                             CheckSort = DataGridSortDirection.Ascending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByCartridges((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            dataGets.CartridgesList.Clear();
+                            dataGets.CartridgesList = Order.GetOrderByCartridges((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            MainDataGrid.ItemsSource = dataGets.CartridgesList;
                         }
                         else
                         {
                             CheckSort = DataGridSortDirection.Descending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByCartridges((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            dataGets.CartridgesList.Clear();
+                            dataGets.CartridgesList = Order.GetOrderByCartridges((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            MainDataGrid.ItemsSource = dataGets.CartridgesList;
                         }
                         break;
                     case "cashRegister":
                         if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
                         {
                             CheckSort = DataGridSortDirection.Ascending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByCashRegister((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            dataGets.CashRegisterList.Clear();
+                            dataGets.CashRegisterList = Order.GetOrderByCashRegister((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            MainDataGrid.ItemsSource = dataGets.CashRegisterList;
                         }
                         else
                         {
                             CheckSort = DataGridSortDirection.Descending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByCashRegister((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            dataGets.CashRegisterList.Clear();
+                            dataGets.CashRegisterList = Order.GetOrderByCashRegister((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            MainDataGrid.ItemsSource = dataGets.CashRegisterList;
                         }
                         break;
                     case "simCard":
                         if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
                         {
                             CheckSort = DataGridSortDirection.Ascending;
-                            MainDataGrid.ItemsSource = Order.GetOrderBySimCard((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            dataGets.SimCardList.Clear();
+                            dataGets.SimCardList = Order.GetOrderBySimCard((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            MainDataGrid.ItemsSource = dataGets.SimCardList;
                         }
                         else
                         {
                             CheckSort = DataGridSortDirection.Descending;
-                            MainDataGrid.ItemsSource = Order.GetOrderBySimCard((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            dataGets.SimCardList.Clear();
+                            dataGets.SimCardList = Order.GetOrderBySimCard((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            MainDataGrid.ItemsSource = dataGets.SimCardList;
                         }
                         break;
                     case "phoneBook":
                         if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
                         {
                             CheckSort = DataGridSortDirection.Ascending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByPhoneBook((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            dataGets.PhoneBookList.Clear();
+                            dataGets.PhoneBookList = Order.GetOrderByPhoneBook((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            MainDataGrid.ItemsSource = dataGets.PhoneBookList;
                         }
                         else
                         {
                             CheckSort = DataGridSortDirection.Descending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByPhoneBook((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            dataGets.PhoneBookList.Clear();
+                            dataGets.PhoneBookList = Order.GetOrderByPhoneBook((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            MainDataGrid.ItemsSource = dataGets.PhoneBookList;
                         }
                         break;
                     case "holder":
@@ -778,31 +788,57 @@ namespace TerminalMaster
                         else
                         {
                             CheckSort = DataGridSortDirection.Descending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByHolder((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            dataGets.HolderList.Clear();
+                            dataGets.HolderList = Order.GetOrderByHolder((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            MainDataGrid.ItemsSource = dataGets.HolderList;
                         }
                         break;
                     case "user":
                         if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
                         {
                             CheckSort = DataGridSortDirection.Ascending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByUser((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            dataGets.UserList.Clear();
+                            dataGets.UserList = Order.GetOrderByUser((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            MainDataGrid.ItemsSource = dataGets.UserList;
                         }
                         else
                         {
                             CheckSort = DataGridSortDirection.Descending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByUser((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            dataGets.UserList.Clear();
+                            dataGets.UserList = Order.GetOrderByUser((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            MainDataGrid.ItemsSource = dataGets.UserList;
                         }
                         break;
                     case "ie":
                         if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
                         {
                             CheckSort = DataGridSortDirection.Ascending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByIndividual((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            dataGets.IndividualEntrepreneurList.Clear();
+                            dataGets.IndividualEntrepreneurList = Order.GetOrderByIndividual((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            MainDataGrid.ItemsSource = dataGets.IndividualEntrepreneurList;
                         }
                         else
                         {
                             CheckSort = DataGridSortDirection.Descending;
-                            MainDataGrid.ItemsSource = Order.GetOrderByIndividual((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            dataGets.IndividualEntrepreneurList.Clear();
+                            dataGets.IndividualEntrepreneurList = Order.GetOrderByIndividual((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            MainDataGrid.ItemsSource = dataGets.IndividualEntrepreneurList;
+                        }
+                        break;
+                    case "waybill":
+                        if (CheckSort == null || CheckSort == DataGridSortDirection.Descending)
+                        {
+                            CheckSort = DataGridSortDirection.Ascending;
+                            dataGets.WaybillList.Clear();
+                            dataGets.WaybillList = Order.GetOrderByWaybill((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            MainDataGrid.ItemsSource = dataGets.WaybillList;
+                        }
+                        else
+                        {
+                            CheckSort = DataGridSortDirection.Descending;
+                            dataGets.WaybillList.Clear();
+                            dataGets.WaybillList = Order.GetOrderByWaybill((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            MainDataGrid.ItemsSource = dataGets.WaybillList;
                         }
                         break;
                     default:
@@ -811,9 +847,8 @@ namespace TerminalMaster
             }
             catch (Exception ex)
             {
-                logFile.WriteLogAsync(ex.Message, "MainDataGrid_Sorting");
+                await logFile.WriteLogAsync(ex.Message, "MainDataGrid_Sorting");
             }
-            
         }
         private void MainDataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
         {
@@ -827,14 +862,7 @@ namespace TerminalMaster
         {
 
         }
-
-        private void DowloandFile_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-
-        private void MainDataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        private async void MainDataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             try
             {
@@ -1060,6 +1088,30 @@ namespace TerminalMaster
                         e.Column.Header = "Дата состояния";
                         e.Column.Tag = "date";
                         break;
+                    case "NameDocument":
+                        e.Column.Header = "Имя документа";
+                        e.Column.Tag = "name_document";
+                        break;
+                    case "NumberSuppliers":
+                        e.Column.Header = "Номер документа";
+                        e.Column.Tag = "number_document";
+                        break;
+                    case "DateDocument":
+                        e.Column.CanUserSort = false;
+                        e.Column.Header = "Дата документа";
+                        e.Column.Tag = "date_document";
+                        e.Column.Visibility = Visibility.Collapsed;
+                        triggerPropertyNameList = false;
+                        triggerHeader = false;
+                        break;
+                    case "DateDocumentString":
+                        e.Column.Header = "Дата документа";
+                        e.Column.Tag = "date_document";
+                        break;
+                    case "FileName":
+                        e.Column.Header = "Имя файла";
+                        e.Column.Tag = "file_name";
+                        break;
                     case "FilePDF":
                         e.Column.CanUserSort = false;
                         e.Column.Header = "Файлы";
@@ -1080,13 +1132,13 @@ namespace TerminalMaster
             }
             catch (Exception ex)
             {
-                logFile.WriteLogAsync(ex.Message, "MainDataGrid_AutoGeneratingColumn");
+                await logFile.WriteLogAsync(ex.Message, "MainDataGrid_AutoGeneratingColumn");
             }
-            
+
         }
-        private void SearcherTextBox_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
+        private async void SearcherTextBox_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
         {
-            try 
+            try
             {
                 triggerPropertyNameList = false;
                 triggerHeader = false;
@@ -1416,6 +1468,31 @@ namespace TerminalMaster
                                     MainDataGrid.ItemsSource = SimCardIndividualEntrepreneurFilter;
                                     dataGets.SimCardList = new ObservableCollection<SimCard>(SimCardIndividualEntrepreneurFilter);
                                     break;
+                                case "NameDocument":
+                                    IEnumerable<Waybill> WaybillNameDocumentFilter = dataGets.WaybillList.Where(Waybill => Waybill.NameDocument.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = WaybillNameDocumentFilter;
+                                    dataGets.WaybillList = new ObservableCollection<Waybill>(WaybillNameDocumentFilter);
+                                    break;
+                                case "NumberDocument":
+                                    IEnumerable<Waybill> WaybillNumberDocumentFilter = dataGets.WaybillList.Where(Waybill => Waybill.NumberDocument.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = WaybillNumberDocumentFilter;
+                                    dataGets.WaybillList = new ObservableCollection<Waybill>(WaybillNumberDocumentFilter);
+                                    break;
+                                case "NumberSuppliers":
+                                    IEnumerable<Waybill> WaybillNumberSuppliersFilter = dataGets.WaybillList.Where(Waybill => Waybill.NumberSuppliers.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = WaybillNumberSuppliersFilter;
+                                    dataGets.WaybillList = new ObservableCollection<Waybill>(WaybillNumberSuppliersFilter);
+                                    break;
+                                case "DateDocumentString":
+                                    IEnumerable<Waybill> WaybillDateDocumentStringFilter = dataGets.WaybillList.Where(Waybill => Waybill.DateDocumentString.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = WaybillDateDocumentStringFilter;
+                                    dataGets.WaybillList = new ObservableCollection<Waybill>(WaybillDateDocumentStringFilter);
+                                    break;
+                                case "FileName":
+                                    IEnumerable<Waybill> WaybillFileNameFilter = dataGets.WaybillList.Where(Waybill => Waybill.FileName.StartsWith(args.QueryText));
+                                    MainDataGrid.ItemsSource = WaybillFileNameFilter;
+                                    dataGets.WaybillList = new ObservableCollection<Waybill>(WaybillFileNameFilter);
+                                    break;
                                 default:
                                     break;
                             }
@@ -1423,16 +1500,15 @@ namespace TerminalMaster
                     }
                     catch (NullReferenceException exNull)
                     {
-                        logFile.WriteLogAsync(exNull.Message, "SearcherTextBox_QuerySubmitted");
-                        MessageDialog dialog = new MessageDialog("Ячейки пусты");
+                        await logFile.WriteLogAsync(exNull.Message, "SearcherTextBox_QuerySubmitted");
+                        await new MessageDialog("Ячейки пусты").ShowAsync();
                     }
                 }
             }
             catch (Exception ex)
             {
-                logFile.WriteLogAsync(ex.Message, "SearcherTextBox_QuerySubmitted");
+                await logFile.WriteLogAsync(ex.Message, "SearcherTextBox_QuerySubmitted");
             }
-
         }
 
         //private void AppBarButtonSave_Tapped(object sender, TappedRoutedEventArgs e)

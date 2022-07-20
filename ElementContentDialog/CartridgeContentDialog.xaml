@@ -10,7 +10,6 @@
     PrimaryButtonText="ОК"
     SecondaryButtonText="Отмена"
     Opened="ContentDialog_Opened"
-    Closing="ContentDialog_Closing"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 

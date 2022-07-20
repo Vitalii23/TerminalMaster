@@ -4,7 +4,7 @@ namespace TerminalMaster.Model
 {
     class Waybill
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string NameDocument { get; set;}
         public string NumberDocument { get; set; }
         public string NumberSuppliers { get; set; }

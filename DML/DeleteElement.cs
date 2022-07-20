@@ -8,7 +8,7 @@ namespace TerminalMaster.ViewModel
     class DeleteElement
     {
         LogFile logFile = new LogFile();
-        public void DeleteDataElement(string connection, int id, string items)
+        public async void DeleteDataElement(string connection, int id, string items)
         {
             try
             {
@@ -59,8 +59,7 @@ namespace TerminalMaster.ViewModel
             }
             catch (Exception eSql)
             {
-               // logFile.WriteLogAsync(eSql.Message, "DeleteDataElement");
-                Debug.WriteLine(eSql);
+                await logFile.WriteLogAsync(eSql.Message, "DeleteDataElement");
             }
 
         }

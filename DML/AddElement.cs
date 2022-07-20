@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TerminalMaster.Logging;
-using TerminalMaster.Model;
 
 namespace TerminalMaster.ViewModel
 {
     class AddElement
     {
         private LogFile logFile = new LogFile();
-        public void AddDataElement(string connection, string[] element, string items)
+        public async void AddDataElement(string connection, string[] element, string items)
         {
             try
             {
@@ -73,11 +66,11 @@ namespace TerminalMaster.ViewModel
             }
             catch (Exception eSql)
             {
-                logFile.WriteLogAsync(eSql.Message, "AddDataElement(connection, element, items)");
+                await logFile.WriteLogAsync(eSql.Message, items + "_AddDataElement");
             }
 
         }
-        public void AddDataElement(string connection, string[] element, int[] id,  string items)
+        public async void AddDataElement(string connection, string[] element, int[] id,  string items)
         {
             try
             {
@@ -122,15 +115,11 @@ namespace TerminalMaster.ViewModel
             }
             catch (Exception eSql)
             {
-                logFile.WriteLogAsync(eSql.Message, "AddDataElement(connection, element, id, items)");
-                Debug.WriteLine(eSql);
+                await logFile.WriteLogAsync(eSql.Message, items + "_AddDataElement");
             }
 
         }
-
-
-
-        public void AddDataElement(string connection, string[] element, int[] id, string path, string items)
+        public async void AddDataElement(string connection, string[] element, int[] id, string path, string items)
         {
             try
             {
@@ -155,7 +144,7 @@ namespace TerminalMaster.ViewModel
 
                 if (items.Equals("waybill"))
                 {
-                    AddQuery = "INSERT INTO dbo.Waybill (name_document, number_document, number_suppliers, date_document, file_name file_pdf, id_holder) VALUES " + values + ") " + path + ", " + id[0] + ")";
+                    AddQuery = "INSERT INTO dbo.Waybill (name_document, number_document, number_suppliers, date_document, file_name, file_pdf, id_holder) VALUES " + values + path + ", " + id[0] + ")";
                 }
 
                 SqlConnection connect = new SqlConnection(connection);
@@ -170,8 +159,7 @@ namespace TerminalMaster.ViewModel
             }
             catch (Exception eSql)
             {
-                //logFile.WriteLogAsync(eSql.Message, "AddDataElement(connection, element, id, items)");
-                Debug.WriteLine(eSql);
+                await logFile.WriteLogAsync(eSql.Message, items + "_AddDataElement");
             }
 
         }

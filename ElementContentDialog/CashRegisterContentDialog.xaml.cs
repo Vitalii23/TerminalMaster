@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
+using TerminalMaster.Logging;
 using TerminalMaster.Model;
 using TerminalMaster.ViewModel;
 using Windows.UI.Xaml.Controls;
-
-// Документацию по шаблону элемента "Диалоговое окно содержимого" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace TerminalMaster.ElementContentDialog
 {
@@ -14,6 +12,7 @@ namespace TerminalMaster.ElementContentDialog
         private AddElement add = new AddElement();
         private UpdateElement update = new UpdateElement();
         private GetElement get = new GetElement();
+        private LogFile logFile = new LogFile();
         private ObservableCollection<Holder> holders;
         private ObservableCollection<User> users;
 
@@ -22,7 +21,7 @@ namespace TerminalMaster.ElementContentDialog
             InitializeComponent();
             holders = get.GetHolder((App.Current as App).ConnectionString, "ALL", 0);
             users = get.GetUser((App.Current as App).ConnectionString, "ALL", 0);
-            
+
 
             for (int i = 0; i < holders.Count; i++)
             {
@@ -39,6 +38,7 @@ namespace TerminalMaster.ElementContentDialog
         }
         public string SelectData { get; set; }
         public int SelectIndex { get; set; }
+        public int SelectId { get; set; }
         internal ObservableCollection<CashRegister> SelectCashRegister;
         public void AddComboxItem(string[] text, ComboBox combo)
         {
@@ -47,40 +47,47 @@ namespace TerminalMaster.ElementContentDialog
                 combo.Items.Add(text[i]);
             }
         }
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            
-            string brandValue = (string)BrendComboBox.SelectedValue;
+            try
+            {
+                string brandValue = (string)BrendComboBox.SelectedValue;
 
-            DateTimeOffset? dateTime = DateReceptionCalendarDatePicker.Date;
-            string dateReception = dateTime.Value.Year.ToString() + "-"+ dateTime.Value.Month.ToString() + "-" + dateTime.Value.Day.ToString();
+                DateTimeOffset? dateTime = DateReceptionCalendarDatePicker.Date;
+                string dateReception = dateTime.Value.Year.ToString() + "-" + dateTime.Value.Month.ToString() + "-" + dateTime.Value.Day.ToString();
 
-            dateTime = DateEndFiscalMemoryCalendarDatePicker.Date;
-            string dateEndFiscal = dateTime.Value.Year.ToString() + "-" + dateTime.Value.Month.ToString() + "-" + dateTime.Value.Day.ToString();
+                dateTime = DateEndFiscalMemoryCalendarDatePicker.Date;
+                string dateEndFiscal = dateTime.Value.Year.ToString() + "-" + dateTime.Value.Month.ToString() + "-" + dateTime.Value.Day.ToString();
 
-            dateTime = DateKeyActivationFiscalDataOperatorCalendarDatePicker.Date;
-            string dateActivatFiscal = dateTime.Value.Year.ToString() + "-" + dateTime.Value.Month.ToString() + "-" + dateTime.Value.Day.ToString();
+                dateTime = DateKeyActivationFiscalDataOperatorCalendarDatePicker.Date;
+                string dateActivatFiscal = dateTime.Value.Year.ToString() + "-" + dateTime.Value.Month.ToString() + "-" + dateTime.Value.Day.ToString();
 
-            string[] cashRehisters = { NameTextBox.Text, brandValue, FactoryNumberTextBox.Text,
+                string[] cashRehisters = { NameTextBox.Text, brandValue, FactoryNumberTextBox.Text,
                 SerialNumberTextBox.Text, PaymentNumberTextBox.Text, dateReception, dateActivatFiscal, dateEndFiscal, LocationTextBox.Text};
-            int[] Ids = new int[] { holders[HolderComboBox.SelectedIndex].Id, users[UserComboBox.SelectedIndex].Id };
+                int[] Ids = new int[] { holders[HolderComboBox.SelectedIndex].Id, users[UserComboBox.SelectedIndex].Id };
 
-            if (SelectData.Equals("ADD")) 
-            {
-                
-                add.AddDataElement((App.Current as App).ConnectionString, cashRehisters, Ids, "cashRegister"); 
+                if (SelectData.Equals("ADD"))
+                {
+
+                    add.AddDataElement((App.Current as App).ConnectionString, cashRehisters, Ids, "cashRegister");
+                }
+
+                if (SelectData.Equals("UPDATE"))
+                {
+                    update.UpdateDataElement((App.Current as App).ConnectionString, cashRehisters, Ids, SelectId, "cashRegister");
+                }
+
+                NameTextBox.Text = string.Empty;
+                FactoryNumberTextBox.Text = string.Empty;
+                SerialNumberTextBox.Text = string.Empty;
+                PaymentNumberTextBox.Text = string.Empty;
+                LocationTextBox.Text = string.Empty;
+
             }
-
-            if (SelectData.Equals("UPDATE")) 
+            catch (Exception ex)
             {
-                update.UpdateDataElement((App.Current as App).ConnectionString, cashRehisters, Ids, SelectIndex, "cashRegister"); 
+                await logFile.WriteLogAsync(ex.Message, "CashRegister_ContentDialog_PrimaryButtonClick");
             }
-
-            NameTextBox.Text = string.Empty;
-            FactoryNumberTextBox.Text = string.Empty;
-            SerialNumberTextBox.Text = string.Empty;
-            PaymentNumberTextBox.Text = string.Empty;
-            LocationTextBox.Text = string.Empty;
         }
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
@@ -90,22 +97,29 @@ namespace TerminalMaster.ElementContentDialog
             PaymentNumberTextBox.Text = string.Empty;
             LocationTextBox.Text = string.Empty;
         }
-        private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
+        private async void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
-            if (SelectData.Equals("GET"))
+            try
             {
-                NameTextBox.Text = SelectCashRegister[SelectIndex].NameDevice;
-                BrendComboBox.SelectedValue = SelectCashRegister[SelectIndex].Brand;
-                FactoryNumberTextBox.Text = SelectCashRegister[SelectIndex].FactoryNumber;
-                SerialNumberTextBox.Text = SelectCashRegister[SelectIndex].SerialNumber;
-                PaymentNumberTextBox.Text = SelectCashRegister[SelectIndex].PaymentNumber;
-                HolderComboBox.SelectedValue = SelectCashRegister[SelectIndex].Holder;
-                UserComboBox.SelectedValue = SelectCashRegister[SelectIndex].User;
-                DateReceptionCalendarDatePicker.Date = SelectCashRegister[SelectIndex].DateReception;
-                DateEndFiscalMemoryCalendarDatePicker.Date = SelectCashRegister[SelectIndex].DateEndFiscalMemory;
-                DateKeyActivationFiscalDataOperatorCalendarDatePicker.Date = SelectCashRegister[SelectIndex].DateKeyActivationFiscalDataOperator;
-                LocationTextBox.Text = SelectCashRegister[SelectIndex].Location;
-                SelectData = "UPDATE";
+                if (SelectData.Equals("GET"))
+                {
+                    NameTextBox.Text = SelectCashRegister[SelectIndex].NameDevice;
+                    BrendComboBox.SelectedValue = SelectCashRegister[SelectIndex].Brand;
+                    FactoryNumberTextBox.Text = SelectCashRegister[SelectIndex].FactoryNumber;
+                    SerialNumberTextBox.Text = SelectCashRegister[SelectIndex].SerialNumber;
+                    PaymentNumberTextBox.Text = SelectCashRegister[SelectIndex].PaymentNumber;
+                    HolderComboBox.SelectedValue = SelectCashRegister[SelectIndex].Holder;
+                    UserComboBox.SelectedValue = SelectCashRegister[SelectIndex].User;
+                    DateReceptionCalendarDatePicker.Date = SelectCashRegister[SelectIndex].DateReception;
+                    DateEndFiscalMemoryCalendarDatePicker.Date = SelectCashRegister[SelectIndex].DateEndFiscalMemory;
+                    DateKeyActivationFiscalDataOperatorCalendarDatePicker.Date = SelectCashRegister[SelectIndex].DateKeyActivationFiscalDataOperator;
+                    LocationTextBox.Text = SelectCashRegister[SelectIndex].Location;
+                    SelectData = "UPDATE";
+                }
+            }
+            catch (Exception ex)
+            {
+                await logFile.WriteLogAsync(ex.Message, "CashRegister_ContentDialog_Opened");
             }
         }
     }

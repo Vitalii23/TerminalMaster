@@ -4,12 +4,9 @@ using TerminalMaster.Model;
 using TerminalMaster.ViewModel;
 using TerminalMaster.Logging;
 using Windows.System;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-
-// Документацию по шаблону элемента "Диалоговое окно содержимого" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace TerminalMaster.ElementContentDialog
 {
@@ -17,7 +14,6 @@ namespace TerminalMaster.ElementContentDialog
     {
         private AddElement add = new AddElement();
         private UpdateElement update = new UpdateElement();
-        private GetElement get = new GetElement();
         private LogFile logFile = new LogFile();
         
 
@@ -31,6 +27,7 @@ namespace TerminalMaster.ElementContentDialog
         }
         public string SelectData { get; set; }
         public int SelectIndex { get; set; }
+        public int SelectId { get; set; }
         internal ObservableCollection<Printer> SelectPrinter { get; set; }
         public void NextGoTextBox(TextBox previousBox, TextBox nextBox, object sender, KeyRoutedEventArgs e, bool trigger)
         {
@@ -63,7 +60,7 @@ namespace TerminalMaster.ElementContentDialog
                 combo.Items.Add(text[i]);
             }
         }
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             try
             {
@@ -79,7 +76,7 @@ namespace TerminalMaster.ElementContentDialog
 
                 if (SelectData.Equals("UPDATE"))
                 {
-                    update.UpdateDataElement((App.Current as App).ConnectionString, printers, SelectIndex, "printer");
+                    update.UpdateDataElement((App.Current as App).ConnectionString, printers, SelectId, "printer");
                 }
 
                 ModelTextBox.Text = string.Empty;
@@ -88,7 +85,7 @@ namespace TerminalMaster.ElementContentDialog
             }
             catch (Exception e) 
             {
-                logFile.WriteLogAsync(e.Message, "ContentDialog_PrimaryButtonClick");
+                await logFile.WriteLogAsync(e.Message, "Printer_ContentDialog_PrimaryButtonClick");
             }
             
         }
@@ -98,7 +95,7 @@ namespace TerminalMaster.ElementContentDialog
             NamePortTextBox.Text = string.Empty;
             LocationTextBox.Text = string.Empty;
         }
-        private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
+        private async void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
             try 
             {
@@ -118,7 +115,7 @@ namespace TerminalMaster.ElementContentDialog
             }
             catch (Exception e)
             {
-                logFile.WriteLogAsync(e.Message, "ContentDialog_Opened(GET)");
+                await logFile.WriteLogAsync(e.Message, "Printer_ContentDialog_Opened");
             }
         }
         private void ModelTextBox_KeyDown(object sender, KeyRoutedEventArgs e)

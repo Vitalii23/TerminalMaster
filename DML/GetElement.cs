@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TerminalMaster.Logging;
 using TerminalMaster.Model;
 using TerminalMaster.Model.People;
-using Windows.UI.Popups;
 
 namespace TerminalMaster.ViewModel
 {
     class GetElement
     {
+        LogFile logFile = new LogFile();
         public ObservableCollection<Cartridge> GetCartridges(string connection, string selection, int id)
         {
             string GetCartridgeQuery = null;
@@ -61,7 +58,7 @@ namespace TerminalMaster.ViewModel
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "GetCartridges");
             }
             return null;
         }
@@ -136,7 +133,7 @@ namespace TerminalMaster.ViewModel
 
                                 while (reader.Read())
                                 {
-                                    var cashRegister = new CashRegister();
+                                    CashRegister cashRegister = new CashRegister();
                                     cashRegister.Id = reader.GetInt32(0);
                                     cashRegister.NameDevice = reader.GetString(1);
                                     cashRegister.Brand = reader.GetString(2);
@@ -164,7 +161,7 @@ namespace TerminalMaster.ViewModel
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "GetCashRegister");
             }
             return null;
         }
@@ -216,7 +213,7 @@ namespace TerminalMaster.ViewModel
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "GetPhoneBook");
             }
             return null;
         }
@@ -272,7 +269,7 @@ namespace TerminalMaster.ViewModel
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "GetPrinter");
             }
             return null;
         }
@@ -337,19 +334,21 @@ namespace TerminalMaster.ViewModel
                             {
                                 while (reader.Read())
                                 {
-                                    var simcard = new SimCard();
-                                    simcard.Id = reader.GetInt32(0);
-                                    simcard.NameTerminal = reader.GetString(1);
-                                    simcard.Operator = reader.GetString(2);
-                                    simcard.IdentNumber = reader.GetString(3);
-                                    simcard.Brand = reader.GetString(4);
-                                    simcard.TypeDevice = reader.GetString(5);
-                                    simcard.TMS = reader.GetString(6);
-                                    simcard.ICC = reader.GetString(7);
-                                    simcard.Status = reader.GetString(8);
-                                    simcard.IdIndividual = reader.GetInt32(9);
-                                    simcard.IdCashRegister = reader.GetInt32(10);
-                                    simcard.IndividualEntrepreneur = reader.GetString(11) + " " + reader.GetString(12) + " " + reader.GetString(13);
+                                    SimCard simcard = new SimCard
+                                    {
+                                        Id = reader.GetInt32(0),
+                                        NameTerminal = reader.GetString(1),
+                                        Operator = reader.GetString(2),
+                                        IdentNumber = reader.GetString(3),
+                                        Brand = reader.GetString(4),
+                                        TypeDevice = reader.GetString(5),
+                                        TMS = reader.GetString(6),
+                                        ICC = reader.GetString(7),
+                                        Status = reader.GetString(8),
+                                        IdIndividual = reader.GetInt32(9),
+                                        IdCashRegister = reader.GetInt32(10),
+                                        IndividualEntrepreneur = reader.GetString(11) + " " + reader.GetString(12) + " " + reader.GetString(13)
+                                    };
                                     simCards.Add(simcard);
                                 }
                             }
@@ -360,7 +359,7 @@ namespace TerminalMaster.ViewModel
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "GetSimCard");
             }
             return null;
         }
@@ -411,7 +410,7 @@ namespace TerminalMaster.ViewModel
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "GetIndividual");
             }
             return null;
         }
@@ -462,7 +461,7 @@ namespace TerminalMaster.ViewModel
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "GetHolder");
             }
             return null;
         }
@@ -513,7 +512,7 @@ namespace TerminalMaster.ViewModel
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "GetUser");
             }
             return null;
         }
@@ -569,14 +568,14 @@ namespace TerminalMaster.ViewModel
                                 while (reader.Read())
                                 {
                                     Waybill waybill = new Waybill();
-                                    waybill.ID = reader.GetInt32(0);
+                                    waybill.Id = reader.GetInt32(0);
                                     waybill.NameDocument = reader.GetString(1);
                                     waybill.NumberDocument = reader.GetString(2);
                                     waybill.NumberSuppliers = reader.GetString(3);
                                     waybill.DateDocument = reader.GetDateTime(4);
                                     waybill.DateDocumentString = waybill.DateDocument.ToShortDateString();
                                     waybill.FileName = reader.GetString(5);
-                                    waybill.FilePDF = GetDocument(waybill.ID, connection);
+                                    waybill.FilePDF = GetDocument(waybill.Id, connection);
                                     waybill.IdHolder = reader.GetInt32(6);
                                     waybill.Holder = reader.GetString(7) + " " + reader.GetString(8) + " " + reader.GetString(9);
                                     waybills.Add(waybill);
@@ -589,11 +588,10 @@ namespace TerminalMaster.ViewModel
             }
             catch (Exception eSql)
             {
-                Debug.WriteLine("Exception: " + eSql);
+                logFile.WriteLogAsync(eSql.Message, "GetWaybill");
             }
             return null;
         }
-
         private static byte[] GetDocument(int documentId, string connection)
         {
             using (SqlConnection connect = new SqlConnection(connection))
