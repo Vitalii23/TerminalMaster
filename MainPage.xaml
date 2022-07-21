@@ -75,7 +75,7 @@
                 <NavigationViewItem Content="Пользователи" Icon="People" Tapped="UserNavigationViewItem_Tapped"/>
                 <NavigationViewItem Content="Индивидуальные предприниматели" Icon="Contact2" Tapped="IndividualEntrepreneurNavigationViewItem_Tapped"/>
                 <NavigationViewItem Content="Накладные" Icon="Page2" Tapped="WaybillNavigationViewItem_Tapped"/>
-                <!-- <NavigationViewItemSeparator/>
+                <!--<NavigationViewItemSeparator/>
                 <NavigationViewItemHeader Content="Конфигурации"/>
                 <NavigationViewItem Content="Подключение" Icon="DisconnectDrive" Tapped="ConnectNavigationItem_Tapped"/>
                 <NavigationViewItem Content="Настройка" Icon="Setting" Tapped="SettingNavigationItem_Tapped"/>
@@ -83,9 +83,9 @@
                 <NavigationViewItem Content="О программе" Icon="ContactInfo" Tapped="AboutNavigationItem_Tapped"/>-->
             </NavigationView.MenuItems>
             <NavigationView.PaneFooter>
-                <NavigationViewItem Icon="MapDrive">Подключение</NavigationViewItem>
+                <NavigationViewItem Content="Подключение" Icon="MapDrive" Tapped="ConnectNavigationItem_Tapped"></NavigationViewItem>
             </NavigationView.PaneFooter>
-            <NavigationView.Content>
+                <NavigationView.Content>
                 <control:DataGrid x:Name="MainDataGrid" 
                                   AutoGeneratingColumn="MainDataGrid_AutoGeneratingColumn"
                                   CanUserSortColumns="True"

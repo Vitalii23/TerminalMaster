@@ -265,6 +265,20 @@ namespace TerminalMaster
 
             UpdateTable(NameNavigationItem);
         }
+        private async void ConnectNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            try
+            {
+                triggerPropertyNameList = false;
+                triggerHeader = false;
+                ConnectContentDialog connect = new ConnectContentDialog();
+                await connect.ShowAsync();
+            }
+            catch (Exception ex)
+            {
+                await logFile.WriteLogAsync(ex.Message, "ConnectNavigationItem_Tapped");
+            }
+        }
         private async void AppBarButtonAdd_Tapped(object sender, TappedRoutedEventArgs e)
         {
             try
@@ -865,6 +879,12 @@ namespace TerminalMaster
         {
 
         }
+
+        private void NavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+        }
+
         private async void MainDataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             try
@@ -1515,10 +1535,6 @@ namespace TerminalMaster
         }
 
         //private void AppBarButtonSave_Tapped(object sender, TappedRoutedEventArgs e)
-        //{
-
-        //}
-        //private void ConnectNavigationItem_Tapped(object sender, TappedRoutedEventArgs e)
         //{
 
         //}

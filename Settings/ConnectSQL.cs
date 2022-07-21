@@ -9,8 +9,6 @@ namespace TerminalMaster.Settings
 {
     class ConnectSQL
     {
-        private string connectionString =
-@"Data Source=KV-149;Initial Catalog=dbTerminalMaster;User ID=dva;Password=Kolizey$;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         public void ConnectWrite(string connect)
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;

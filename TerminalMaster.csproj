@@ -141,6 +141,9 @@
     <Compile Include="ElementContentDialog\CashRegisterContentDialog.xaml.cs">
       <DependentUpon>CashRegisterContentDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ElementContentDialog\ConnectContentDialog.xaml.cs">
+      <DependentUpon>ConnectContentDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ElementContentDialog\WaybillContentDialog.xaml.cs">
       <DependentUpon>WaybillContentDialog.xaml</DependentUpon>
     </Compile>
@@ -204,6 +207,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ElementContentDialog\CashRegisterContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ElementContentDialog\ConnectContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
