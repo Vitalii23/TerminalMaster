@@ -24,7 +24,7 @@ namespace TerminalMaster
 {
     public sealed partial class MainPage : Page
     {
-        private string NameNavigationItem;
+        private string NameNavigationItem, CheckASCorDesc, CheckTag;
         private readonly DataGets dataGets = new DataGets();
         private GetElement Get = new GetElement();
         private DeleteElement Delete = new DeleteElement();
@@ -108,6 +108,7 @@ namespace TerminalMaster
             triggerPropertyNameList = true;
             triggerHeader = true;
             AppBarButtonDowloand.IsEnabled = false;
+            CheckTag = null;
 
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
@@ -126,6 +127,7 @@ namespace TerminalMaster
             triggerPropertyNameList = true;
             triggerHeader = true;
             AppBarButtonDowloand.IsEnabled = false;
+            CheckTag = null;
 
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
@@ -144,6 +146,7 @@ namespace TerminalMaster
             triggerPropertyNameList = true;
             triggerHeader = true;
             AppBarButtonDowloand.IsEnabled = false;
+            CheckTag = null;
 
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
@@ -162,6 +165,7 @@ namespace TerminalMaster
             triggerPropertyNameList = true;
             triggerHeader = true;
             AppBarButtonDowloand.IsEnabled = false;
+            CheckTag = null;
 
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
@@ -180,6 +184,7 @@ namespace TerminalMaster
             triggerPropertyNameList = true;
             triggerHeader = true;
             AppBarButtonDowloand.IsEnabled = false;
+            CheckTag = null;
 
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
@@ -198,6 +203,7 @@ namespace TerminalMaster
             triggerPropertyNameList = true;
             triggerHeader = true;
             AppBarButtonDowloand.IsEnabled = false;
+            CheckTag = null;
 
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
@@ -216,6 +222,7 @@ namespace TerminalMaster
             triggerPropertyNameList = true;
             triggerHeader = true;
             AppBarButtonDowloand.IsEnabled = false;
+            CheckTag = null;
 
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
@@ -234,6 +241,7 @@ namespace TerminalMaster
             triggerPropertyNameList = true;
             triggerHeader = true;
             AppBarButtonDowloand.IsEnabled = false;
+            CheckTag = null;
 
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
@@ -253,6 +261,7 @@ namespace TerminalMaster
             triggerPropertyNameList = true;
             triggerHeader = true;
             AppBarButtonDowloand.IsEnabled = true;
+            CheckTag = null;
 
             MainDataGrid.Columns.Clear();
             SelectionItemComboBox.Items.Clear();
@@ -285,6 +294,7 @@ namespace TerminalMaster
             {
                 triggerPropertyNameList = false;
                 triggerHeader = false;
+                CheckASCorDesc = null;
                 switch (NameNavigationItem)
                 {
                     case "printer":
@@ -293,6 +303,7 @@ namespace TerminalMaster
                             SelectData = "ADD"
                         };
                         await printer.ShowAsync();
+                        dataGets.PrinterList = Get.GetPrinter((App.Current as App).ConnectionString, "ALL", 0);
                         UpdateTable(NameNavigationItem);
                         break;
                     case "cartrides":
@@ -301,6 +312,7 @@ namespace TerminalMaster
                             SelectData = "ADD"
                         };
                         await cartridge.ShowAsync();
+                        dataGets.CartridgesList = Get.GetCartridges((App.Current as App).ConnectionString, "ALL", 0);
                         UpdateTable(NameNavigationItem);
                         break;
                     case "cashRegister":
@@ -309,6 +321,7 @@ namespace TerminalMaster
                             SelectData = "ADD"
                         };
                         await cashRegister.ShowAsync();
+                        dataGets.CashRegisterList = Get.GetCashRegister((App.Current as App).ConnectionString, "ALL", 0);
                         UpdateTable(NameNavigationItem);
                         break;
                     case "simCard":
@@ -317,6 +330,7 @@ namespace TerminalMaster
                             SelectData = "ADD"
                         };
                         await simCard.ShowAsync();
+                        dataGets.SimCardList = Get.GetSimCard((App.Current as App).ConnectionString, "ALL", 0);
                         UpdateTable(NameNavigationItem);
                         break;
                     case "phoneBook":
@@ -325,6 +339,7 @@ namespace TerminalMaster
                             SelectData = "ADD"
                         };
                         await phoneBook.ShowAsync();
+                        dataGets.PhoneBookList = Get.GetPhoneBook((App.Current as App).ConnectionString, "ALL", 0);
                         UpdateTable(NameNavigationItem);
                         break;
                     case "holder":
@@ -334,6 +349,7 @@ namespace TerminalMaster
                             People = NameNavigationItem
                         };
                         await holder.ShowAsync();
+                        dataGets.HolderList = Get.GetHolder((App.Current as App).ConnectionString, "ALL", 0);
                         UpdateTable(NameNavigationItem);
                         break;
                     case "user":
@@ -343,6 +359,7 @@ namespace TerminalMaster
                             People = NameNavigationItem
                         };
                         await user.ShowAsync();
+                        dataGets.UserList = Get.GetUser((App.Current as App).ConnectionString, "ALL", 0);
                         UpdateTable(NameNavigationItem);
                         break;
                     case "ie":
@@ -352,6 +369,7 @@ namespace TerminalMaster
                             People = NameNavigationItem
                         };
                         await individual.ShowAsync();
+                        dataGets.IndividualEntrepreneurList = Get.GetIndividual((App.Current as App).ConnectionString, "ALL", 0);
                         UpdateTable(NameNavigationItem);
                         break;
                     case "waybill":
@@ -360,6 +378,7 @@ namespace TerminalMaster
                             SelectData = "ADD"
                         };
                         await waybill.ShowAsync();
+                        dataGets.WaybillList = Get.GetWaybill((App.Current as App).ConnectionString, "ALL", 0);
                         UpdateTable(NameNavigationItem);
                         break;
                     default:
@@ -391,6 +410,18 @@ namespace TerminalMaster
                                 SelectPrinter = dataGets.PrinterList
                             };
                             await printer.ShowAsync();
+                            if (CheckASCorDesc.Equals("Ascending"))
+                            {
+                                dataGets.PrinterList = Order.GetOrderByPrinter((App.Current as App).ConnectionString, "Ascending", CheckTag);
+                            }
+                            else if (CheckASCorDesc.Equals("Descending")) 
+                            {
+                                dataGets.PrinterList = Order.GetOrderByPrinter((App.Current as App).ConnectionString, "Descending", CheckTag);
+                            }
+                            else
+                            {
+                                dataGets.PrinterList = Get.GetPrinter((App.Current as App).ConnectionString, "ALL", 0);
+                            }
                             UpdateTable(NameNavigationItem);
                         }
                         else
@@ -409,6 +440,18 @@ namespace TerminalMaster
                                 SelectCartrides = dataGets.CartridgesList
                             };
                             await cartridge.ShowAsync();
+                            if (CheckASCorDesc.Equals("Ascending"))
+                            {
+                                dataGets.CartridgesList = Order.GetOrderByCartridges((App.Current as App).ConnectionString, "Ascending", CheckTag);
+                            }
+                            else if (CheckASCorDesc.Equals("Descending"))
+                            {
+                                dataGets.CartridgesList = Order.GetOrderByCartridges((App.Current as App).ConnectionString, "Descending", CheckTag);
+                            }
+                            else
+                            {
+                                dataGets.CartridgesList = Get.GetCartridges((App.Current as App).ConnectionString, "ALL", 0);
+                            }
                             UpdateTable(NameNavigationItem);
                         }
                         else
@@ -427,6 +470,18 @@ namespace TerminalMaster
                                 SelectCashRegister = dataGets.CashRegisterList
                             };
                             await cashRegister.ShowAsync();
+                            if (CheckASCorDesc.Equals("Ascending"))
+                            {
+                                dataGets.CashRegisterList = Order.GetOrderByCashRegister((App.Current as App).ConnectionString, "Ascending", CheckTag);
+                            }
+                            else if (CheckASCorDesc.Equals("Descending"))
+                            {
+                                dataGets.CashRegisterList = Order.GetOrderByCashRegister((App.Current as App).ConnectionString, "Descending", CheckTag);
+                            }
+                            else
+                            {
+                                dataGets.CashRegisterList = Get.GetCashRegister((App.Current as App).ConnectionString, "ALL", 0);
+                            }
                             UpdateTable(NameNavigationItem);
                         }
                         else
@@ -445,6 +500,18 @@ namespace TerminalMaster
                                 SelectSimCard = dataGets.SimCardList
                             };
                             await simCard.ShowAsync();
+                            if (CheckASCorDesc.Equals("Ascending"))
+                            {
+                                dataGets.SimCardList = Order.GetOrderBySimCard((App.Current as App).ConnectionString, "Ascending", CheckTag);
+                            }
+                            else if (CheckASCorDesc.Equals("Descending"))
+                            {
+                                dataGets.SimCardList = Order.GetOrderBySimCard((App.Current as App).ConnectionString, "Descending", CheckTag);
+                            }
+                            else
+                            {
+                                dataGets.SimCardList = Get.GetSimCard((App.Current as App).ConnectionString, "ALL", 0);
+                            }
                             UpdateTable(NameNavigationItem);
                         }
                         else
@@ -464,6 +531,18 @@ namespace TerminalMaster
                                 SelectPhoneBook = dataGets.PhoneBookList
                             };
                             await phoneBook.ShowAsync();
+                            if (CheckASCorDesc.Equals("Ascending"))
+                            {
+                                dataGets.PhoneBookList = Order.GetOrderByPhoneBook((App.Current as App).ConnectionString, "Ascending", CheckTag);
+                            }
+                            else if (CheckASCorDesc.Equals("Descending"))
+                            {
+                                dataGets.PhoneBookList = Order.GetOrderByPhoneBook((App.Current as App).ConnectionString, "Descending", CheckTag);
+                            }
+                            else
+                            {
+                                dataGets.PhoneBookList = Get.GetPhoneBook((App.Current as App).ConnectionString, "ALL", 0);
+                            }
                             UpdateTable(NameNavigationItem);
                         }
                         else
@@ -483,6 +562,18 @@ namespace TerminalMaster
                                 People = NameNavigationItem
                             };
                             await holder.ShowAsync();
+                            if (CheckASCorDesc.Equals("Ascending"))
+                            {
+                                dataGets.HolderList = Order.GetOrderByHolder((App.Current as App).ConnectionString, "Ascending", CheckTag);
+                            }
+                            else if (CheckASCorDesc.Equals("Descending"))
+                            {
+                                dataGets.HolderList = Order.GetOrderByHolder((App.Current as App).ConnectionString, "Descending", CheckTag);
+                            }
+                            else
+                            {
+                                dataGets.HolderList = Get.GetHolder((App.Current as App).ConnectionString, "ALL", 0);
+                            }
                             UpdateTable(NameNavigationItem);
                         }
                         else
@@ -502,6 +593,18 @@ namespace TerminalMaster
                                 People = NameNavigationItem
                             };
                             await user.ShowAsync();
+                            if (CheckASCorDesc.Equals("Ascending"))
+                            {
+                                dataGets.UserList = Order.GetOrderByUser((App.Current as App).ConnectionString, "Ascending", CheckTag);
+                            }
+                            else if (CheckASCorDesc.Equals("Descending"))
+                            {
+                                dataGets.UserList = Order.GetOrderByUser((App.Current as App).ConnectionString, "Descending", CheckTag);
+                            }
+                            else
+                            {
+                                dataGets.UserList = Get.GetUser((App.Current as App).ConnectionString, "ALL", 0);
+                            }
                             UpdateTable(NameNavigationItem);
                         }
                         else
@@ -521,6 +624,18 @@ namespace TerminalMaster
                                 People = NameNavigationItem
                             };
                             await individual.ShowAsync();
+                            if (CheckASCorDesc.Equals("Ascending"))
+                            {
+                                dataGets.IndividualEntrepreneurList = Order.GetOrderByIndividual((App.Current as App).ConnectionString, "Ascending", CheckTag);
+                            }
+                            else if (CheckASCorDesc.Equals("Descending"))
+                            {
+                                dataGets.IndividualEntrepreneurList = Order.GetOrderByIndividual((App.Current as App).ConnectionString, "Descending", CheckTag);
+                            }
+                            else
+                            {
+                                dataGets.IndividualEntrepreneurList = Get.GetIndividual((App.Current as App).ConnectionString, "ALL", 0);
+                            }
                             UpdateTable(NameNavigationItem);
                         }
                         else
@@ -539,6 +654,18 @@ namespace TerminalMaster
                                 SelectWaybill = dataGets.WaybillList
                             };
                             await waybill.ShowAsync();
+                            if (CheckASCorDesc.Equals("Ascending"))
+                            {
+                                dataGets.WaybillList = Order.GetOrderByWaybill((App.Current as App).ConnectionString, "Ascending", CheckTag);
+                            }
+                            else if (CheckASCorDesc.Equals("Descending"))
+                            {
+                                dataGets.WaybillList = Order.GetOrderByWaybill((App.Current as App).ConnectionString, "Descending", CheckTag);
+                            }
+                            else
+                            {
+                                dataGets.WaybillList = Get.GetWaybill((App.Current as App).ConnectionString, "ALL", 0);
+                            }
                             UpdateTable(NameNavigationItem);
                         }
                         else
@@ -720,6 +847,8 @@ namespace TerminalMaster
                             CheckSort = DataGridSortDirection.Ascending;
                             dataGets.PrinterList.Clear();
                             dataGets.PrinterList = Order.GetOrderByPrinter((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            CheckASCorDesc = "Ascending";
+                            CheckTag = e.Column.Tag.ToString();
                             MainDataGrid.ItemsSource = dataGets.PrinterList;
                         }
                         else
@@ -727,6 +856,8 @@ namespace TerminalMaster
                             CheckSort = DataGridSortDirection.Descending;
                             dataGets.PrinterList.Clear();
                             dataGets.PrinterList = Order.GetOrderByPrinter((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            CheckASCorDesc = "Descending";
+                            CheckTag = e.Column.Tag.ToString();
                             MainDataGrid.ItemsSource = dataGets.PrinterList;
                         }
                         break;
@@ -736,6 +867,8 @@ namespace TerminalMaster
                             CheckSort = DataGridSortDirection.Ascending;
                             dataGets.CartridgesList.Clear();
                             dataGets.CartridgesList = Order.GetOrderByCartridges((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            CheckASCorDesc = "Ascending";
+                            CheckTag = e.Column.Tag.ToString();
                             MainDataGrid.ItemsSource = dataGets.CartridgesList;
                         }
                         else
@@ -743,6 +876,8 @@ namespace TerminalMaster
                             CheckSort = DataGridSortDirection.Descending;
                             dataGets.CartridgesList.Clear();
                             dataGets.CartridgesList = Order.GetOrderByCartridges((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            CheckASCorDesc = "Descending";
+                            CheckTag = e.Column.Tag.ToString();
                             MainDataGrid.ItemsSource = dataGets.CartridgesList;
                         }
                         break;
@@ -752,6 +887,8 @@ namespace TerminalMaster
                             CheckSort = DataGridSortDirection.Ascending;
                             dataGets.CashRegisterList.Clear();
                             dataGets.CashRegisterList = Order.GetOrderByCashRegister((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            CheckASCorDesc = "Ascending";
+                            CheckTag = e.Column.Tag.ToString();
                             MainDataGrid.ItemsSource = dataGets.CashRegisterList;
                         }
                         else
@@ -759,6 +896,8 @@ namespace TerminalMaster
                             CheckSort = DataGridSortDirection.Descending;
                             dataGets.CashRegisterList.Clear();
                             dataGets.CashRegisterList = Order.GetOrderByCashRegister((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            CheckASCorDesc = "Descending";
+                            CheckTag = e.Column.Tag.ToString();
                             MainDataGrid.ItemsSource = dataGets.CashRegisterList;
                         }
                         break;
@@ -768,6 +907,8 @@ namespace TerminalMaster
                             CheckSort = DataGridSortDirection.Ascending;
                             dataGets.SimCardList.Clear();
                             dataGets.SimCardList = Order.GetOrderBySimCard((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            CheckASCorDesc = "Ascending";
+                            CheckTag = e.Column.Tag.ToString();
                             MainDataGrid.ItemsSource = dataGets.SimCardList;
                         }
                         else
@@ -775,6 +916,8 @@ namespace TerminalMaster
                             CheckSort = DataGridSortDirection.Descending;
                             dataGets.SimCardList.Clear();
                             dataGets.SimCardList = Order.GetOrderBySimCard((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            CheckASCorDesc = "Descending";
+                            CheckTag = e.Column.Tag.ToString();
                             MainDataGrid.ItemsSource = dataGets.SimCardList;
                         }
                         break;
@@ -784,6 +927,8 @@ namespace TerminalMaster
                             CheckSort = DataGridSortDirection.Ascending;
                             dataGets.PhoneBookList.Clear();
                             dataGets.PhoneBookList = Order.GetOrderByPhoneBook((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            CheckASCorDesc = "Ascending";
+                            CheckTag = e.Column.Tag.ToString();
                             MainDataGrid.ItemsSource = dataGets.PhoneBookList;
                         }
                         else
@@ -791,6 +936,8 @@ namespace TerminalMaster
                             CheckSort = DataGridSortDirection.Descending;
                             dataGets.PhoneBookList.Clear();
                             dataGets.PhoneBookList = Order.GetOrderByPhoneBook((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            CheckASCorDesc = "Descending";
+                            CheckTag = e.Column.Tag.ToString();
                             MainDataGrid.ItemsSource = dataGets.PhoneBookList;
                         }
                         break;
@@ -800,6 +947,8 @@ namespace TerminalMaster
                             CheckSort = DataGridSortDirection.Ascending;
                             dataGets.HolderList.Clear();
                             dataGets.HolderList = Order.GetOrderByHolder((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            CheckASCorDesc = "Ascending";
+                            CheckTag = e.Column.Tag.ToString();
                             MainDataGrid.ItemsSource = dataGets.HolderList;
                         }
                         else
@@ -807,6 +956,8 @@ namespace TerminalMaster
                             CheckSort = DataGridSortDirection.Descending;
                             dataGets.HolderList.Clear();
                             dataGets.HolderList = Order.GetOrderByHolder((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            CheckASCorDesc = "Descending";
+                            CheckTag = e.Column.Tag.ToString();
                             MainDataGrid.ItemsSource = dataGets.HolderList;
                         }
                         break;
@@ -816,6 +967,8 @@ namespace TerminalMaster
                             CheckSort = DataGridSortDirection.Ascending;
                             dataGets.UserList.Clear();
                             dataGets.UserList = Order.GetOrderByUser((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            CheckASCorDesc = "Ascending";
+                            CheckTag = e.Column.Tag.ToString();
                             MainDataGrid.ItemsSource = dataGets.UserList;
                         }
                         else
@@ -823,6 +976,8 @@ namespace TerminalMaster
                             CheckSort = DataGridSortDirection.Descending;
                             dataGets.UserList.Clear();
                             dataGets.UserList = Order.GetOrderByUser((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            CheckASCorDesc = "Descending";
+                            CheckTag = e.Column.Tag.ToString();
                             MainDataGrid.ItemsSource = dataGets.UserList;
                         }
                         break;
@@ -832,6 +987,8 @@ namespace TerminalMaster
                             CheckSort = DataGridSortDirection.Ascending;
                             dataGets.IndividualEntrepreneurList.Clear();
                             dataGets.IndividualEntrepreneurList = Order.GetOrderByIndividual((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            CheckASCorDesc = "Ascending";
+                            CheckTag = e.Column.Tag.ToString();
                             MainDataGrid.ItemsSource = dataGets.IndividualEntrepreneurList;
                         }
                         else
@@ -839,6 +996,8 @@ namespace TerminalMaster
                             CheckSort = DataGridSortDirection.Descending;
                             dataGets.IndividualEntrepreneurList.Clear();
                             dataGets.IndividualEntrepreneurList = Order.GetOrderByIndividual((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            CheckASCorDesc = "Descending";
+                            CheckTag = e.Column.Tag.ToString();
                             MainDataGrid.ItemsSource = dataGets.IndividualEntrepreneurList;
                         }
                         break;
@@ -848,6 +1007,8 @@ namespace TerminalMaster
                             CheckSort = DataGridSortDirection.Ascending;
                             dataGets.WaybillList.Clear();
                             dataGets.WaybillList = Order.GetOrderByWaybill((App.Current as App).ConnectionString, "Ascending", e.Column.Tag.ToString());
+                            CheckASCorDesc = "Ascending";
+                            CheckTag = e.Column.Tag.ToString();
                             MainDataGrid.ItemsSource = dataGets.WaybillList;
                         }
                         else
@@ -855,6 +1016,8 @@ namespace TerminalMaster
                             CheckSort = DataGridSortDirection.Descending;
                             dataGets.WaybillList.Clear();
                             dataGets.WaybillList = Order.GetOrderByWaybill((App.Current as App).ConnectionString, "Descending", e.Column.Tag.ToString());
+                            CheckASCorDesc = "Descending";
+                            CheckTag = e.Column.Tag.ToString();
                             MainDataGrid.ItemsSource = dataGets.WaybillList;
                         }
                         break;
@@ -1115,9 +1278,13 @@ namespace TerminalMaster
                         e.Column.Header = "Имя документа";
                         e.Column.Tag = "name_document";
                         break;
-                    case "NumberSuppliers":
+                    case "NumberDocument":
                         e.Column.Header = "Номер документа";
                         e.Column.Tag = "number_document";
+                        break;
+                    case "NumberSuppliers":
+                        e.Column.Header = "Номер поставщика";
+                        e.Column.Tag = "number_suppliers";
                         break;
                     case "DateDocument":
                         e.Column.CanUserSort = false;
